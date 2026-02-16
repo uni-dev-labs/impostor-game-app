@@ -5,19 +5,28 @@ import 'package:impostor/components/custom_button.dart';
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
 
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.blue,
-      body: SafeArea(
+@override
+Widget build(BuildContext context) {
+  return Scaffold(
+    body: Container(
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter,
+          colors: [
+            Color(0xFF1a1f4d), // Más claro arriba
+            Color(0xFF0a0e27), // Más oscuro abajo
+          ],
+        ),
+      ),
+      child: SafeArea(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20),
           child: Column(
             children: [
               Container(
-                width : double.infinity,
+                width: double.infinity,
                 height: 100,
-                color: Colors.red,
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -25,12 +34,13 @@ class HomePage extends StatelessWidget {
                     CustomButton(icon: Icons.settings),
                     CustomButton(icon: Icons.info_outline),
                   ],
-                ),            
+                ),
               )
             ],
           ),
         ),
-      )
-    );
-  }
+      ),
+    ),
+  );
+}
 }
