@@ -14,7 +14,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Impostor',
       theme: ThemeData(
-        colorScheme: .fromSeed(seedColor: Colors.red),
+        colorScheme: .fromSeed(seedColor: Colors.deepPurpleAccent),
       ),
       routes: routes,
       initialRoute: "/",
