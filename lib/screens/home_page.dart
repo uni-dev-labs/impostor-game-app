@@ -14,8 +14,8 @@ Widget build(BuildContext context) {
           begin: Alignment.topCenter,
           end: Alignment.bottomCenter,
           colors: [
-            Color(0xFF1a1f4d), // Más claro arriba
-            Color(0xFF0a0e27), // Más oscuro abajo
+            Color(0xFF1a1f4d), 
+            Color(0xFF0a0e27), 
           ],
         ),
       ),

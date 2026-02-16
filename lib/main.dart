@@ -12,10 +12,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Impostor',
-      theme: ThemeData(
-        colorScheme: .fromSeed(seedColor: Colors.red),
-      ),
+      
       routes: routes,
       initialRoute: "/",
     );
