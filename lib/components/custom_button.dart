@@ -16,7 +16,7 @@ class CustomButton extends StatelessWidget {
       ),
       child: IconButton(
         onPressed: () {
-          print("hola mundo");
+          print("hola");
         }, 
         icon: Icon(icon)
       ),
