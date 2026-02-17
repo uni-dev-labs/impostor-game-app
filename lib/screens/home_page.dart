@@ -32,6 +32,12 @@ class HomePage extends StatelessWidget {
                 fontWeight: FontWeight.bold),
                 textAlign: TextAlign.center,
               ),
+              Text("DESCUBRE QUIÉN ES EL IMPOSTOR", style: TextStyle(
+                  color: Colors.grey, fontSize: 16,
+                  fontWeight: FontWeight.bold
+                ),
+                textAlign: TextAlign.center,
+              ),
             ],
           ),
         ),
