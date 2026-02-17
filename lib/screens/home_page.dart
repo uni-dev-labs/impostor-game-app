@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:impostor/components/custom_button.dart';
 
@@ -15,7 +14,7 @@ class HomePage extends StatelessWidget {
           child: Column(
             children: [
               Container(
-                width : double.infinity,
+                width: double.infinity,
                 height: 100,
                 color: Colors.red,
                 child: Row(
@@ -25,12 +24,12 @@ class HomePage extends StatelessWidget {
                     CustomButton(icon: Icons.settings),
                     CustomButton(icon: Icons.info_outline),
                   ],
-                ),            
-              )
+                ),
+              ),
             ],
           ),
         ),
-      )
+      ),
     );
   }
 }
