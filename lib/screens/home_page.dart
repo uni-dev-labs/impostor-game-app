@@ -8,7 +8,7 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.blue,
+      backgroundColor: Colors.purple,
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -17,7 +17,7 @@ class HomePage extends StatelessWidget {
               Container(
                 width : double.infinity,
                 height: 100,
-                color: Colors.red,
+                color: Colors.transparent,
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -25,8 +25,13 @@ class HomePage extends StatelessWidget {
                     CustomButton(icon: Icons.settings),
                     CustomButton(icon: Icons.info_outline),
                   ],
-                ),            
-              )
+                ),
+              ),
+              Text("El \n Impostor", style: TextStyle(
+                color: Colors.white, fontSize: 24,
+                fontWeight: FontWeight.bold),
+                textAlign: TextAlign.center,
+              ),
             ],
           ),
         ),
