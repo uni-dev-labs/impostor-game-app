@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 class CustomButton extends StatelessWidget {
-
   final IconData icon;
 
   const CustomButton({super.key, required this.icon});
@@ -10,15 +9,21 @@ class CustomButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        color: Color.fromRGBO(33, 27, 68, 1),
-        borderRadius: BorderRadius.circular(100),
-        border: Border.all(color: const Color.fromARGB(255, 100, 100, 100), width: 2),
+        // Un azul noche un poco más claro que el fondo para que resalte el círculo
+        color: const Color(0xFF1E1B4B),
+        shape: BoxShape.circle, // Forma circular perfecta
+        border: Border.all(
+          // Nueva forma de poner opacidad para evitar el mensaje de 'deprecated'
+          color: Colors.white.withValues(alpha: 0.3),
+          width: 1.5,
+        ),
       ),
       child: IconButton(
         onPressed: () {
-          print("hola mundo");
-        }, 
-        icon: Icon(icon)
+          print("Botón presionado");
+        },
+        // Ponemos el ícono en blanco brillante para que resalte
+        icon: Icon(icon, color: Colors.white, size: 24),
       ),
     );
   }
