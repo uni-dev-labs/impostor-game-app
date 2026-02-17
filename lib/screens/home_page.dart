@@ -35,7 +35,8 @@ Widget build(BuildContext context) {
                     CustomButton(icon: Icons.info_outline),
                   ],
                 ),
-              )
+              ),
+Text("El \n Impostor", style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: Colors.white), textAlign: TextAlign.center),
             ],
           ),
         ),
