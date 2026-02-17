@@ -15,8 +15,9 @@ class CustomButton extends StatelessWidget {
         border: Border.all(color: const Color.fromARGB(255, 100, 100, 100), width: 2),
       ),
       child: IconButton(
+        color: Color.fromARGB(255, 160, 153, 192),
         onPressed: () {
-          print("hola mundo");
+          print("Botón");
         }, 
         icon: Icon(icon)
       ),
