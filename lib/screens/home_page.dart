@@ -55,16 +55,7 @@ class HomePage extends StatelessWidget {
                   ),
                   textAlign: TextAlign.center,
                 ),
-                Image.asset('assets/images/amongus.webp', width: 300),
-
-                Text(
-                  'DESCUBRE QUIÉN MIENTE',
-                  style: TextStyle(
-                    fontSize: 12,
-                    fontWeight: FontWeight.normal,
-                    color: const Color.fromARGB(135, 255, 255, 255),
-                  ),
-                ),
+                Image.asset('assets/images/amongus.webp', width: 300)
               ],
             ),
           ),
