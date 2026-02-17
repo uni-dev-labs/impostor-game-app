@@ -7,33 +7,35 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
-        decoration: const BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-            colors: [Color(0xFF32388A), Color(0xFF0D0B2A)],
-          ),
-        ),
-        child: SafeArea(
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20),
-            child: Column(
-              children: [
-                const SizedBox(height: 20),
-                SizedBox(
-                  width: double.infinity,
-                  height: 60,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: const [
-                      CustomButton(icon: Icons.settings),
-                      CustomButton(icon: Icons.info_outline),
-                    ],
-                  ),
+      backgroundColor: Color.fromRGBO(33, 27, 68, 1),
+      body: SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 20),
+          child: Column(
+            children: [
+              Container(
+                width: double.infinity,
+                height: 100,
+                color: Colors.transparent,
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    CustomButton(icon: Icons.settings),
+                    CustomButton(icon: Icons.info_outline),
+                  ],
                 ),
-              ],
-            ),
+              ),
+              Text(
+                "El \n Impostor",
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 24,
+                  fontWeight: FontWeight.bold,
+                ),
+                textAlign: TextAlign.center,
+              ),
+            ],
           ),
         ),
       ),
