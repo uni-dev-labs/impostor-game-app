@@ -42,19 +42,29 @@ class HomePage extends StatelessWidget {
                   style: TextStyle(
                     fontSize: 40,
                     fontWeight: FontWeight.bold,
-                    color: Colors.white,                    
+                    color: Colors.white,
                   ),
                   textAlign: TextAlign.center,
                 ),
-                Text('DESCUBRE QUIÉN MIENTE',
-                style: TextStyle(
-                  fontSize: 12,
-                  fontWeight: FontWeight.normal,
-                  color: const Color.fromARGB(135, 255, 255, 255),
+                Text(
+                  'DESCUBRE QUIÉN MIENTE',
+                  style: TextStyle(
+                    fontSize: 12,
+                    fontWeight: FontWeight.normal,
+                    color: const Color.fromARGB(135, 255, 255, 255),
+                  ),
+                  textAlign: TextAlign.center,
                 ),
-                textAlign: TextAlign.center,
+                Image.asset('assets/images/amongus.webp', width: 300),
+
+                Text(
+                  'DESCUBRE QUIÉN MIENTE',
+                  style: TextStyle(
+                    fontSize: 12,
+                    fontWeight: FontWeight.normal,
+                    color: const Color.fromARGB(135, 255, 255, 255),
+                  ),
                 ),
-                Image.asset('assets/images/amongus.webp',)
               ],
             ),
           ),
