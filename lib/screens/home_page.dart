@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:impostor/components/custom_button.dart';
 
@@ -8,16 +7,16 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.blue,
+      backgroundColor: Color.fromRGBO(33, 27, 68, 1),
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20),
           child: Column(
             children: [
               Container(
-                width : double.infinity,
+                width: double.infinity,
                 height: 100,
-                color: Colors.red,
+                color: Colors.transparent,
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -25,12 +24,21 @@ class HomePage extends StatelessWidget {
                     CustomButton(icon: Icons.settings),
                     CustomButton(icon: Icons.info_outline),
                   ],
-                ),            
-              )
+                ),
+              ),
+              Text(
+                "El \n Impostor",
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 24,
+                  fontWeight: FontWeight.bold,
+                ),
+                textAlign: TextAlign.center,
+              ),
             ],
           ),
         ),
-      )
+      ),
     );
   }
 }
