@@ -36,7 +36,21 @@ Widget build(BuildContext context) {
                     CustomButton(icon: Icons.info_outline),
                   ],
                 ),
-              )
+              ),
+              Text("EL \n IMPOSTOR", style: TextStyle(
+                fontSize: 50,
+                fontWeight: FontWeight.bold,
+                color: Colors.white,
+               ),
+              textAlign: TextAlign.center,
+              ),
+              Text("DESCUBRE QUIÉN MIENTE", style: TextStyle(
+                fontSize: 15,
+                fontWeight: FontWeight.w300,
+                color: Colors.grey[500],
+              ),
+              textAlign: TextAlign.center,
+              ),
             ],
           ),
         ),
