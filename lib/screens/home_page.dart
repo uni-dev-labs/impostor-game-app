@@ -1,110 +1,137 @@
 import 'package:flutter/material.dart';
+
 import 'package:impostor/components/custom_button.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
 
+  static const _gradient = LinearGradient(
+    begin: Alignment.topCenter,
+    end: Alignment.bottomCenter,
+    colors: [
+      Color(0xFF1A1F4D),
+      Color(0xFF0A0E27),
+    ],
+  );
+
   @override
   Widget build(BuildContext context) {
-    final double size = MediaQuery.of(context).size.height;
-
     return Scaffold(
       body: Container(
-        decoration: BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-            colors: [Color(0xFF1a1f4d), Color(0xFF0a0e27)],
-          ),
-        ),
+        decoration: const BoxDecoration(gradient: _gradient),
         child: SingleChildScrollView(
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Container(
-                  width: double.infinity,
-                  height: 100,
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      CustomButton(icon: Icons.settings),
-                      CustomButton(icon: Icons.info_outline),
-                    ],
-                  ),
-                ),
+          padding: const EdgeInsets.symmetric(horizontal: 20),
+          child: Column(
+            children: [
+              const SizedBox(height: 50),
 
-                Text(
-                  "EL \n IMPOSTOR",
-                  style: TextStyle(
-                    fontSize: 24,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.white,
-                  ),
-                  textAlign: TextAlign.center,
-                ),
+              /// Header
+              const _HeaderButtons(),
 
-                Text(
-                  "DESCUBRE QUIEN MIENTE...",
-                  style: TextStyle(
-                    fontSize: 10,
-                    fontWeight: FontWeight.bold,
-                    color: Color.fromRGBO(255, 255, 255, 0.5),
-                  ),
-                  textAlign: .center,
-                ),
-                Container(
-                  
-                  width: 200,
-                  height: 200,
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    border: Border.all(color: Colors.white, width: 3),
-                  ),
-                  child: CircleAvatar(
-                    radius: 100,
-                    backgroundImage: AssetImage('assets/images/logo.png'),
-                    
-                  ),
-                ),
+              const SizedBox(height: 20),
 
-                ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.blue,
-                    foregroundColor: Colors.white,
-                    padding: EdgeInsets.symmetric(horizontal: 100, vertical: 15),
-                  ),
-                  onPressed: () {
-                    print("Botón estilizado");
-                  },
-                  child: Text("➡ JUGAR"),
+              /// Title
+              const Text(
+                'EL \nIMPOSTOR',
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontSize: 24,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.white,
                 ),
+              ),
 
-                Container(
-                  width: double.infinity,
-                  height: 100,
-                  color: Colors.red,
-                  child: Text("JUGAR"),
+              const SizedBox(height: 8),
+
+              /// Subtitle
+              const Text(
+                'DESCUBRE QUIÉN MIENTE...',
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontSize: 10,
+                  fontWeight: FontWeight.bold,
+                  color: Color.fromRGBO(255, 255, 255, 0.5),
                 ),
-                Container(
-                  width: double.infinity,
-                  height: 100,
-                  color: Colors.green,
-                  child: Text("iniciar"),
-                ),
-                Container(
-                  width: double.infinity,
-                  height: 100,
-                  color: Colors.blue,
-                  child: Text("iniciar"),
-                ),
-              ],
-            ),
+              ),
+
+              const SizedBox(height: 30),
+
+              /// Logo
+              const _Logo(),
+
+              const SizedBox(height: 40),
+
+              /// Play Button
+              PrimaryButton(
+                text: '➡ JUGAR',
+                onPressed: () {
+                  debugPrint('Jugar');
+                },
+              ),
+
+              const SizedBox(height: 15),
+
+              /// How To Play Button
+              PrimaryButton(
+                text: 'Cómo jugar',
+                backgroundColor: Colors.transparent,
+                onPressed: () {
+                  debugPrint('Cómo jugar');
+                },
+              ),
+            ],
           ),
         ),
       ),
     );
   }
+}
+
+//Funciones ----------------------------------------------
+class _HeaderButtons extends StatelessWidget {
+  const _HeaderButtons();
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      height: 100,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: const [
+          CustomButton(icon: Icons.settings),
+          CustomButton(icon: Icons.info_outline),
+        ],
+      ),
+    );
+  }
+}
+
+class _Logo extends StatelessWidget {
+  const _Logo();
+
+@override
+Widget build(BuildContext context) {
+  return Container(
+    width: 200,
+    height: 200,
+    decoration: BoxDecoration(
+      shape: BoxShape.circle,
+      border: Border.all(color: Colors.deepPurple),
+    ),
+    child: Stack(
+      children: [
+        const CircleAvatar(
+          radius: 100,
+          backgroundImage: AssetImage('assets/images/logo.png'),
+        ),
+        Container(
+          decoration: BoxDecoration(
+            shape: BoxShape.circle,
+            color: Colors.black.withOpacity(0.4), // Nivel de oscuridad
+          ),
+        ),
+      ],
+    ),
+  );
+}
 }
