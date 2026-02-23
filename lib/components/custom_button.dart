@@ -45,7 +45,7 @@ class PrimaryButton extends StatelessWidget {
     this.backgroundColor = const Color(0xFF5B3FD9),
     this.textColor = Colors.white,
     this.horizontalPadding = 100,
-    this.verticalPadding = 15,
+    this.verticalPadding = 20,
   });
 
   @override
@@ -87,7 +87,7 @@ class ProfileBar extends StatelessWidget {
   Widget build(BuildContext context) {
     return SizedBox(
       width: 40 + (_profileImages.length - 1) * 24.0, // ancho dinámico
-      height: 40,
+      height: 80,
       child: Stack(
         children: List.generate(
           _profileImages.length,
@@ -110,7 +110,7 @@ class _Perfiles extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: 40,
-      height: 40,
+      height: 80,
       decoration: BoxDecoration(
         shape: BoxShape.circle,
         border: Border.all(color: Colors.deepPurple),

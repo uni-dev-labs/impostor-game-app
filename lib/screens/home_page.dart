@@ -9,6 +9,7 @@ class HomePage extends StatelessWidget {
     begin: Alignment.topCenter,
     end: Alignment.bottomCenter,
     colors: [Color(0xFF1A1F4D), Color(0xFF0A0E27)],
+    
   );
 
   @override
@@ -18,6 +19,10 @@ class HomePage extends StatelessWidget {
         decoration: const BoxDecoration(gradient: _gradient),
         child: SingleChildScrollView(
           padding: const EdgeInsets.symmetric(horizontal: 20),
+          child: ConstrainedBox(
+    constraints: BoxConstraints(
+      minHeight: MediaQuery.of(context).size.height,
+    ),
           child: Column(
             children: [
               const SizedBox(height: 50),
@@ -80,7 +85,7 @@ class HomePage extends StatelessWidget {
               const ProfileBar(),
 
               Padding(
-                padding: const EdgeInsets.only(top: 20),
+                padding: const EdgeInsets.only(top: 5),
                 child: Text(
                   'JUGADO POR GRUPOS EN TODO EL MUNDO',
                   textAlign: TextAlign.center,
@@ -94,6 +99,7 @@ class HomePage extends StatelessWidget {
             ],
           ),
         ),
+      ),
       ),
     );
   }
