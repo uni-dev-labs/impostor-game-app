@@ -8,10 +8,7 @@ class HomePage extends StatelessWidget {
   static const _gradient = LinearGradient(
     begin: Alignment.topCenter,
     end: Alignment.bottomCenter,
-    colors: [
-      Color(0xFF1A1F4D),
-      Color(0xFF0A0E27),
-    ],
+    colors: [Color(0xFF1A1F4D), Color(0xFF0A0E27)],
   );
 
   @override
@@ -79,6 +76,21 @@ class HomePage extends StatelessWidget {
                   debugPrint('Cómo jugar');
                 },
               ),
+
+              const ProfileBar(),
+
+              Padding(
+                padding: const EdgeInsets.only(top: 20),
+                child: Text(
+                  'JUGADO POR GRUPOS EN TODO EL MUNDO',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontSize: 10,
+                    fontWeight: FontWeight.bold,
+                    color: Color.fromRGBO(255, 255, 255, 0.5),
+                  ),
+                ),
+              ),
             ],
           ),
         ),
@@ -109,29 +121,30 @@ class _HeaderButtons extends StatelessWidget {
 class _Logo extends StatelessWidget {
   const _Logo();
 
-@override
-Widget build(BuildContext context) {
-  return Container(
-    width: 200,
-    height: 200,
-    decoration: BoxDecoration(
-      shape: BoxShape.circle,
-      border: Border.all(color: Colors.deepPurple),
-    ),
-    child: Stack(
-      children: [
-        const CircleAvatar(
-          radius: 100,
-          backgroundImage: AssetImage('assets/images/logo.png'),
-        ),
-        Container(
-          decoration: BoxDecoration(
-            shape: BoxShape.circle,
-            color: Colors.black.withOpacity(0.4), // Nivel de oscuridad
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: 200,
+      height: 200,
+      decoration: BoxDecoration(
+        shape: BoxShape.circle,
+        border: Border.all(color: Colors.deepPurple),
+      ),
+      child: Stack(
+        children: [
+          const CircleAvatar(
+            radius: 100,
+            backgroundImage: AssetImage('assets/images/logo.png'),
           ),
-        ),
-      ],
-    ),
-  );
+          Container(
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              color: Colors.black.withOpacity(0.4), // Nivel de oscuridad
+            ),
+          ),
+        ],
+      ),
+    );
+  }
 }
-}
+
