@@ -51,7 +51,22 @@ Widget build(BuildContext context) {
               ),
               textAlign: TextAlign.center,
               ),
-            ],
+              Container(
+                margin: EdgeInsets.only(top: 50),
+                width: 200,
+                height: 200,
+                alignment: AlignmentDirectional.bottomCenter,
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(100),
+                  border: Border.all(color: Colors.white, width: 2)
+                ),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(100),
+                  child: Image.asset("assets/images/logo.jpg", fit: BoxFit.contain),
+                )
+              )
+            ], 
           ),
         ),
       ),
