@@ -1,25 +1,36 @@
 import 'package:flutter/material.dart';
 
-class CustomButton extends StatelessWidget {
+class OptionButton extends StatelessWidget {
+  
+  final IconData? icon;
+  final String text;
+  final Color colorIcon;
+  final Color colorBackground;
+  final VoidCallback onPressed;
 
-  final IconData icon;
-
-  const CustomButton({super.key, required this.icon});
+  const OptionButton({super.key, this.icon, required this.text, required this.colorIcon, required this.colorBackground, required this.onPressed});
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        color: Color.fromRGBO(33, 27, 68, 1),
-        borderRadius: BorderRadius.circular(100),
-        border: Border.all(color: const Color.fromARGB(255, 100, 100, 100), width: 2),
-      ),
-      child: IconButton(
-        color: Color.fromARGB(255, 160, 153, 192),
-        onPressed: () {
-          print("Botón");
-        }, 
-        icon: Icon(icon)
+    return MaterialButton(
+      height: 70,
+      shape:RoundedRectangleBorder(borderRadius: BorderRadius.circular(35)),
+      color: colorBackground,
+      onPressed: () {onPressed();
+      },
+      child: Center(
+        child: Row(
+          mainAxisAlignment:MainAxisAlignment.center,
+          children: [
+            Icon(icon, color: colorIcon),
+            Text(text, style: TextStyle(
+              fontSize: 20,
+              fontWeight: FontWeight.bold,
+              color: Colors.white
+             )
+             ),
+          ],
+        )
       ),
     );
   }
