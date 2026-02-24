@@ -37,6 +37,8 @@ class PrimaryButton extends StatelessWidget {
   final Color textColor;
   final double horizontalPadding;
   final double verticalPadding;
+  final IconData? icon;
+
 
   const PrimaryButton({
     super.key,
@@ -46,6 +48,8 @@ class PrimaryButton extends StatelessWidget {
     this.textColor = Colors.white,
     this.horizontalPadding = 100,
     this.verticalPadding = 20,
+   this.icon,
+    
   });
 
   @override
@@ -65,7 +69,20 @@ class PrimaryButton extends StatelessWidget {
           ),
         ),
         onPressed: onPressed,
-        child: Text(text, style: const TextStyle(fontWeight: FontWeight.bold)),
+     child: Row(
+  mainAxisSize: MainAxisSize.min,
+  mainAxisAlignment: MainAxisAlignment.center,
+  children: [
+    if (icon != null) ...[
+      Icon(icon, color: textColor),
+      const SizedBox(width: 8),
+    ],
+    Text(
+      text,
+      style: const TextStyle(fontWeight: FontWeight.bold),
+    ),
+  ],
+),
       ),
     );
   }

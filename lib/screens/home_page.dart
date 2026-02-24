@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
 import 'package:impostor/components/custom_button.dart';
+import 'package:impostor/components/header_button.dart';
+import 'package:impostor/components/config_logo.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -28,7 +30,8 @@ class HomePage extends StatelessWidget {
               const SizedBox(height: 50),
 
               /// Header
-              const _HeaderButtons(),
+              /// Header Buttons
+              const HeaderButtons(),
 
               const SizedBox(height: 20),
 
@@ -59,17 +62,19 @@ class HomePage extends StatelessWidget {
               const SizedBox(height: 30),
 
               /// Logo
-              const _Logo(),
+              const Logo(),
 
               const SizedBox(height: 40),
 
-              /// Play Button
-              PrimaryButton(
-                text: '➡ JUGAR',
-                onPressed: () {
-                  debugPrint('Jugar');
-                },
-              ),
+            PrimaryButton(
+               icon: Icons.play_arrow,
+  text: 'JUGAR',
+
+
+  onPressed: () {
+    debugPrint('Jugar');
+  },
+),
 
               const SizedBox(height: 15),
 
@@ -105,52 +110,5 @@ class HomePage extends StatelessWidget {
   }
 }
 
-//Funciones ----------------------------------------------
-class _HeaderButtons extends StatelessWidget {
-  const _HeaderButtons();
 
-  @override
-  Widget build(BuildContext context) {
-    return SizedBox(
-      height: 100,
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: const [
-          CustomButton(icon: Icons.settings),
-          CustomButton(icon: Icons.info_outline),
-        ],
-      ),
-    );
-  }
-}
-
-class _Logo extends StatelessWidget {
-  const _Logo();
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      width: 200,
-      height: 200,
-      decoration: BoxDecoration(
-        shape: BoxShape.circle,
-        border: Border.all(color: Colors.deepPurple),
-      ),
-      child: Stack(
-        children: [
-          const CircleAvatar(
-            radius: 100,
-            backgroundImage: AssetImage('assets/images/logo.png'),
-          ),
-          Container(
-            decoration: BoxDecoration(
-              shape: BoxShape.circle,
-              color: Colors.black.withOpacity(0.4), // Nivel de oscuridad
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}
 
