@@ -22,7 +22,7 @@ class HomePage extends StatelessWidget {
                 Container(
                   width : double.infinity,
                   height: 100,
-                  color: Colors.red,
+                  color: Colors.deepPurple,
                   child: Row(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -38,7 +38,7 @@ class HomePage extends StatelessWidget {
                   textAlign: TextAlign.center,
                 ),
                 Text("DESCUBRE QUIÉN ES EL IMPOSTOR", style: TextStyle(
-                    color: Colors.grey, fontSize: 16,
+                    color: Colors.purple.shade100, fontSize: 16,
                     fontWeight: FontWeight.bold
                   ),
                   textAlign: TextAlign.center,
@@ -47,7 +47,7 @@ class HomePage extends StatelessWidget {
                   width: 200,
                   height: 200,
                   decoration: BoxDecoration(
-                    color: Colors.blue,
+                    color: Colors.purple.shade200,
                     borderRadius: BorderRadius.circular(100),
                     border: Border.all(color: Colors.white, width: 2),
                   ),
@@ -62,13 +62,13 @@ class HomePage extends StatelessWidget {
                 Container(
                   width: double.infinity,
                   height: size.height * 0.3,
-                  color: Colors.green,
+                  color: Colors.purple.shade600,
                   child: Text("Iniciar"),
                 ),
                 Container(
                   width: double.infinity,
                   height: size.height * 0.7,
-                  color: Colors.yellow,
+                  color: Colors.purple.shade700,
                   child: Text("Iniciar"),
                 ),
               ],
