@@ -10,15 +10,15 @@ class CustomButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        color: Color.fromRGBO(33, 27, 68, 1),
+        color: Colors.deepPurple.shade800,
         borderRadius: BorderRadius.circular(100),
-        border: Border.all(color: const Color.fromARGB(255, 100, 100, 100), width: 2),
+        border: Border.all(color: Colors.purple.shade200, width: 2),
       ),
       child: IconButton(
         onPressed: () {
           print("hola mundo");
         }, 
-        icon: Icon(icon)
+        icon: Icon(icon, color: Colors.white)
       ),
     );
   }
