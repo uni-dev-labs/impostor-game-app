@@ -11,7 +11,7 @@ class HomePage extends StatelessWidget {
     final Size size =MediaQuery.of(context).size; //TODO: OPTIMIZAR ESTE CALCULO
 
     return Scaffold(
-      backgroundColor: Colors.purple,
+      backgroundColor: const Color.fromARGB(255, 196, 196, 196),
       body: SafeArea(
         child: SingleChildScrollView(
           child: Padding(
