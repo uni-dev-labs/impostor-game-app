@@ -10,6 +10,7 @@ class HomePage extends StatelessWidget {
 
     return Scaffold(
       backgroundColor: const Color(0xFF1A1A3E),
+
       body: SafeArea(
         child: SingleChildScrollView(
           child: Padding(
@@ -17,21 +18,29 @@ class HomePage extends StatelessWidget {
             child: Column(
               children: [
                 const SizedBox(height: 20),
-              
+
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                 _buildCircularButton(Icons.settings, Colors.white54, context), 
-    _buildCircularButton(Icons.info_outline, Colors.white54, context),
+                    _buildCircularButton(
+                      Icons.settings,
+                      Colors.white54,
+                      context,
+                    ),
+                    _buildCircularButton(
+                      Icons.info_outline,
+                      Colors.white54,
+                      context,
+                    ),
                   ],
                 ),
                 const SizedBox(height: 40),
-               
+
                 const Text(
                   "EL",
                   style: TextStyle(
                     color: Colors.white,
-                    fontSize: 40 ,
+                    fontSize: 40,
                     fontWeight: FontWeight.bold,
                     letterSpacing: 2,
                   ),
@@ -46,7 +55,7 @@ class HomePage extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(height: 10),
-              
+
                 const Text(
                   "DESCUBRE QUIÉN MIENTE",
                   style: TextStyle(
@@ -56,7 +65,7 @@ class HomePage extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(height: 50),
-               
+
                 Container(
                   width: 210,
                   height: 210,
@@ -82,10 +91,7 @@ class HomePage extends StatelessWidget {
                         gradient: LinearGradient(
                           begin: Alignment.topLeft,
                           end: Alignment.bottomRight,
-                          colors: [
-                            Color(0xFF2D2D5A),
-                            Color(0xFF1A1A3E),
-                          ],
+                          colors: [Color(0xFF2D2D5A), Color(0xFF1A1A3E)],
                         ),
                       ),
                       child: Image.asset(
@@ -96,13 +102,16 @@ class HomePage extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(height: 30),
-                
+
                 Container(
                   width: double.infinity,
                   height: 52,
                   decoration: BoxDecoration(
                     gradient: const LinearGradient(
-                      colors: [Color.fromARGB(255, 50, 14, 255), Color.fromARGB(255, 50, 14, 255)],
+                      colors: [
+                        Color.fromARGB(255, 50, 14, 255),
+                        Color.fromARGB(255, 50, 14, 255),
+                      ],
                     ),
                     borderRadius: BorderRadius.circular(30),
                     boxShadow: [
@@ -144,16 +153,14 @@ class HomePage extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(height: 15),
-            
+
                 Container(
                   width: double.infinity,
                   height: 55,
                   decoration: BoxDecoration(
                     color: Colors.white.withOpacity(0.05),
                     borderRadius: BorderRadius.circular(30),
-                    border: Border.all(
-                      color: Colors.white.withOpacity(0.1),
-                    ),
+                    border: Border.all(color: Colors.white.withOpacity(0.1)),
                   ),
                   child: Material(
                     color: Colors.transparent,
@@ -174,7 +181,7 @@ class HomePage extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(height: 30),
-              
+
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -220,32 +227,36 @@ class HomePage extends StatelessWidget {
     );
   }
 
-Widget _buildCircularButton(IconData icon, Color color, BuildContext context) {
-  return Container(
-    width: 45,
-    height: 45,
-    decoration: BoxDecoration(
-      shape: BoxShape.circle,
-      border: Border.all(color: Colors.white24, width: 1),
-    ),
-    child: IconButton(
-      icon: Icon(icon, color: color, size: 22),
-      onPressed: () {
-        if (icon == Icons.settings) {
-          // Navegar a la pantalla de configuración
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => const ConfigScreen()),
-          );
-        } else if (icon == Icons.info_outline) {
-          // Navegar a la pantalla de información (si la tienes)
-          // Navigator.push(...);
-        }
-      },
-      padding: EdgeInsets.zero,
-    ),
-  );
-}
+  Widget _buildCircularButton(
+    IconData icon,
+    Color color,
+    BuildContext context,
+  ) {
+    return Container(
+      width: 45,
+      height: 45,
+      decoration: BoxDecoration(
+        shape: BoxShape.circle,
+        border: Border.all(color: Colors.white24, width: 1),
+      ),
+      child: IconButton(
+        icon: Icon(icon, color: color, size: 22),
+        onPressed: () {
+          if (icon == Icons.settings) {
+            // Navegar a la pantalla de configuración
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => const ConfigScreen()),
+            );
+          } else if (icon == Icons.info_outline) {
+            // Navegar a la pantalla de información (si la tienes)
+            // Navigator.push(...);
+          }
+        },
+        padding: EdgeInsets.zero,
+      ),
+    );
+  }
 
   Widget _buildSocialIcon(IconData icon, double size) {
     return Container(
@@ -255,11 +266,7 @@ Widget _buildCircularButton(IconData icon, Color color, BuildContext context) {
         color: Colors.white.withOpacity(0.1),
         shape: BoxShape.circle,
       ),
-      child: Icon(
-        icon,
-        color: Colors.white70,
-        size: size * 0.5,
-      ),
+      child: Icon(icon, color: Colors.white70, size: size * 0.5),
     );
   }
-} 
+}
