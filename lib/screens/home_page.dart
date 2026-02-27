@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:impostor/components/custom_button.dart';
 import 'package:impostor/components/custom_button_text.dart';
+import 'package:impostor/components/backgraund_sreen.dart';
 import 'package:impostor/data/user_list.dart';
 
 class HomePage extends StatelessWidget {
@@ -12,17 +13,7 @@ class HomePage extends StatelessWidget {
         .size
         .height; // Todo: Optimizar este metodo es necesario que no este en el build
 
-    return Container(
-      decoration: const BoxDecoration(
-        gradient: LinearGradient(
-          colors: [
-            Color.fromRGBO(24, 18, 58, 1),
-            Color.fromRGBO(19, 16, 37, 1),
-          ],
-          begin: Alignment.topCenter,
-          end: Alignment.bottomCenter,
-        ),
-      ),
+    return BackgraundScreen(
       child: Scaffold(
         backgroundColor: Colors.transparent,
         body: SafeArea(
