@@ -44,11 +44,10 @@ class _CounterItem extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        // 🔥 TITULO
         Text(
           title,
           style: const TextStyle(
-            color: Color(0xFF6C63FF),
+            color: Color(0xFF1A3DBF),
             fontWeight: FontWeight.bold,
             fontSize: 14,
             letterSpacing: 1.2,
@@ -57,7 +56,6 @@ class _CounterItem extends StatelessWidget {
 
         const SizedBox(height: 4),
 
-        // 🔥 SUBTITULO
         Text(
           subtitle,
           style: const TextStyle(
@@ -68,18 +66,15 @@ class _CounterItem extends StatelessWidget {
 
         const SizedBox(height: 14),
 
-        // 🔥 CARD OSCURO
         Container(
           padding: const EdgeInsets.symmetric(vertical: 25, horizontal: 20),
           decoration: BoxDecoration(
-            color: const Color(0xFF0F1230), // Más oscuro
+            color: const Color(0xFF0F1230),
             borderRadius: BorderRadius.circular(25),
-
             border: Border.all(
               color: Colors.white.withOpacity(0.05),
               width: 1,
             ),
-
             boxShadow: [
               BoxShadow(
                 color: Colors.black.withOpacity(0.6),
@@ -90,7 +85,6 @@ class _CounterItem extends StatelessWidget {
           ),
           child: Column(
             children: [
-              // 🔢 Número grande
               Text(
                 value,
                 style: const TextStyle(
@@ -102,14 +96,13 @@ class _CounterItem extends StatelessWidget {
 
               const SizedBox(height: 18),
 
-              // ➖➕ Botones
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  _smallButton(Icons.remove),
-                  _smallButton(Icons.add),
+                  _smallButton(Icons.remove, isPrimary: false),
+                  _smallButton(Icons.add, isPrimary: true),
                 ],
-              )
+              ),
             ],
           ),
         ),
@@ -117,19 +110,27 @@ class _CounterItem extends StatelessWidget {
     );
   }
 
-  Widget _smallButton(IconData icon) {
-    return Container(
-      height: 48,
-      width: 60,
-      decoration: BoxDecoration(
-        color: const Color(0xFF262B5E), // Más claro que el card
-        borderRadius: BorderRadius.circular(15),
-      ),
-      child: Icon(
-        icon,
-        color: Colors.white,
-        size: 22,
-      ),
-    );
-  }
+Widget _smallButton(IconData icon, {required bool isPrimary}) {
+  return Container(
+    height: 48,
+    width: 60,
+    decoration: BoxDecoration(
+      color: isPrimary ? const Color.fromARGB(255, 3, 17, 78) : const Color(0xFF080C1A),
+      borderRadius: BorderRadius.circular(30),
+      boxShadow: [
+        BoxShadow(
+          color: Colors.black.withOpacity(0.85),
+          blurRadius: 12,
+          spreadRadius: 3,
+          offset: const Offset(0, 6),
+        ),
+      ],
+    ),
+    child: Icon(
+      icon,
+      color: const Color(0xFF1A3DBF),
+      size: 22,
+    ),
+  );
+}
 }
