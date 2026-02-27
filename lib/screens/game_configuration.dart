@@ -49,7 +49,7 @@ class _ConfigScreenState extends State<ConfigScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // JUGADORES
+          
               _buildSectionTitle('JUGADORES', 'Total de participantes'),
               const SizedBox(height: 16),
               Row(
@@ -80,7 +80,7 @@ class _ConfigScreenState extends State<ConfigScreen> {
               ),
               const SizedBox(height: 32),
 
-              // IMPOSTORES y RONDAS
+             
               Row(
                 children: [
                   Expanded(
@@ -122,7 +122,7 @@ class _ConfigScreenState extends State<ConfigScreen> {
               ),
               const SizedBox(height: 32),
 
-              // TEMÁTICA
+             
               _buildSectionTitle('TEMÁTICA', 'Selecciona el mazo de palabras'),
               const SizedBox(height: 16),
               SizedBox(
@@ -149,7 +149,7 @@ class _ConfigScreenState extends State<ConfigScreen> {
               ),
               const SizedBox(height: 24),
 
-              // Recomendación
+              
               Container(
                 padding: const EdgeInsets.all(16),
                 decoration: BoxDecoration(
@@ -190,14 +190,14 @@ class _ConfigScreenState extends State<ConfigScreen> {
               ),
               const SizedBox(height: 24),
 
-              // Botón COMENZAR
+             
               SizedBox(
                 width: double.infinity,
                 height: 56,
                 child: ElevatedButton(
                   onPressed: () {
                     HapticFeedback.mediumImpact();
-                    // Navegar a la pantalla de juego
+                   
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: const Color(0xFF6C63FF),
