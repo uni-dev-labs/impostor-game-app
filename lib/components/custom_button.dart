@@ -1,24 +1,46 @@
 import 'package:flutter/material.dart';
 
+
 class CustomButton extends StatelessWidget {
+  
+  final String text;
+  final IconData? icon;
+  final VoidCallback onPressed;
+  final Color color;
 
-  final IconData icon;
-
-  const CustomButton({super.key, required this.icon});
+  
+  const CustomButton({
+    super.key, 
+    required this.text, 
+    required this.onPressed,
+    this.color = Colors.blue,
+    this.icon, 
+  });
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        color: Color.fromRGBO(33, 27, 68, 1),
-        borderRadius: BorderRadius.circular(100),
-        border: Border.all(color: const Color.fromARGB(255, 100, 100, 100), width: 2),
+    return MaterialButton(
+      height: 70,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(30),
       ),
-      child: IconButton(
-        onPressed: () {
-          print("hola mundo");
-        }, 
-        icon: Icon(icon)
+      color: color,
+      onPressed: onPressed,
+      child: Center(
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(icon, color: Colors.white),
+            Text(
+              text, 
+              style: TextStyle(
+                color: Colors.white, 
+                fontSize: 20, 
+                fontWeight: FontWeight.w800
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
