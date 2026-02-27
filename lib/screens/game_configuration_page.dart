@@ -15,7 +15,15 @@ class GameConfigurationPage extends StatelessWidget {
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20),
               child: Column(
+                
+
                 children: [
+                  //Todo: Angelica componente contador jugadores
+                  //Fin Angélica
+                  //Todo Componente impostores y rondas Daniela
+                  //Fin Daniela
+                  //Todo componente tarjetas de juego Wldy
+
                   Row(
                     children: [
                       Container(
@@ -29,6 +37,7 @@ class GameConfigurationPage extends StatelessWidget {
                       ),
                     ],
                   ),
+                  //Fin Wldy
                 ],
               ),
             ),
