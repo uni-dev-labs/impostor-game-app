@@ -10,7 +10,30 @@ class GameConfigurationPage extends StatelessWidget {
       child: Scaffold(
         backgroundColor: Colors.transparent,
         appBar: AppBar(title: Text("Configuracion juego")),
-        body: Text("Configuración"),
+        body: SafeArea(
+          child: SingleChildScrollView(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20),
+              child: Column(
+                children: [
+                  Row(
+                    children: [
+                      Container(
+                        decoration: BoxDecoration(
+                          color: Colors.red,
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                        height: 200,
+                        width: 150,
+                        child: Image.asset(''),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ),
       ),
     );
   }
@@ -39,4 +62,3 @@ Text _subtitleText(String subtitleText) {
     textAlign: TextAlign.start,
   );
 }
-
