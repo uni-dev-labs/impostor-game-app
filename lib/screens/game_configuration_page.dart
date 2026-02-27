@@ -25,7 +25,7 @@ class GameConfigurationPage extends StatelessWidget {
                         ),
                         height: 200,
                         width: 150,
-                        child: Image.asset(''),
+                        child: Image.asset('assets/images/dado.png'),
                       ),
                     ],
                   ),
