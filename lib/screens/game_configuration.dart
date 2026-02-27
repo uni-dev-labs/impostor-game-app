@@ -16,30 +16,29 @@ class GameConfigurationPage extends StatelessWidget {
           gradient: LinearGradient(
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
-            colors: [
-              Color(0xFF1C1F4A),
-              Color(0xFF0C0F2E),
-            ],
+            colors: [Color(0xFF1C1F4A), Color(0xFF0C0F2E)],
           ),
         ),
         child: SafeArea(
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: const [
-                SizedBox(height: 10),
-                ConfigHeader(),
-                SizedBox(height: 30),
-                PlayersSection(),
-                SizedBox(height: 30),
-                CounterSection(),
-                SizedBox(height: 30),
-                ThemeSection(),
-                Spacer(),
-                StartButton(),
-                SizedBox(height: 20),
-              ],
+          child: SingleChildScrollView(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: const [
+                  SizedBox(height: 10),
+                  ConfigHeader(),
+                  SizedBox(height: 30),
+                  PlayersSection(),
+                  SizedBox(height: 30),
+                  CounterSection(),
+                  SizedBox(height: 30),
+                  ThemeSection(),
+                  SizedBox(height: 30),
+                  StartButton(),
+                  SizedBox(height: 10),
+                ],
+              ),
             ),
           ),
         ),
