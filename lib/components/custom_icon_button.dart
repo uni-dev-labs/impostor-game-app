@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:impostor/screens/game_configuration_page.dart';
 
 class CustomIconButton extends StatelessWidget {
 
@@ -16,7 +17,10 @@ class CustomIconButton extends StatelessWidget {
       ),
       child: IconButton(
         onPressed: () {
-          print("hola mundo");
+          Navigator.push(
+              context, 
+              MaterialPageRoute(builder: (context) => const GameConfigurationPage()),
+            );
         }, 
         icon: Icon(icon)
       ),
