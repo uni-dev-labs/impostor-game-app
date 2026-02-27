@@ -1,11 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:impostor/components/custom_button.dart';
+import 'package:impostor/components/custom_button_text.dart';
+import 'package:impostor/data/user_list.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final size = MediaQuery.of(context)
+        .size
+        .height; // Todo: Optimizar este metodo es necesario que no este en el build
+
     return Container(
       decoration: const BoxDecoration(
         gradient: LinearGradient(
@@ -20,45 +26,141 @@ class HomePage extends StatelessWidget {
       child: Scaffold(
         backgroundColor: Colors.transparent,
         body: SafeArea(
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20),
-            child: Column(
-              children: [
-                Container(
-                  width: double.infinity,
-                  height: 100,
-                  color: Colors.transparent,
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      CustomButton(icon: Icons.settings),
-                      CustomButton(icon: Icons.info_outline),
-                    ],
+          child: SingleChildScrollView(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20),
+              child: Column(
+                children: [
+                  _customAppbar(),
+                  SizedBox(height: 5),
+                  _title(),
+                  _subTitle("DESCUBRE QUIÉN MIENTE"),
+                  SizedBox(height: 20),
+                  _imageGame(),
+                  SizedBox(height: 20),
+                  CustomButtonText(
+                    icon: Icons.play_arrow,
+                    textButton: " JUGAR ",
+                    onPressed: () =>
+                        Navigator.pushNamed(context, "configuration-game"),
                   ),
-                ),
-                Text(
-                  "EL\nIMPOSTOR",
-                  style: TextStyle(
-                    fontSize: 40,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.white,
+                  SizedBox(height: 20),
+                  CustomButtonText(
+                    textButton: "Cómo Jugar",
+                    colorButton: const Color.fromARGB(18, 255, 255, 255),
+                    onPressed: () => "Como Jugar?",
+                    borderButon: const Color.fromARGB(56, 255, 255, 255),
                   ),
-                  textAlign: TextAlign.center,
-                ),
-                Text(
-                  'DESCUBRE QUIÉN MIENTE',
-                  style: TextStyle(
-                    fontSize: 12,
-                    fontWeight: FontWeight.normal,
-                    color: const Color.fromARGB(135, 255, 255, 255),
-                  ),
-                  textAlign: TextAlign.center,
-                ),
-                Image.asset('assets/images/amongus.webp', width: 300)
-              ],
+                  SizedBox(height: 30),
+                  _superponerImages(imagesUser),
+                  _subTitle("JUGANDO POR GRUPOS EN TODO EL MUNDO"),
+                ],
+              ),
             ),
           ),
+        ),
+      ),
+    );
+  }
+
+  Container _imageGame() {
+    return Container(
+      decoration: BoxDecoration(
+        color: Colors.red,
+        borderRadius: BorderRadius.circular(100),
+        border: Border.all(color: Colors.white, width: 2),
+      ),
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(100),
+
+        child: Image.asset(
+          'assets/images/impostor.jpg',
+          width: 200,
+          fit: BoxFit.fill,
+        ),
+      ),
+    );
+  }
+
+  Text _subTitle(String textSubtitle) {
+    return Text(
+      textSubtitle,
+      style: TextStyle(
+        fontSize: 12,
+        fontWeight: FontWeight.normal,
+        color: const Color.fromARGB(135, 255, 255, 255),
+      ),
+      textAlign: TextAlign.center,
+    );
+  }
+
+  Text _title() {
+    return Text(
+      "EL\nIMPOSTOR",
+      style: TextStyle(
+        fontSize: 40,
+        fontWeight: FontWeight.bold,
+        color: Colors.white,
+      ),
+      textAlign: TextAlign.center,
+    );
+  }
+
+  Container _customAppbar() {
+    return Container(
+      width: double.infinity,
+      height: 100,
+      color: Colors.transparent,
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          CustomButton(icon: Icons.settings),
+          CustomButton(icon: Icons.info_outline),
+        ],
+      ),
+    );
+  }
+
+  Container _imagesPlayers(String imagePayers) {
+    return Container(
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(100),
+        border: Border.all(
+          color: const Color.fromARGB(61, 255, 255, 255),
+          width: 1,
+        ),
+      ),
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(100),
+        child: Image.asset(
+          'assets/images/$imagePayers',
+          width: 40,
+          fit: BoxFit.fill,
+        ),
+      ),
+    );
+  }
+
+  Widget _superponerImages(List<String> imagesUser) {
+    const double imageSize = 50;
+    const double overlap = 20;
+
+    return Align(
+      alignment: Alignment.center,
+      child: SizedBox(
+        width: imageSize + (imagesUser.length) * overlap,
+        height: 45,
+        child: Stack(
+          children: imagesUser.asMap().entries.map((entry) {
+            int index = entry.key;
+            String image = entry.value;
+
+            return Positioned(
+              left: (index * overlap) + overlap,
+              child: _imagesPlayers(image),
+            );
+          }).toList(),
         ),
       ),
     );
