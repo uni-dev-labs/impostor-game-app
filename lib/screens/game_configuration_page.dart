@@ -1,10 +1,29 @@
 import 'package:flutter/material.dart';
 import 'package:impostor/components/backgraund_sreen.dart';
+import 'package:impostor/components/game_card.dart';
+import 'package:impostor/data/game_card_data.dart';
 import 'package:impostor/components/player_counter.dart';
 import 'package:impostor/components/impostor-ronda.dart';
 
-class GameConfigurationPage extends StatelessWidget {
+class GameConfigurationPage extends StatefulWidget {
   const GameConfigurationPage({super.key});
+
+  @override
+  State<GameConfigurationPage> createState() => _GameConfigurationPageState();
+}
+
+class _GameConfigurationPageState extends State<GameConfigurationPage> {
+  late int selectedIndex;
+
+  @override
+  void initState() {
+    super.initState();
+
+    selectedIndex = gameModes.indexWhere((game) => game.title == "ALEATORIO");
+    if (selectedIndex == -1) {
+      selectedIndex = 0;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -90,25 +109,44 @@ class GameConfigurationPage extends StatelessWidget {
                   SizedBox(height: 20),
                   //Fin Daniela
                   //Todo componente tarjetas de juego Wldy
-                  Row(
-                    children: [
-                      Container(
-                        decoration: BoxDecoration(
-                          color: Colors.red,
-                          borderRadius: BorderRadius.circular(20),
-                        ),
-                        height: 200,
-                        width: 150,
-                        child: Image.asset('assets/images/dado.png'),
-                      ),
-                    ],
-                  ),
+                  _gameModeSelector(),
                   //Fin Wldy
                 ],
               ),
             ),
           ),
         ),
+      ),
+    );
+  }
+
+  SingleChildScrollView _gameModeSelector() {
+    return SingleChildScrollView(
+      scrollDirection: Axis.horizontal,
+      child: Row(
+        children: [
+          ...gameModes.asMap().entries.map((entry) {
+            int index = entry.key;
+            var game = entry.value;
+
+            return Row(
+              children: [
+                GameCard(
+                  imagePath: game.imagePath,
+                  title: game.title,
+                  imageBackgraundPath: game.imageBackgraundPath,
+                  isSelected: selectedIndex == index,
+                  onTap: () {
+                    setState(() {
+                      selectedIndex = index;
+                    });
+                  },
+                ),
+                const SizedBox(width: 20),
+              ],
+            );
+          }),
+        ],
       ),
     );
   }
