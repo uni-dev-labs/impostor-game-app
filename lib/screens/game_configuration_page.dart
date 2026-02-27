@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:impostor/components/backgraund_sreen.dart';
 import 'package:impostor/components/player_counter.dart';
-import 'package:impostor/components/Impostor-ronda.dart';
+import 'package:impostor/components/impostor-ronda.dart';
 
 class GameConfigurationPage extends StatelessWidget {
   const GameConfigurationPage({super.key});
@@ -63,21 +63,31 @@ class GameConfigurationPage extends StatelessWidget {
                         children: [
                           _mainText('Ronda'),
                           _subtitleText('Duración partida'),
-                        ],
+                        ],                      
                       ),
+                      
                     ],
                   ),
+                  SizedBox(height: 20),
                   //Fin Angélica
                   //Todo Componente impostores y rondas Daniela
                   Row(
-                    children: [
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [                      
                       ImpostorRonda(
                         onMinus: () {},
                         onPlus: () {},
-                        ronda: 0,
+                        ronda: 1,
+                      ),
+                      SizedBox(width: 20),
+                      ImpostorRonda(
+                        onMinus: () {},
+                        onPlus: () {},
+                        ronda: 5,
                       ),
                     ],
                   ),
+                  SizedBox(height: 20),
                   //Fin Daniela
                   //Todo componente tarjetas de juego Wldy
                   Row(
