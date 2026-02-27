@@ -10,7 +10,7 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
 
     return Scaffold(
-      backgroundColor: Colors.purple,
+      backgroundColor: Color(0xFF181A3D),
       body: SafeArea(
         child: SingleChildScrollView(
           child: Padding(
