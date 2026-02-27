@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 
 class CustomIconButton extends StatelessWidget {
   final IconData icon;
-  const CustomIconButton({super.key, required this.icon});
+  final VoidCallback? onPressed; // ← ahora es opcional
+
+  const CustomIconButton({super.key, required this.icon, this.onPressed});
 
   @override
   Widget build(BuildContext context) {
@@ -16,19 +18,16 @@ class CustomIconButton extends StatelessWidget {
         ),
       ),
       child: IconButton(
-        onPressed: () {
-          print("hola mundo");
-        },
+        onPressed: onPressed ?? () {}, // usa el callback o no hace nada
         icon: Icon(
           icon,
-          color: Colors.white.withOpacity(
-            0.7,
-          ), // Color blanco semi-transparente
+          color: Colors.white.withOpacity(0.7),
         ),
       ),
     );
   }
 }
+
 class PrimaryButton extends StatelessWidget {
   final String text;
   final VoidCallback onPressed;
@@ -73,7 +72,6 @@ class PrimaryButton extends StatelessWidget {
 class ProfileBar extends StatelessWidget {
   const ProfileBar({super.key});
 
-  // Simula tu lista de imágenes (puedes reemplazar con tu modelo de datos)
   static const List<String> _profileImages = [
     'assets/images/elDrink.png',
     'assets/images/elSinger.png',
@@ -85,13 +83,13 @@ class ProfileBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: 40 + (_profileImages.length - 1) * 24.0, // ancho dinámico
+      width: 40 + (_profileImages.length - 1) * 24.0,
       height: 80,
       child: Stack(
         children: List.generate(
           _profileImages.length,
           (index) => Positioned(
-            left: index * 24.0, // cuánto se enciman
+            left: index * 24.0,
             child: _Perfiles(imagePath: _profileImages[index]),
           ),
         ),
@@ -120,7 +118,7 @@ class _Perfiles extends StatelessWidget {
           Container(
             decoration: BoxDecoration(
               shape: BoxShape.circle,
-              color: Colors.black.withOpacity(0.4), // Nivel de oscuridad
+              color: Colors.black.withOpacity(0.4),
             ),
           ),
         ],
