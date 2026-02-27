@@ -8,8 +8,6 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
-    final Size size =MediaQuery.of(context).size; //TODO: OPTIMIZAR ESTE CALCULO
-
     return Scaffold(
       backgroundColor: Colors.purple,
       body: SafeArea(
