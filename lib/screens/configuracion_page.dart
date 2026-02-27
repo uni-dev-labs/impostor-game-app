@@ -16,9 +16,10 @@ class _ConfiguracionPageState extends State<ConfiguracionPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFF0A0A1F),
+      // background color changed to a slightly lighter shade
+      backgroundColor: const Color(0xFF1E1E2F),
       appBar: AppBar(
-        backgroundColor: const Color(0xFF0A0A1F),
+        backgroundColor: const Color(0xFF1E1E2F),
         elevation: 0,
         leading: IconButton(
           icon: const Icon(Icons.arrow_back_ios, color: Colors.white),
@@ -42,7 +43,7 @@ class _ConfiguracionPageState extends State<ConfiguracionPage> {
             // SECCIÓN JUGADORES
             _buildSeccionJugadores(),
             const SizedBox(height: 32),
-            
+
             // SECCIÓN IMPOSTORES Y RONDAS
             Row(
               children: [
@@ -52,15 +53,15 @@ class _ConfiguracionPageState extends State<ConfiguracionPage> {
               ],
             ),
             const SizedBox(height: 32),
-            
+
             // SECCIÓN TEMÁTICA
             _buildSeccionTematica(),
             const SizedBox(height: 32),
-            
+
             // TEXTO RECOMENDACIÓN
             _buildTextoRecomendacion(),
             const SizedBox(height: 24),
-            
+
             // BOTÓN COMENZAR
             _buildBotonComenzar(),
           ],
@@ -85,25 +86,19 @@ class _ConfiguracionPageState extends State<ConfiguracionPage> {
         const SizedBox(height: 8),
         const Text(
           'Total de participantes',
-          style: TextStyle(
-            color: Colors.white70,
-            fontSize: 13,
-          ),
+          style: TextStyle(color: Colors.white70, fontSize: 13),
         ),
         const SizedBox(height: 20),
         Row(
           children: [
             // Botón menos
-            _buildBotonControl(
-              Icons.remove,
-              () {
-                if (totalJugadores > 3) {
-                  setState(() => totalJugadores--);
-                }
-              },
-            ),
+            _buildBotonControl(Icons.remove, () {
+              if (totalJugadores > 3) {
+                setState(() => totalJugadores--);
+              }
+            }),
             const SizedBox(width: 16),
-            
+
             // Slider y número
             Expanded(
               child: Column(
@@ -118,9 +113,10 @@ class _ConfiguracionPageState extends State<ConfiguracionPage> {
                   ),
                   SliderTheme(
                     data: SliderThemeData(
-                      activeTrackColor: const Color(0xFF5B4FFF),
+                      // use a pink accent for sliders
+                      activeTrackColor: const Color(0xFFE91E63),
                       inactiveTrackColor: Colors.white24,
-                      thumbColor: const Color(0xFF5B4FFF),
+                      thumbColor: const Color(0xFFE91E63),
                       thumbShape: const RoundSliderThumbShape(
                         enabledThumbRadius: 8,
                       ),
@@ -141,17 +137,13 @@ class _ConfiguracionPageState extends State<ConfiguracionPage> {
               ),
             ),
             const SizedBox(width: 16),
-            
+
             // Botón más
-            _buildBotonControl(
-              Icons.add,
-              () {
-                if (totalJugadores < 20) {
-                  setState(() => totalJugadores++);
-                }
-              },
-              isPrimary: true,
-            ),
+            _buildBotonControl(Icons.add, () {
+              if (totalJugadores < 20) {
+                setState(() => totalJugadores++);
+              }
+            }, isPrimary: true),
           ],
         ),
       ],
@@ -174,10 +166,7 @@ class _ConfiguracionPageState extends State<ConfiguracionPage> {
         const SizedBox(height: 8),
         const Text(
           '¿Quién miente?',
-          style: TextStyle(
-            color: Colors.white70,
-            fontSize: 12,
-          ),
+          style: TextStyle(color: Colors.white70, fontSize: 12),
         ),
         const SizedBox(height: 16),
         Center(
@@ -194,23 +183,17 @@ class _ConfiguracionPageState extends State<ConfiguracionPage> {
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            _buildBotonControlPequeno(
-              Icons.remove,
-              () {
-                if (numImpostores > 1) {
-                  setState(() => numImpostores--);
-                }
-              },
-            ),
+            _buildBotonControlPequeno(Icons.remove, () {
+              if (numImpostores > 1) {
+                setState(() => numImpostores--);
+              }
+            }),
             const SizedBox(width: 16),
-            _buildBotonControlPequeno(
-              Icons.add,
-              () {
-                if (numImpostores < totalJugadores.toInt() - 1) {
-                  setState(() => numImpostores++);
-                }
-              },
-            ),
+            _buildBotonControlPequeno(Icons.add, () {
+              if (numImpostores < totalJugadores.toInt() - 1) {
+                setState(() => numImpostores++);
+              }
+            }),
           ],
         ),
       ],
@@ -233,10 +216,7 @@ class _ConfiguracionPageState extends State<ConfiguracionPage> {
         const SizedBox(height: 8),
         const Text(
           'Duración partida',
-          style: TextStyle(
-            color: Colors.white70,
-            fontSize: 12,
-          ),
+          style: TextStyle(color: Colors.white70, fontSize: 12),
         ),
         const SizedBox(height: 16),
         Center(
@@ -253,23 +233,17 @@ class _ConfiguracionPageState extends State<ConfiguracionPage> {
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            _buildBotonControlPequeno(
-              Icons.remove,
-              () {
-                if (numRondas > 1) {
-                  setState(() => numRondas--);
-                }
-              },
-            ),
+            _buildBotonControlPequeno(Icons.remove, () {
+              if (numRondas > 1) {
+                setState(() => numRondas--);
+              }
+            }),
             const SizedBox(width: 16),
-            _buildBotonControlPequeno(
-              Icons.add,
-              () {
-                if (numRondas < 20) {
-                  setState(() => numRondas++);
-                }
-              },
-            ),
+            _buildBotonControlPequeno(Icons.add, () {
+              if (numRondas < 20) {
+                setState(() => numRondas++);
+              }
+            }),
           ],
         ),
       ],
@@ -292,10 +266,7 @@ class _ConfiguracionPageState extends State<ConfiguracionPage> {
         const SizedBox(height: 8),
         const Text(
           'Selecciona el mazo de palabras',
-          style: TextStyle(
-            color: Colors.white70,
-            fontSize: 13,
-          ),
+          style: TextStyle(color: Colors.white70, fontSize: 13),
         ),
         const SizedBox(height: 20),
         SingleChildScrollView(
@@ -316,7 +287,7 @@ class _ConfiguracionPageState extends State<ConfiguracionPage> {
 
   Widget _buildCardTematica(String titulo, IconData icono, bool isSelected) {
     final bool seleccionado = tematicaSeleccionada == titulo;
-    
+
     return GestureDetector(
       onTap: () {
         setState(() => tematicaSeleccionada = titulo);
@@ -325,7 +296,9 @@ class _ConfiguracionPageState extends State<ConfiguracionPage> {
         width: 120,
         height: 140,
         decoration: BoxDecoration(
-          color: seleccionado ? const Color(0xFF5B4FFF) : const Color(0xFF1A1A2E),
+          color: seleccionado
+              ? const Color(0xFF5B4FFF)
+              : const Color(0xFF1A1A2E),
           borderRadius: BorderRadius.circular(16),
           border: Border.all(
             color: seleccionado ? const Color(0xFF5B4FFF) : Colors.white24,
@@ -377,10 +350,7 @@ class _ConfiguracionPageState extends State<ConfiguracionPage> {
         Expanded(
           child: RichText(
             text: const TextSpan(
-              style: TextStyle(
-                color: Colors.white70,
-                fontSize: 12,
-              ),
+              style: TextStyle(color: Colors.white70, fontSize: 12),
               children: [
                 TextSpan(text: 'Recomendamos al menos '),
                 TextSpan(
@@ -439,7 +409,11 @@ class _ConfiguracionPageState extends State<ConfiguracionPage> {
     );
   }
 
-  Widget _buildBotonControl(IconData icono, VoidCallback onPressed, {bool isPrimary = false}) {
+  Widget _buildBotonControl(
+    IconData icono,
+    VoidCallback onPressed, {
+    bool isPrimary = false,
+  }) {
     return Container(
       width: 48,
       height: 48,
