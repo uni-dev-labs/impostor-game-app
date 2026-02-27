@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'package:impostor/components/custom_button.dart';
+import 'package:impostor/components/custom_icon_button.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -115,8 +115,8 @@ class _HeaderButtons extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: const [
-          CustomButton(icon: Icons.settings),
-          CustomButton(icon: Icons.info_outline),
+          CustomIconButton(icon: Icons.settings),
+          CustomIconButton(icon: Icons.info_outline),
         ],
       ),
     );
