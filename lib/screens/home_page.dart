@@ -150,7 +150,7 @@ class HomePage extends StatelessWidget {
       alignment: Alignment.center,
       child: SizedBox(
         width: imageSize + (imagesUser.length) * overlap,
-        height: imageSize,
+        height: 45,
         child: Stack(
           children: imagesUser.asMap().entries.map((entry) {
             int index = entry.key;
