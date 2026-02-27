@@ -6,73 +6,130 @@ class CounterSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: const [
-        Expanded(child: _CounterCard(title: "IMPOSTORES", value: "1")),
+        Expanded(
+          child: _CounterItem(
+            title: "IMPOSTORES",
+            subtitle: "¿Quién miente?",
+            value: "1",
+          ),
+        ),
         SizedBox(width: 20),
-        Expanded(child: _CounterCard(title: "RONDAS", value: "5")),
+        Expanded(
+          child: _CounterItem(
+            title: "RONDAS",
+            subtitle: "Duración partida",
+            value: "5",
+          ),
+        ),
       ],
     );
   }
 }
 
-class _CounterCard extends StatelessWidget {
+class _CounterItem extends StatelessWidget {
   final String title;
+  final String subtitle;
   final String value;
 
-  const _CounterCard({
+  const _CounterItem({
     required this.title,
+    required this.subtitle,
     required this.value,
   });
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.all(15),
-      decoration: BoxDecoration(
-        color: Color(0xFF14183C),
-        borderRadius: BorderRadius.circular(20),
-      ),
-      child: Column(
-        children: [
-          Text(
-            title,
-            style: const TextStyle(
-              color: Color(0xFF6C63FF),
-              fontWeight: FontWeight.bold,
-              fontSize: 12,
-            ),
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        // 🔥 TITULO
+        Text(
+          title,
+          style: const TextStyle(
+            color: Color(0xFF6C63FF),
+            fontWeight: FontWeight.bold,
+            fontSize: 14,
+            letterSpacing: 1.2,
           ),
-          const SizedBox(height: 10),
-          Text(
-            value,
-            style: const TextStyle(
-              color: Colors.white,
-              fontSize: 24,
-              fontWeight: FontWeight.bold,
-            ),
+        ),
+
+        const SizedBox(height: 4),
+
+        // 🔥 SUBTITULO
+        Text(
+          subtitle,
+          style: const TextStyle(
+            color: Colors.white54,
+            fontSize: 12,
           ),
-          const SizedBox(height: 10),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              _smallButton(Icons.remove),
-              _smallButton(Icons.add),
+        ),
+
+        const SizedBox(height: 14),
+
+        // 🔥 CARD OSCURO
+        Container(
+          padding: const EdgeInsets.symmetric(vertical: 25, horizontal: 20),
+          decoration: BoxDecoration(
+            color: const Color(0xFF0F1230), // Más oscuro
+            borderRadius: BorderRadius.circular(25),
+
+            border: Border.all(
+              color: Colors.white.withOpacity(0.05),
+              width: 1,
+            ),
+
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black.withOpacity(0.6),
+                blurRadius: 15,
+                offset: const Offset(0, 8),
+              ),
             ],
-          )
-        ],
-      ),
+          ),
+          child: Column(
+            children: [
+              // 🔢 Número grande
+              Text(
+                value,
+                style: const TextStyle(
+                  color: Colors.white,
+                  fontSize: 34,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+
+              const SizedBox(height: 18),
+
+              // ➖➕ Botones
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  _smallButton(Icons.remove),
+                  _smallButton(Icons.add),
+                ],
+              )
+            ],
+          ),
+        ),
+      ],
     );
   }
 
   Widget _smallButton(IconData icon) {
     return Container(
-      height: 35,
-      width: 35,
+      height: 48,
+      width: 60,
       decoration: BoxDecoration(
-        color: Color(0xFF1E224F),
-        borderRadius: BorderRadius.circular(10),
+        color: const Color(0xFF262B5E), // Más claro que el card
+        borderRadius: BorderRadius.circular(15),
       ),
-      child: Icon(icon, color: Colors.white, size: 18),
+      child: Icon(
+        icon,
+        color: Colors.white,
+        size: 22,
+      ),
     );
   }
 }
