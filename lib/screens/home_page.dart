@@ -31,7 +31,7 @@ class HomePage extends StatelessWidget {
               padding: const EdgeInsets.symmetric(horizontal: 20),
               child: Column(
                 children: [
-                  _customAppbar(),
+                  _customAppbar(context),
                   SizedBox(height: 5),
                   _title(),
                   _subTitle("DESCUBRE QUIÉN MIENTE"),
@@ -42,7 +42,7 @@ class HomePage extends StatelessWidget {
                     icon: Icons.play_arrow,
                     textButton: " JUGAR ",
                     onPressed: () =>
-                        Navigator.pushNamed(context, "configuration-game"),
+                        "Jugar",
                   ),
                   SizedBox(height: 20),
                   CustomButtonText(
@@ -106,7 +106,7 @@ class HomePage extends StatelessWidget {
     );
   }
 
-  Container _customAppbar() {
+  Container _customAppbar(BuildContext context) {
     return Container(
       width: double.infinity,
       height: 100,
@@ -115,8 +115,8 @@ class HomePage extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          CustomButton(icon: Icons.settings),
-          CustomButton(icon: Icons.info_outline),
+          CustomButton(icon: Icons.settings, onPressed: () => Navigator.pushNamed(context, "configuration-game"),),
+          CustomButton(icon: Icons.info_outline, onPressed: () => '',),
         ],
       ),
     );
