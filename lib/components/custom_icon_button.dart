@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 class CustomIconButton extends StatelessWidget {
   final IconData icon;
-  final VoidCallback? onPressed; // ← ahora es opcional
+  final VoidCallback? onPressed;
 
   const CustomIconButton({super.key, required this.icon, this.onPressed});
 
@@ -18,7 +18,7 @@ class CustomIconButton extends StatelessWidget {
         ),
       ),
       child: IconButton(
-        onPressed: onPressed ?? () {}, // usa el callback o no hace nada
+        onPressed: onPressed ?? () {},
         icon: Icon(
           icon,
           color: Colors.white.withOpacity(0.7),
