@@ -14,6 +14,26 @@ class HeaderButtons extends StatelessWidget {
         children: const [
           CustomButton(icon: Icons.settings),
           CustomButton(icon: Icons.info_outline),
+         
+        ],
+      ),
+    );
+  }
+}
+
+class HeaderArrow extends StatelessWidget {
+  const HeaderArrow();
+
+  @override
+  Widget build(BuildContext context) {
+   return SizedBox(
+      height: 100,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: const [
+          CustomButton(icon: Icons.arrow_back),
+        
+         
         ],
       ),
     );
