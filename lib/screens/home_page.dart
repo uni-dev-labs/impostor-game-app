@@ -7,7 +7,6 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       backgroundColor: Colors.purple,
       body: SafeArea(
@@ -18,18 +17,19 @@ class HomePage extends StatelessWidget {
               mainAxisSize: MainAxisSize.min,
               children: [
                 _customAppbar(),
-                SizedBox(height: 5),
+                const SizedBox(height: 5),
                 _title(),
                 _subtitle(),
-                SizedBox(height: 40),
+                const SizedBox(height: 40),
                 _imageGame(),
-                SizedBox(height: 40),
+                const SizedBox(height: 40),
                 CustomButton(
                   text: "JUGAR",
-                  onPressed: () => Navigator.pushNamed(context, 'configuration-game'),
+                  onPressed: () =>
+                      Navigator.pushNamed(context, 'configuration-game'),
                   icon: Icons.play_arrow,
                 ),
-                SizedBox(height: 20),
+                const SizedBox(height: 20),
                 CustomButton(
                   text: "hola mundo",
                   onPressed: () => print("Iniciar"),
@@ -58,41 +58,47 @@ class HomePage extends StatelessWidget {
           'assets/images/logo.png',
           fit: BoxFit.contain,
         ),
-      )
+      ),
     );
   }
 
   Text _subtitle() {
-    return Text("DESCUBRE QUIÉN ES EL IMPOSTOR", style: TextStyle(
-        color: Colors.grey, fontSize: 16,
-        fontWeight: FontWeight.bold
+    return const Text(
+      "DESCUBRE QUIÉN ES EL IMPOSTOR",
+      style: TextStyle(
+        color: Colors.grey,
+        fontSize: 16,
+        fontWeight: FontWeight.bold,
       ),
       textAlign: TextAlign.center,
     );
   }
 
   Text _title() {
-    return Text("El \n Impostor", style: TextStyle(
-      color: Colors.white, fontSize: 24,
-      fontWeight: FontWeight.bold),
+    return const Text(
+      "El \n Impostor",
+      style: TextStyle(
+        color: Colors.white,
+        fontSize: 24,
+        fontWeight: FontWeight.bold,
+      ),
       textAlign: TextAlign.center,
     );
   }
 
   Container _customAppbar() {
     return Container(
-      width : double.infinity,
+      width: double.infinity,
       height: 100,
       color: Colors.red,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
+        children: const [
           CustomIconButton(icon: Icons.settings),
           CustomIconButton(icon: Icons.info_outline),
         ],
       ),
     );
   }
-
 }
