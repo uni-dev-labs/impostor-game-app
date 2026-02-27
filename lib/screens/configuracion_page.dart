@@ -21,9 +21,18 @@ class _ConfiguracionPageState extends State<ConfiguracionPage> {
       appBar: AppBar(
         backgroundColor: const Color(0xFF1E1E2F),
         elevation: 0,
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back_ios, color: Colors.white),
-          onPressed: () => Navigator.pop(context),
+        leading: Container(
+          margin: const EdgeInsets.all(8),
+          decoration: BoxDecoration(
+            color: const Color(0xFF1A1A2E),
+            borderRadius: BorderRadius.circular(8),
+            border: Border.all(color: Colors.white24, width: 2),
+          ),
+          child: IconButton(
+            icon: const Icon(Icons.arrow_back_ios, color: Colors.white, size: 20),
+            onPressed: () => Navigator.pop(context),
+            padding: EdgeInsets.zero,
+          ),
         ),
         title: const Text(
           'Configuración',

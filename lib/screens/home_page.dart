@@ -27,7 +27,12 @@ class HomePage extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      CustomButton(icon: Icons.settings),
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.pushNamed(context, '/configuracion');
+                        },
+                        child: CustomButton(icon: Icons.settings),
+                      ),
                       CustomButton(icon: Icons.info_outline),
                     ],
                   ),
