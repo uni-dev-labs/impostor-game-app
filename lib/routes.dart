@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'screens/screens.dart';
+import 'package:impostor/screens/game_configuration.dart';
+import 'package:impostor/screens/home_page.dart';
 
 Map<String, WidgetBuilder> routes = {
   "/": (context) => const HomePage(),
-  'configuration-game': (context) => const GameConfigurationPage(),
+  'configuration-game': (context) => const ConfigScreen(),
 }; 

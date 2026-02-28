@@ -1,99 +1,120 @@
-
 import 'package:flutter/material.dart';
-import 'package:impostor/components/custom_button.dart';
-import 'package:impostor/components/custom_icon_button.dart';
+import '../constants/app_colors.dart';
+import '../widgets/widgets.dart';
+import 'game_configuration.dart';
+
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
 
+  static const _horizontalPadding = 30.0;
+
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
-      backgroundColor: Color(0xFF181A3D),
+      backgroundColor: AppColors.backgroundSecondary,
       body: SafeArea(
         child: SingleChildScrollView(
           child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20),
+            padding: const EdgeInsets.symmetric(horizontal: _horizontalPadding),
             child: Column(
-              mainAxisSize: MainAxisSize.min,
               children: [
-                _customAppbar(),
-                SizedBox(height: 5),
-                _title(),
-                _subtitle(),
-                SizedBox(height: 40),
-                _imageGame(),
-                SizedBox(height: 40),
-                CustomButton(
-                  text: "JUGAR",
-                  onPressed: () => Navigator.pushNamed(context, 'configuration-game'),
-                  icon: Icons.play_arrow,
+                const SizedBox(height: 20),
+                _TopBar(),
+                const SizedBox(height: 40),
+                const _TitleSection(),
+                const SizedBox(height: 50),
+                const LogoAvatar(),
+                const SizedBox(height: 30),
+                PrimaryActionButton(
+                  label: 'JUGAR',
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (_) => const ConfigScreen(),
+                      ),
+                    );
+                  },
                 ),
-                SizedBox(height: 20),
-                CustomButton(
-                  text: "hola mundo",
-                  onPressed: () => print("Iniciar"),
-                  color: Colors.grey,
+                const SizedBox(height: 15),
+                SecondaryButton(
+                  label: 'Cómo jugar',
+                  onPressed: () {},
                 ),
+                const SizedBox(height: 30),
+                const SocialStatsRow(),
+                const SizedBox(height: 30),
               ],
             ),
           ),
         ),
-      )
+      ),
     );
   }
+}
 
-  Container _imageGame() {
-    return Container(
-      width: 200,
-      height: 200,
-      decoration: BoxDecoration(
-        color: Colors.blue,
-        borderRadius: BorderRadius.circular(100),
-        border: Border.all(color: Colors.white, width: 2),
-      ),
-      child: ClipRRect(
-        borderRadius: BorderRadius.circular(100),
-        child: Image.asset(
-          'assets/images/logo.png',
-          fit: BoxFit.contain,
+class _TopBar extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        CircularIconButton(
+          icon: Icons.settings,
+          onPressed: () => _openConfiguration(context),
         ),
-      )
+        CircularIconButton(
+          icon: Icons.info_outline,
+          onPressed: () {},
+        ),
+      ],
     );
   }
 
-  Text _subtitle() {
-    return Text("DESCUBRE QUIÉN ES EL IMPOSTOR", style: TextStyle(
-        color: Colors.grey, fontSize: 16,
-        fontWeight: FontWeight.bold
-      ),
-      textAlign: TextAlign.center,
+  void _openConfiguration(BuildContext context) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (_) => const ConfigScreen()),
     );
   }
+}
 
-  Text _title() {
-    return Text("El \n Impostor", style: TextStyle(
-      color: Colors.white, fontSize: 24,
-      fontWeight: FontWeight.bold),
-      textAlign: TextAlign.center,
+class _TitleSection extends StatelessWidget {
+  const _TitleSection();
+
+  @override
+  Widget build(BuildContext context) {
+    return const Column(
+      children: [
+        Text(
+          'EL',
+          style: TextStyle(
+            color: AppColors.textPrimary,
+            fontSize: 40,
+            fontWeight: FontWeight.bold,
+            letterSpacing: 2,
+          ),
+        ),
+        Text(
+          'IMPOSTOR',
+          style: TextStyle(
+            color: AppColors.textPrimary,
+            fontSize: 40,
+            fontWeight: FontWeight.bold,
+            letterSpacing: 3,
+          ),
+        ),
+        SizedBox(height: 10),
+        Text(
+          'DESCUBRE QUIÉN MIENTE',
+          style: TextStyle(
+            color: AppColors.textMuted,
+            fontSize: 12,
+            letterSpacing: 2,
+          ),
+        ),
+      ],
     );
   }
-
-  Container _customAppbar() {
-    return Container(
-      width : double.infinity,
-      height: 100,
-      color: Colors.red,
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          CustomIconButton(icon: Icons.settings),
-          CustomIconButton(icon: Icons.info_outline),
-        ],
-      ),
-    );
-  }
-
 }
