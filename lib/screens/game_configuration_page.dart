@@ -336,7 +336,7 @@ class _GameConfigurationPageState extends State<GameConfigurationPage> {
                 child: ThemeCard(
                   label: "MAGIA",
                   icon: Icons.auto_fix_high,
-                  imagePath: "assets/images/logo.jpg",
+                  imagePath: "assets/images/magia.jpg",
                   isSelected: selectedTheme == 1,
                   onTap: () => setState(() => selectedTheme = 1),
                 ),
@@ -346,6 +346,7 @@ class _GameConfigurationPageState extends State<GameConfigurationPage> {
                 child: ThemeCard(
                   label: "DEPORTE",
                   icon: Icons.sports_soccer,
+                  imagePath: "assets/images/deportes.jpg",
                   isSelected: selectedTheme == 2,
                   onTap: () => setState(() => selectedTheme = 2),
                 ),
