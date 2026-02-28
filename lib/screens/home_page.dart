@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
-
 import '../constants/app_colors.dart';
-import '../constants/app_theme.dart';
 import '../widgets/widgets.dart';
 import 'game_configuration.dart';
 
-/// Pantalla principal del juego con logo, botón jugar y acceso a configuración.
+
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
 
@@ -30,7 +28,14 @@ class HomePage extends StatelessWidget {
                 const SizedBox(height: 30),
                 PrimaryActionButton(
                   label: 'JUGAR',
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (_) => const ConfigScreen(),
+                      ),
+                    );
+                  },
                 ),
                 const SizedBox(height: 15),
                 SecondaryButton(
