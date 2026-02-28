@@ -5,4 +5,5 @@ import 'screens/screens.dart';
 
 Map<String, WidgetBuilder> routes = {
   "/": (context) => const HomePage(),
+  "/configuration": (context) => const ConfiguracionPage(),
 };
