@@ -67,7 +67,7 @@ class ImpostorRonda extends StatelessWidget {
                       size: 15,
                       color: Color.fromRGBO(55, 20, 234, 1),
                     ),
-                    onPressed: onMinus,
+                    onPressed: onPlus,
                   ),
                 ),
               ],

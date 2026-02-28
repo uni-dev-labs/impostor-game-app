@@ -1,21 +1,24 @@
 import 'package:flutter/material.dart';
 
-class PlayerCounter extends StatefulWidget {
-  const PlayerCounter({super.key});
+class PlayerCounter extends StatelessWidget {
+  final int players;
+  final int maxPlayers;
+  final ValueChanged<int> onChanged;
 
-  @override
-  State<PlayerCounter> createState() => _PlayerCounterState();
-}
-
-class _PlayerCounterState extends State<PlayerCounter> {
-  int players = 3;
-  final int maxPlayers = 20;
+  const PlayerCounter({
+    super.key,
+    required this.players,
+    required this.maxPlayers,
+    required this.onChanged,
+  });
 
   @override
   Widget build(BuildContext context) {
     double progress = players / maxPlayers;
 
     return Container(
+      width: double.infinity,
+      height: 85,
       decoration: BoxDecoration(
         color: const Color.fromRGBO(17, 20, 39, 1),
         borderRadius: BorderRadius.circular(20),
@@ -24,87 +27,69 @@ class _PlayerCounterState extends State<PlayerCounter> {
           width: 1,
         ),
       ),
-      width: double.infinity,
-      height: 85,
-      child: Padding(
-        padding: const EdgeInsets.all(10),
-        child: Row(
-          children: [
-            /// BOTÓN MENOS
-            GestureDetector(
-              onTap: () {
-                if (players > 3) {
-                  setState(() {
-                    players--;
-                  });
-                }
-              },
-              child: Container(
-                height: 50,
-                width: 50,
-                decoration: BoxDecoration(
-                  color: const Color.fromRGBO(32, 40, 59, 1),
-                  borderRadius: BorderRadius.circular(15),
+      padding: const EdgeInsets.all(10),
+      child: Row(
+        children: [
+          GestureDetector(
+            onTap: () {
+              if (players > 3) {
+                onChanged(players - 1);
+              }
+            },
+            child: _button(Icons.remove, const Color.fromRGBO(32, 40, 59, 1)),
+          ),
+
+          const SizedBox(width: 10),
+
+          Expanded(
+            child: Stack(
+              alignment: Alignment.centerLeft,
+              children: [
+                Container(
+                  height: 10,
+                  decoration: BoxDecoration(
+                    color: const Color.fromRGBO(32, 40, 59, 1),
+                    borderRadius: BorderRadius.circular(10),
+                  ),
                 ),
-                child: const Icon(Icons.remove, color: Colors.white),
-              ),
-            ),
-
-            const SizedBox(width: 10),
-
-            /// BARRA DE PROGRESO
-            Expanded(
-              child: Stack(
-                alignment: Alignment.centerLeft,
-                children: [
-                  // Fondo
-                  Container(
+                FractionallySizedBox(
+                  widthFactor: progress,
+                  child: Container(
                     height: 10,
                     decoration: BoxDecoration(
-                      color: const Color.fromRGBO(32, 40, 59, 1),
+                      color: const Color.fromRGBO(55, 20, 234, 1),
                       borderRadius: BorderRadius.circular(10),
                     ),
                   ),
-
-                  // Progreso
-                  FractionallySizedBox(
-                    widthFactor: progress,
-                    child: Container(
-                      height: 10,
-                      decoration: BoxDecoration(
-                        color: const Color.fromRGBO(55, 20, 234, 1),
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-
-            const SizedBox(width: 10),
-
-            /// BOTÓN MÁS
-            GestureDetector(
-              onTap: () {
-                if (players < maxPlayers) {
-                  setState(() {
-                    players++;
-                  });
-                }
-              },
-              child: Container(
-                height: 50,
-                width: 50,
-                decoration: BoxDecoration(
-                  color: const Color.fromRGBO(55, 20, 234, 1),
-                  borderRadius: BorderRadius.circular(15),
                 ),
-                child: const Icon(Icons.add, color: Colors.white),
-              ),
+              ],
             ),
-          ],
-        ),
+          ),
+
+          const SizedBox(width: 10),
+
+          GestureDetector(
+            onTap: () {
+              if (players < maxPlayers) {
+                onChanged(players + 1);
+              }
+            },
+            child: _button(Icons.add, const Color.fromRGBO(55, 20, 234, 1)),
+          ),
+        ],
       ),
+    );
+  }
+
+  Widget _button(IconData icon, Color color) {
+    return Container(
+      height: 50,
+      width: 50,
+      decoration: BoxDecoration(
+        color: color,
+        borderRadius: BorderRadius.circular(15),
+      ),
+      child: Icon(icon, color: Colors.white),
     );
   }
 }

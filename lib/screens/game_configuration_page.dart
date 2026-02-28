@@ -15,6 +15,11 @@ class GameConfigurationPage extends StatefulWidget {
 
 class _GameConfigurationPageState extends State<GameConfigurationPage> {
   late int selectedIndex;
+  int rondas = 1;
+  int impostors = 1;
+  int players = 3;
+  int maxPlayers = 20;
+
   @override
   void initState() {
     super.initState();
@@ -52,7 +57,7 @@ class _GameConfigurationPageState extends State<GameConfigurationPage> {
                       Column(
                         children: [
                           Text(
-                            '08',
+                            '$players',
                             style: TextStyle(
                               color: const Color.fromRGBO(55, 20, 234, 1),
                               fontWeight: FontWeight.bold,
@@ -65,7 +70,15 @@ class _GameConfigurationPageState extends State<GameConfigurationPage> {
                   ),
                   //Todo: Angelica componente contador jugadores
                   SizedBox(height: 20),
-                  PlayerCounter(),
+                  PlayerCounter(
+                    players: players,
+                    maxPlayers: maxPlayers,
+                    onChanged: (newValue) {
+                      setState(() {
+                        players = newValue;
+                      });
+                    },
+                  ),
                   SizedBox(height: 20),
                   _allCounters(),
                   SizedBox(height: 20),
@@ -77,60 +90,75 @@ class _GameConfigurationPageState extends State<GameConfigurationPage> {
                   _gameModeSelector(),
                   //Fin Wldy
                   SizedBox(height: 40),
-                  Container(
-                    height: 50,
-                    decoration: BoxDecoration(
-                      color: Color.fromRGBO(77, 44, 241, 0.2),
-                      borderRadius: BorderRadius.circular(20),
-                    ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        const Icon(
-                          Icons.info_outline,
-                          color: Color.fromRGBO(55, 20, 234, 1),
-                        ),
-                        const SizedBox(width: 8),
-                        Expanded(
-                          child: RichText(
-                            text: TextSpan(
-                              style: const TextStyle(
-                                color: Color.fromARGB(135, 255, 255, 255),
-                                fontSize: 12,
-                              ),
-                              children: const [
-                                TextSpan(text: "Recomendamos al menos "),
-                                TextSpan(
-                                  text: "5 jugadores",
-                                  style: TextStyle(
-                                    color: Color.fromRGBO(55, 20, 234, 1),
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                                TextSpan(
-                                  text:
-                                      " para una experiencia óptima para más de un impostor.",
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-
-                  CustomButtonText(
-                    textButton: 'Comenzar ',
-                    onPressed: () => "Comenzar",
-                    iconRight: Icons.play_arrow,
-                  ),
+                  _warningAndBegin(),
                 ],
               ),
             ),
           ),
         ),
       ),
+    );
+  }
+
+  Stack _warningAndBegin() {
+    return Stack(
+      children: [
+        Container(
+          height: 110,
+          decoration: BoxDecoration(
+            color: Color.fromRGBO(77, 44, 241, 0.2),
+            borderRadius: BorderRadius.circular(20),
+          ),
+          child: Padding(
+            padding: const EdgeInsets.all(12.0),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const Icon(
+                  Icons.info_rounded,
+                  color: Color.fromRGBO(55, 20, 234, 1),
+                ),
+                const SizedBox(width: 8),
+                Expanded(
+                  child: RichText(
+                    text: TextSpan(
+                      style: const TextStyle(
+                        color: Color.fromARGB(135, 255, 255, 255),
+                        fontSize: 12,
+                      ),
+                      children: const [
+                        TextSpan(text: "Recomendamos al menos "),
+                        TextSpan(
+                          text: "5 jugadores",
+                          style: TextStyle(
+                            color: Color.fromRGBO(55, 20, 234, 1),
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        TextSpan(
+                          text:
+                              " para una experiencia óptima para más de un impostor.",
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+
+        Positioned(
+          bottom: 0,
+          right: 0,
+          left: 0,
+          child: CustomButtonText(
+            textButton: 'Comenzar ',
+            onPressed: () => "Comenzar",
+            iconRight: Icons.play_arrow,
+          ),
+        ),
+      ],
     );
   }
 
@@ -145,7 +173,19 @@ class _GameConfigurationPageState extends State<GameConfigurationPage> {
               _mainText('IMPOSTORES'),
               _subtitleText('¿Quién miente?'),
               const SizedBox(height: 20),
-              ImpostorRonda(onMinus: () {}, onPlus: () {}, ronda: 1),
+              ImpostorRonda(
+                onMinus: () {
+                  setState(() {
+                    if (rondas > 1) rondas--;
+                  });
+                },
+                onPlus: () {
+                  setState(() {
+                    rondas++;
+                  });
+                },
+                ronda: rondas,
+              ),
             ],
           ),
         ),
@@ -160,7 +200,19 @@ class _GameConfigurationPageState extends State<GameConfigurationPage> {
               _mainText('RONDAS'),
               _subtitleText('Duración partida'),
               const SizedBox(height: 20),
-              ImpostorRonda(onMinus: () {}, onPlus: () {}, ronda: 5),
+              ImpostorRonda(
+                onMinus: () {
+                  setState(() {
+                    if (impostors > 1) impostors--;
+                  });
+                },
+                onPlus: () {
+                  setState(() {
+                    impostors++;
+                  });
+                },
+                ronda: impostors,
+              ),
             ],
           ),
         ),
