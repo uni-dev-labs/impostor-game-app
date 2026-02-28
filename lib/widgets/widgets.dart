@@ -1,4 +1,4 @@
-/// Exportación centralizada de widgets reutilizables.
+
 
 export 'circular_icon_button.dart';
 export 'counter_card.dart';

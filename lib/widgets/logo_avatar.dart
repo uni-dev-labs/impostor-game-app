@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import '../constants/app_colors.dart';
 
-/// Logo de la app con sombra y gradiente de fondo.
+
 class LogoAvatar extends StatelessWidget {
   const LogoAvatar({
     super.key,

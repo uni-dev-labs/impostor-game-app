@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import '../constants/app_colors.dart';
 
-/// Fila de iconos sociales con contador y texto inferior.
+
 class SocialStatsRow extends StatelessWidget {
   const SocialStatsRow({
     super.key,

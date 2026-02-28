@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import '../constants/app_colors.dart';
 
-/// Botón secundario con borde (ej: Cómo jugar).
+
 class SecondaryButton extends StatelessWidget {
   const SecondaryButton({
     super.key,

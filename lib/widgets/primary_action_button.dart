@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import '../constants/app_colors.dart';
 
-/// Botón principal con gradiente (ej: JUGAR en home).
+
 class PrimaryActionButton extends StatelessWidget {
   const PrimaryActionButton({
     super.key,

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import '../constants/app_theme.dart';
 
-/// Título de sección con subtítulo para pantallas de configuración.
+
 class SectionTitle extends StatelessWidget {
   const SectionTitle({
     super.key,

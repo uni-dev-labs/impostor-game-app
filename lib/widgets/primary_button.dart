@@ -3,7 +3,7 @@ import 'package:flutter/services.dart';
 import '../constants/app_colors.dart';
 import '../constants/app_theme.dart';
 
-/// Botón principal de acción (ej: Comenzar, Jugar).
+
 class PrimaryButton extends StatelessWidget {
   const PrimaryButton({
     super.key,

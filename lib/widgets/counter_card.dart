@@ -3,7 +3,6 @@ import 'package:flutter/services.dart';
 import '../constants/app_colors.dart';
 import '../constants/app_theme.dart';
 
-/// Tarjeta con valor numérico y botones de incremento/decremento.
 class CounterCard extends StatelessWidget {
   const CounterCard({
     super.key,

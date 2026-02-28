@@ -5,7 +5,7 @@ import '../constants/app_colors.dart';
 import '../constants/app_theme.dart';
 import '../widgets/widgets.dart';
 
-/// Pantalla de configuración del juego: jugadores, impostores, rondas y temática.
+
 class ConfigScreen extends StatefulWidget {
   const ConfigScreen({super.key});
 
@@ -116,7 +116,7 @@ class _ConfigScreenState extends State<ConfigScreen> {
   }
 
   void _onComenzarPressed() {
-    // TODO: navegar al flujo de juego
+
   }
 }
 

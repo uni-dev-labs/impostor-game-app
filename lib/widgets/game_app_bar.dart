@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import '../constants/app_colors.dart';
 
-/// AppBar consistente para las pantallas del juego.
+
 class GameAppBar extends StatelessWidget implements PreferredSizeWidget {
   const GameAppBar({
     super.key,

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import '../constants/app_colors.dart';
 
-/// Tarjeta seleccionable para elegir temática del juego.
+
 class ThemeCard extends StatelessWidget {
   const ThemeCard({
     super.key,

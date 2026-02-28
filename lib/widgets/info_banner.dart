@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import '../constants/app_colors.dart';
 
-/// Banner informativo con icono y texto (opcionalmente con fragmento resaltado).
+
 class InfoBanner extends StatelessWidget {
   const InfoBanner({
     super.key,

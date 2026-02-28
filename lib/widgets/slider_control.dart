@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import '../constants/app_colors.dart';
 
-/// Control deslizante con botones +/- para valores numéricos.
+
 class SliderControl extends StatelessWidget {
   const SliderControl({
     super.key,

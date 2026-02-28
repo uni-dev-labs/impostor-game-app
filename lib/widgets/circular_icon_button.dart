@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import '../constants/app_colors.dart';
 
-/// Botón circular con icono para la barra superior (ajustes, info, etc.).
+
 class CircularIconButton extends StatelessWidget {
   const CircularIconButton({
     super.key,
