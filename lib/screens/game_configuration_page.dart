@@ -4,7 +4,7 @@ import 'package:impostor/components/custom_button_text.dart';
 import 'package:impostor/components/game_card.dart';
 import 'package:impostor/data/game_card_data.dart';
 import 'package:impostor/components/player_counter.dart';
-import 'package:impostor/components/impostor-ronda.dart';
+import 'package:impostor/components/impostor_ronda.dart';
 
 class GameConfigurationPage extends StatefulWidget {
   const GameConfigurationPage({super.key});
