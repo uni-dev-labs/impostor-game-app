@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
-
 class PlayerCounter extends StatefulWidget {
   const PlayerCounter({super.key});
 
   @override
   State<PlayerCounter> createState() => _PlayerCounterState();
 }
-
 class _PlayerCounterState extends State<PlayerCounter> {
   int players = 3;
   final int maxPlayers = 20;

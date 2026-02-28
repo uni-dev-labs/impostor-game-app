@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:impostor/components/backgraund_sreen.dart';
+import 'package:impostor/components/custom_button_text.dart';
 import 'package:impostor/components/game_card.dart';
 import 'package:impostor/data/game_card_data.dart';
 import 'package:impostor/components/player_counter.dart';
@@ -14,7 +15,6 @@ class GameConfigurationPage extends StatefulWidget {
 
 class _GameConfigurationPageState extends State<GameConfigurationPage> {
   late int selectedIndex;
-
   @override
   void initState() {
     super.initState();
@@ -30,7 +30,9 @@ class _GameConfigurationPageState extends State<GameConfigurationPage> {
     return BackgraundScreen(
       child: Scaffold(
         backgroundColor: Colors.transparent,
-        appBar: AppBar(title: Text("Configuracion juego")),
+        appBar: AppBar(          
+          title: Text("Configuración"),
+        ),
         body: SafeArea(
           child: SingleChildScrollView(
             child: Padding(
@@ -38,8 +40,8 @@ class _GameConfigurationPageState extends State<GameConfigurationPage> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Row(  
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,                  
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -49,7 +51,7 @@ class _GameConfigurationPageState extends State<GameConfigurationPage> {
                         ],
                       ),
                       SizedBox(width: 100),
-                      Column(                                                                        
+                      Column(
                         children: [
                           Text(
                             '08',
@@ -58,7 +60,7 @@ class _GameConfigurationPageState extends State<GameConfigurationPage> {
                               fontWeight: FontWeight.bold,
                               fontSize: 32,
                             ),
-                          )
+                          ),
                         ],
                       ),
                     ],
@@ -67,56 +69,50 @@ class _GameConfigurationPageState extends State<GameConfigurationPage> {
                   SizedBox(height: 20),
                   PlayerCounter(),
                   SizedBox(height: 20),
-                  Row(
-                    children: [
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          _mainText('Impostores'),
-                          _subtitleText('¿Quién miente?'),
-                        ],
-                      ),
-                      SizedBox(width: 200),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          _mainText('Ronda'),
-                          _subtitleText('Duración partida'),
-                        ],                      
-                      ),
-                      
-                    ],
-                  ),
-                  SizedBox(height: 20),
-                  //Fin Angélica
-                  //Todo Componente impostores y rondas Daniela
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [                      
-                      ImpostorRonda(
-                        onMinus: () {},
-                        onPlus: () {},
-                        ronda: 1,
-                      ),
-                      SizedBox(width: 20),
-                      ImpostorRonda(
-                        onMinus: () {},
-                        onPlus: () {},
-                        ronda: 5,
-                      ),
-                    ],
-                  ),
+                  _allCounters(),
                   SizedBox(height: 20),
                   //Fin Daniela
                   //Todo componente tarjetas de juego Wldy
+                  _mainText('TEMÁTICA'),
+                  _subtitleText('Selecciona el mazo de palabras'),
+                  SizedBox(height: 20,),
                   _gameModeSelector(),
                   //Fin Wldy
-                ],
+                  SizedBox(height: 40),
+                  CustomButtonText(textButton: 'Comenzar', onPressed: ()=> "Comenzar"),
+                ],                
               ),
             ),
           ),
         ),
       ),
+    );
+  }
+
+  Row _allCounters() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceAround,      
+      children: [
+        
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            _mainText('IMPOSTORES'),
+            _subtitleText('¿Quién miente?'),
+            SizedBox(height: 20),
+            ImpostorRonda(onMinus: () {}, onPlus: () {}, ronda: 1),
+          ],
+        ),
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            _mainText('RONDAS'),
+            _subtitleText('Duración partida'),
+            SizedBox(height: 20),
+            ImpostorRonda(onMinus: () {}, onPlus: () {}, ronda: 5),
+          ],
+        ),
+      ],
     );
   }
 
@@ -170,7 +166,7 @@ Text _subtitleText(String subtitleText) {
     style: TextStyle(
       fontSize: 12,
       fontWeight: FontWeight.normal,
-      color: const Color.fromRGBO(255, 255, 255, 1),
+      color: const Color.fromARGB(135, 255, 255, 255),
     ),
     textAlign: TextAlign.start,
   );

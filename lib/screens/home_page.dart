@@ -8,11 +8,7 @@ class HomePage extends StatelessWidget {
   const HomePage({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    final size = MediaQuery.of(context)
-        .size
-        .height; // Todo: Optimizar este metodo es necesario que no este en el build
-
+  Widget build(BuildContext context) {    
     return BackgraundScreen(
       child: Scaffold(
         backgroundColor: Colors.transparent,

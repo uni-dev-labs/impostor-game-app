@@ -15,9 +15,7 @@ class ImpostorRonda extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 200,
-      height: 120,
-      
+      height: 90,      
       decoration: BoxDecoration(
         color: const Color.fromRGBO(17, 20, 39, 1),
         borderRadius: BorderRadius.circular(20),
@@ -27,49 +25,55 @@ class ImpostorRonda extends StatelessWidget {
         ),
       ),
       child: Column(
-        children: [
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Text(
-                  '$ronda',
-                  style: const TextStyle(color: Colors.white, fontSize: 30),
-                ),
+        children: [          
+          Text(
+            '$ronda',
+            style: const TextStyle(color: Colors.white, fontSize: 30),
           ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Container(
-                height: 40,
-                width: 65,
-                decoration: BoxDecoration(
-                  color: const Color.fromRGBO(32, 40, 59, 1),
-                  borderRadius: BorderRadius.circular(15),
-                ),
-                child: IconButton(
-                  padding: EdgeInsets.zero,
-                  icon: const Icon(Icons.remove, size: 15, color:  Color.fromRGBO(108, 110, 116, 1),),
-                  onPressed: onMinus,
-                ),
+          Padding(
+            padding: const EdgeInsets.only(left: 8, right: 8),
+            child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Container(
+                    height: 35,
+                    width: 55,
+                    decoration: BoxDecoration(
+                      color: const Color.fromRGBO(32, 40, 59, 1),
+                      borderRadius: BorderRadius.circular(15),
+                    ),
+                    child: IconButton(                    
+                      icon: const Icon(
+                        Icons.remove,
+                        size: 15,
+                        color: Color.fromRGBO(108, 110, 116, 1),
+                      ),
+                      onPressed: onMinus,
+                    ),
+                  ),
+                  SizedBox(width: 10),
+                  Container(
+                    height: 35,
+                    width: 55,
+                    decoration: BoxDecoration(
+                      color: Color.fromRGBO(55, 20, 234, 0.2),
+                      borderRadius: BorderRadius.circular(15),
+                    ),
+                    child: IconButton(
+                      padding: EdgeInsets.zero,
+                      icon: const Icon(
+                        Icons.add,
+                        size: 15,
+                        color: Color.fromRGBO(55, 20, 234, 1),
+                      ),
+                      onPressed: onMinus,
+                    ),
+                  ),
+                ],
               ),
-              SizedBox(width: 10,),
-              Container(
-                height: 40,
-                width: 65,
-                decoration: BoxDecoration(
-                  color: Color.fromRGBO(55, 20, 234, 0.2),                  borderRadius: BorderRadius.circular(15),
-                ),
-                child: IconButton(
-                  padding: EdgeInsets.zero,
-                  icon: const Icon(Icons.add, size: 15, color: Color.fromRGBO(55, 20, 234, 1)),
-                  onPressed: onMinus,
-                ),
-              ),
-            ],
-          )
+          ),          
         ],
       ),
     );
   }
-
-  
 }
