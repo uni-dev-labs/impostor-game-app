@@ -1,172 +1,35 @@
 import 'package:flutter/material.dart';
+import '../core/app_colors.dart';
+import '../components/custom_button.dart';
 import 'configuration_page.dart';
+
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-
-      backgroundColor: const Color(0xFF0F0B29),
+      backgroundColor: AppColors.background,
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 10),
           child: Column(
             children: [
-
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  CustomButton(icon: Icons.settings, onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => const ConfigurationPage()),
-                    );
-                  }),
-                  CustomButton(icon: Icons.info_outline, onPressed: () {
-                    // Acción para el botón de información
-                  }),
-                ],
-              ),
-              
+              _buildTopBar(context),
               const Spacer(flex: 2),
-
-
-              Column(
-                children: const [
-                  Text(
-                    'EL',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 24,
-                      fontWeight: FontWeight.bold,
-                      letterSpacing: 2,
-                    ),
-                  ),
-                  Text(
-                    'IMPOSTOR',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 48,
-                      fontWeight: FontWeight.w900, // Extra Bold
-                      letterSpacing: 1.5,
-                    ),
-                  ),
-                  SizedBox(height: 8),
-                  Text(
-                    'DESCUBRE QUIÉN MIENTE',
-                    style: TextStyle(
-                      color: Colors.grey,
-                      fontSize: 12,
-                      letterSpacing: 3,
-                    ),
-                  ),
-                ],
-              ),
-
+              _buildTitle(),
               const Spacer(flex: 2),
-
-              Container(
-                height: 200,
-                
-                width: 200,
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  gradient: RadialGradient(
-                    colors: [
-                      Colors.purple.withOpacity(0.3),
-                      Colors.transparent,
-                    ],
-                  ),
-                ),
-                child: const Icon(
-                  Icons.fingerprint, 
-                  size: 100,
-                  color: Colors.white70,
-                ),
-              ),
-
+              _buildHeroImage(),
               const Spacer(flex: 3),
-
-
-              SizedBox(
-                width: double.infinity,
-                height: 55,
-                child: ElevatedButton.icon(
-                  onPressed: () {},
-                  icon: const Icon(Icons.play_arrow, color: Colors.white),
-                  label: const Text(
-                    'JUGAR',
-                    style: TextStyle(
-                      fontSize: 18, 
-                      fontWeight: FontWeight.bold, 
-                      letterSpacing: 1,
-                      color: Colors.white
-                    ),
-                  ),
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: const Color(0xFF4C35FF), // Color azul neón/eléctrico
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(30),
-                    ),
-                    elevation: 10,
-                    shadowColor: const Color(0xFF4C35FF).withOpacity(0.5),
-                  ),
-                ),
+              PrimaryButton(
+                text: 'JUGAR',
+                icon: Icons.play_arrow,
+                onPressed: () {},
               ),
-              
               const SizedBox(height: 16),
-              
-              SizedBox(
-                width: double.infinity,
-                height: 55,
-                child: OutlinedButton(
-                  onPressed: () {},
-                  style: OutlinedButton.styleFrom(
-                    backgroundColor: Colors.white.withOpacity(0.05),
-                    side: BorderSide.none,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(30),
-                    ),
-                  ),
-                  child: const Text(
-                    'Cómo jugar',
-                    style: TextStyle(
-                      color: Colors.white70,
-                      fontSize: 16,
-                    ),
-                  ),
-                ),
-              ),
-
+              _buildSecondaryButton(),
               const Spacer(flex: 2),
-
-              
-              Column(
-                children: [
-                  
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      _buildAvatar(Colors.blue),
-                      const SizedBox(width: 5),
-                      _buildAvatar(Colors.orange),
-                      const SizedBox(width: 5),
-                      _buildAvatar(Colors.purple, text: "+10k"),
-                    ],
-                  ),
-                  const SizedBox(height: 10),
-                  const Text(
-                    'JUGADO POR GRUPOS EN TODO EL MUNDO',
-                    style: TextStyle(
-                      color: Colors.grey,
-                      fontSize: 10,
-                      letterSpacing: 1,
-                    ),
-                  ),
-                ],
-              ),
-              
+              _buildFooter(),
               const SizedBox(height: 10),
             ],
           ),
@@ -175,40 +38,98 @@ class HomePage extends StatelessWidget {
     );
   }
 
-  Widget _buildAvatar(Color color, {String? text}) {
+
+
+  Widget _buildTopBar(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        CustomIconButton(
+          icon: Icons.settings,
+          onPressed: () {
+            Navigator.push(context, MaterialPageRoute(builder: (_) => const ConfigurationPage()));
+          },
+        ),
+        CustomIconButton(
+          icon: Icons.info_outline,
+          onPressed: () {},
+        ),
+      ],
+    );
+  }
+
+  Widget _buildTitle() {
+    return const Column(
+      children: [
+        Text('EL', style: TextStyle(color: AppColors.white, fontSize: 24, fontWeight: FontWeight.bold, letterSpacing: 2)),
+        Text('IMPOSTOR', style: TextStyle(color: AppColors.white, fontSize: 48, fontWeight: FontWeight.w900, letterSpacing: 1.5)),
+        SizedBox(height: 8),
+        Text('DESCUBRE QUIÉN MIENTE', style: TextStyle(color: AppColors.textSub, fontSize: 12, letterSpacing: 3)),
+      ],
+    );
+  }
+
+  Widget _buildHeroImage() {
     return Container(
-      padding: const EdgeInsets.all(2),
-      decoration: const BoxDecoration(
-        color: Color(0xFF0F0B29),
+      height: 250, width: 250,
+      decoration: BoxDecoration(
         shape: BoxShape.circle,
+        gradient: RadialGradient(
+          colors: [AppColors.primary.withOpacity(0.4), Colors.transparent],
+          stops: const [0.2, 0.7],
+        ),
       ),
-      child: CircleAvatar(
-        radius: 12,
-        backgroundColor: color,
-        child: text != null 
-          ? Text(text, style: const TextStyle(fontSize: 8, color: Colors.white))
-          : const Icon(Icons.person, size: 14, color: Colors.white),
+      child: Padding(
+        padding: const EdgeInsets.all(30.0),
+        child: Image.asset('assets/images/logo_jusohr.png', fit: BoxFit.contain),
       ),
     );
   }
-}
 
-class CustomButton extends StatelessWidget {
-  final IconData icon;
-  final VoidCallback onPressed;
-
-  const CustomButton({super.key, required this.icon, required this.onPressed});
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        color: Colors.white.withOpacity(0.1),
-        shape: BoxShape.circle,
+  Widget _buildSecondaryButton() {
+    return SizedBox(
+      width: double.infinity,
+      height: 55,
+      child: OutlinedButton(
+        onPressed: () {},
+        style: OutlinedButton.styleFrom(
+          backgroundColor: AppColors.white.withOpacity(0.05),
+          side: BorderSide.none,
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+        ),
+        child: const Text('Cómo jugar', style: TextStyle(color: Colors.white70, fontSize: 16)),
       ),
-      child: IconButton(
-        icon: Icon(icon, color: Colors.white70),
-        onPressed: onPressed,
+    );
+  }
+
+  Widget _buildFooter() {
+    return Column(
+      children: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            _buildAvatar(Colors.blue),
+            const SizedBox(width: 5),
+            _buildAvatar(Colors.orange),
+            const SizedBox(width: 5),
+            _buildAvatar(AppColors.primary, text: "+10k"),
+          ],
+        ),
+        const SizedBox(height: 10),
+        const Text('JUGADO POR GRUPOS EN TODO EL MUNDO', style: TextStyle(color: AppColors.textSub, fontSize: 10, letterSpacing: 1)),
+      ],
+    );
+  }
+
+  Widget _buildAvatar(Color color, {String? text}) {
+    return Container(
+      padding: const EdgeInsets.all(2),
+      decoration: const BoxDecoration(color: AppColors.background, shape: BoxShape.circle),
+      child: CircleAvatar(
+        radius: 12, backgroundColor: color,
+        child: text != null 
+          ? Text(text, style: const TextStyle(fontSize: 8, color: AppColors.white))
+          : const Icon(Icons.person, size: 14, color: AppColors.white),
       ),
     );
   }
