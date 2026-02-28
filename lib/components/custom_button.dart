@@ -2,13 +2,19 @@ import 'package:flutter/material.dart';
 
 class CustomButton extends StatelessWidget {
   final IconData icon;
-  const CustomButton({super.key, required this.icon});
+  final VoidCallback? onPressed; // 1. Agregamos el parámetro opcional
+
+  const CustomButton({
+    super.key,
+    required this.icon,
+    this.onPressed, // 2. Lo incluimos en el constructor
+  });
 
   @override
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        color: Color.fromRGBO(33, 27, 68, 1),
+        color: const Color.fromRGBO(33, 27, 68, 1),
         borderRadius: BorderRadius.circular(100),
         border: Border.all(
           color: const Color.fromARGB(255, 100, 100, 100),
@@ -16,15 +22,9 @@ class CustomButton extends StatelessWidget {
         ),
       ),
       child: IconButton(
-        onPressed: () {
-          print("hola mundo");
-        },
-        icon: Icon(
-          icon,
-          color: Colors.white.withOpacity(
-            0.7,
-          ), // Color blanco semi-transparente
-        ),
+        onPressed:
+            onPressed ?? () => print("Tap!"), // 3. Usamos la función recibida
+        icon: Icon(icon, color: Colors.white.withOpacity(0.7)),
       ),
     );
   }
@@ -75,13 +75,7 @@ class ProfileBar extends StatelessWidget {
   const ProfileBar({super.key});
 
   // Simula tu lista de imágenes (puedes reemplazar con tu modelo de datos)
-  static const List<String> _profileImages = [
-    'assets/images/elDrink.png',
-    'assets/images/elSinger.png',
-    'assets/images/fredy.jpeg',
-    'assets/images/laMaris.jpeg',
-    'assets/images/tresMosqueteros.jpeg',
-  ];
+  static const List<String> _profileImages = [];
 
   @override
   Widget build(BuildContext context) {

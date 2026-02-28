@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:impostor/components/custom_button.dart';
+import 'package:impostor/screens/settings_page.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -114,9 +115,24 @@ class _HeaderButtons extends StatelessWidget {
       height: 100,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: const [
-          CustomButton(icon: Icons.settings),
-          CustomButton(icon: Icons.info_outline),
+        children: [
+          // Botón de Settings
+          CustomButton(
+            icon: Icons.settings,
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const SettingsPage()),
+              );
+            },
+          ),
+          // Botón de Info
+          CustomButton(
+            icon: Icons.info_outline,
+            onPressed: () {
+              print("Información");
+            },
+          ),
         ],
       ),
     );
