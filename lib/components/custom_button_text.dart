@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 
 class CustomButtonText extends StatelessWidget {
-  final IconData? icon;
+  final IconData? iconLeft;
+  final IconData? iconRight;
   final String textButton;
   final Color colorButton;
   final Color borderButon;
@@ -9,11 +10,12 @@ class CustomButtonText extends StatelessWidget {
 
   const CustomButtonText({
     super.key,
-    this.icon,
+    this.iconLeft,
     required this.textButton,
     this.colorButton = const Color.fromRGBO(67, 34, 237, 1),
     this.borderButon = Colors.transparent,
     required this.onPressed,
+    this.iconRight,
   });
 
   @override
@@ -21,7 +23,7 @@ class CustomButtonText extends StatelessWidget {
     return MaterialButton(
       height: 70,
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(30),
+        borderRadius: BorderRadius.circular(20),
         side: BorderSide(color: borderButon, width: 2),
       ),
       color: colorButton,
@@ -30,8 +32,8 @@ class CustomButtonText extends StatelessWidget {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            if (icon != null) ...[
-              Icon(icon, color: Colors.white),
+            if (iconLeft != null) ...[
+              Icon(iconLeft, color: Colors.white),
               const SizedBox(width: 8),
             ],
             Text(
@@ -42,6 +44,10 @@ class CustomButtonText extends StatelessWidget {
                 fontWeight: FontWeight.w800,
               ),
             ),
+            if (iconRight != null) ...[
+              Icon(iconRight, color: Colors.white),
+              const SizedBox(width: 8),
+            ],
           ],
         ),
       ),

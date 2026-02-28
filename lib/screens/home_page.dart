@@ -8,7 +8,7 @@ class HomePage extends StatelessWidget {
   const HomePage({super.key});
 
   @override
-  Widget build(BuildContext context) {    
+  Widget build(BuildContext context) {
     return BackgraundScreen(
       child: Scaffold(
         backgroundColor: Colors.transparent,
@@ -26,10 +26,9 @@ class HomePage extends StatelessWidget {
                   _imageGame(),
                   SizedBox(height: 20),
                   CustomButtonText(
-                    icon: Icons.play_arrow,
+                    iconLeft: Icons.play_arrow,
                     textButton: " JUGAR ",
-                    onPressed: () =>
-                        "Jugar",
+                    onPressed: () => "Jugar",
                   ),
                   SizedBox(height: 20),
                   CustomButtonText(
@@ -102,8 +101,11 @@ class HomePage extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          CustomButton(icon: Icons.settings, onPressed: () => Navigator.pushNamed(context, "configuration-game"),),
-          CustomButton(icon: Icons.info_outline, onPressed: () => '',),
+          CustomButton(
+            icon: Icons.settings,
+            onPressed: () => Navigator.pushNamed(context, "configuration-game"),
+          ),
+          CustomButton(icon: Icons.info_outline, onPressed: () => ''),
         ],
       ),
     );

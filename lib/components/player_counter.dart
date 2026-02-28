@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+
 class PlayerCounter extends StatefulWidget {
   const PlayerCounter({super.key});
 
   @override
   State<PlayerCounter> createState() => _PlayerCounterState();
 }
+
 class _PlayerCounterState extends State<PlayerCounter> {
   int players = 3;
   final int maxPlayers = 20;
@@ -23,9 +25,9 @@ class _PlayerCounterState extends State<PlayerCounter> {
         ),
       ),
       width: double.infinity,
-      height: 120,
+      height: 85,
       child: Padding(
-        padding: const EdgeInsets.all(20),
+        padding: const EdgeInsets.all(10),
         child: Row(
           children: [
             /// BOTÓN MENOS
@@ -57,7 +59,7 @@ class _PlayerCounterState extends State<PlayerCounter> {
                 children: [
                   // Fondo
                   Container(
-                    height: 20,
+                    height: 10,
                     decoration: BoxDecoration(
                       color: const Color.fromRGBO(32, 40, 59, 1),
                       borderRadius: BorderRadius.circular(10),
@@ -68,13 +70,13 @@ class _PlayerCounterState extends State<PlayerCounter> {
                   FractionallySizedBox(
                     widthFactor: progress,
                     child: Container(
-                      height: 20,
+                      height: 10,
                       decoration: BoxDecoration(
                         color: const Color.fromRGBO(55, 20, 234, 1),
                         borderRadius: BorderRadius.circular(10),
                       ),
                     ),
-                  ),                
+                  ),
                 ],
               ),
             ),

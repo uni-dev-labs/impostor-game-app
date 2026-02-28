@@ -30,9 +30,7 @@ class _GameConfigurationPageState extends State<GameConfigurationPage> {
     return BackgraundScreen(
       child: Scaffold(
         backgroundColor: Colors.transparent,
-        appBar: AppBar(          
-          title: Text("Configuración"),
-        ),
+        appBar: AppBar(title: Text("Configuración")),
         body: SafeArea(
           child: SingleChildScrollView(
             child: Padding(
@@ -72,15 +70,62 @@ class _GameConfigurationPageState extends State<GameConfigurationPage> {
                   _allCounters(),
                   SizedBox(height: 20),
                   //Fin Daniela
-                  //Todo componente tarjetas de juego Wldy
+                  //Todo: componente tarjetas de juego Wldy
                   _mainText('TEMÁTICA'),
                   _subtitleText('Selecciona el mazo de palabras'),
-                  SizedBox(height: 20,),
+                  SizedBox(height: 20),
                   _gameModeSelector(),
                   //Fin Wldy
                   SizedBox(height: 40),
-                  CustomButtonText(textButton: 'Comenzar', onPressed: ()=> "Comenzar"),
-                ],                
+                  Container(
+                    height: 50,
+                    decoration: BoxDecoration(
+                      color: Color.fromRGBO(77, 44, 241, 0.2),
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        const Icon(
+                          Icons.info_outline,
+                          color: Color.fromRGBO(55, 20, 234, 1),
+                        ),
+                        const SizedBox(width: 8),
+                        Expanded(
+                          child: RichText(
+                            text: TextSpan(
+                              style: const TextStyle(
+                                color: Color.fromARGB(135, 255, 255, 255),
+                                fontSize: 12,
+                              ),
+                              children: const [
+                                TextSpan(text: "Recomendamos al menos "),
+                                TextSpan(
+                                  text: "5 jugadores",
+                                  style: TextStyle(
+                                    color: Color.fromRGBO(55, 20, 234, 1),
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                                TextSpan(
+                                  text:
+                                      " para una experiencia óptima para más de un impostor.",
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+
+                  CustomButtonText(
+                    textButton: 'Comenzar ',
+                    onPressed: () => "Comenzar",
+                    iconRight: Icons.play_arrow,
+                  ),
+                ],
               ),
             ),
           ),
@@ -91,26 +136,33 @@ class _GameConfigurationPageState extends State<GameConfigurationPage> {
 
   Row _allCounters() {
     return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceAround,      
       children: [
-        
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            _mainText('IMPOSTORES'),
-            _subtitleText('¿Quién miente?'),
-            SizedBox(height: 20),
-            ImpostorRonda(onMinus: () {}, onPlus: () {}, ronda: 1),
-          ],
+        Expanded(
+          flex: 45,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              _mainText('IMPOSTORES'),
+              _subtitleText('¿Quién miente?'),
+              const SizedBox(height: 20),
+              ImpostorRonda(onMinus: () {}, onPlus: () {}, ronda: 1),
+            ],
+          ),
         ),
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            _mainText('RONDAS'),
-            _subtitleText('Duración partida'),
-            SizedBox(height: 20),
-            ImpostorRonda(onMinus: () {}, onPlus: () {}, ronda: 5),
-          ],
+
+        const SizedBox(width: 20),
+        // Columna de RONDAS
+        Expanded(
+          flex: 45,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              _mainText('RONDAS'),
+              _subtitleText('Duración partida'),
+              const SizedBox(height: 20),
+              ImpostorRonda(onMinus: () {}, onPlus: () {}, ronda: 5),
+            ],
+          ),
         ),
       ],
     );

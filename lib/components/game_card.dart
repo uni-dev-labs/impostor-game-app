@@ -26,8 +26,8 @@ class _GameCardState extends State<GameCard> {
     return GestureDetector(
       onTap: widget.onTap,
       child: SizedBox(
-        height: 200,
-        width: 150,
+        height: 180,
+        width: 130,
         child: ClipRRect(
           borderRadius: BorderRadius.circular(20),
           child: Stack(
@@ -67,12 +67,12 @@ class _GameCardState extends State<GameCard> {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Image.asset(widget.imagePath, width: 80),
+                    Image.asset(widget.imagePath, width: 70),
                     const SizedBox(height: 10),
                     Text(
                       widget.title,
                       style: TextStyle(
-                        fontSize: 20,
+                        fontSize: 15,
                         fontWeight: FontWeight.bold,
                         color: Colors.white,
                       ),
