@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:impostor/components/custom_button.dart';
 import 'package:impostor/components/custom_icon_button.dart';
@@ -8,9 +7,8 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
-      backgroundColor: Colors.purple,
+      backgroundColor: const Color(0xFF0F082E),
       body: SafeArea(
         child: SingleChildScrollView(
           child: Padding(
@@ -27,20 +25,21 @@ class HomePage extends StatelessWidget {
                 SizedBox(height: 40),
                 CustomButton(
                   text: "JUGAR",
-                  onPressed: () => Navigator.pushNamed(context, 'configuration-game'),
+                  onPressed: () =>
+                      Navigator.pushNamed(context, 'configuration-game'),
                   icon: Icons.play_arrow,
                 ),
                 SizedBox(height: 20),
                 CustomButton(
-                  text: "hola mundo",
+                  text: "¿Cómo Jugar?",
                   onPressed: () => print("Iniciar"),
-                  color: Colors.grey,
+                  color: const Color.fromARGB(255, 104, 104, 104),
                 ),
               ],
             ),
           ),
         ),
-      )
+      ),
     );
   }
 
@@ -55,36 +54,40 @@ class HomePage extends StatelessWidget {
       ),
       child: ClipRRect(
         borderRadius: BorderRadius.circular(100),
-        child: Image.asset(
-          'assets/images/logo.png',
-          fit: BoxFit.contain,
-        ),
-      )
+        child: Image.asset('assets/images/logo.png', fit: BoxFit.contain),
+      ),
     );
   }
 
   Text _subtitle() {
-    return Text("DESCUBRE QUIÉN ES EL IMPOSTOR", style: TextStyle(
-        color: Colors.grey, fontSize: 16,
-        fontWeight: FontWeight.bold
+    return Text(
+      "DESCUBRE QUIÉN ES EL IMPOSTOR",
+      style: TextStyle(
+        color: Colors.grey,
+        fontSize: 16,
+        fontWeight: FontWeight.bold,
       ),
       textAlign: TextAlign.center,
     );
   }
 
   Text _title() {
-    return Text("El \n Impostor", style: TextStyle(
-      color: Colors.white, fontSize: 24,
-      fontWeight: FontWeight.bold),
+    return Text(
+      "El \n Impostor",
+      style: TextStyle(
+        color: Colors.white,
+        fontSize: 24,
+        fontWeight: FontWeight.bold,
+      ),
       textAlign: TextAlign.center,
     );
   }
 
   Container _customAppbar() {
     return Container(
-      width : double.infinity,
+      width: double.infinity,
       height: 100,
-      color: Colors.red,
+      color: Colors.transparent,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -95,5 +98,4 @@ class HomePage extends StatelessWidget {
       ),
     );
   }
-
 }
