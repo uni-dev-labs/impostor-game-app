@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'configuration_page.dart';
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
 
@@ -16,8 +17,15 @@ class HomePage extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  CustomButton(icon: Icons.settings),
-                  CustomButton(icon: Icons.info_outline),
+                  CustomButton(icon: Icons.settings, onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => const ConfigurationPage()),
+                    );
+                  }),
+                  CustomButton(icon: Icons.info_outline, onPressed: () {
+                    // Acción para el botón de información
+                  }),
                 ],
               ),
               
@@ -60,6 +68,7 @@ class HomePage extends StatelessWidget {
 
               Container(
                 height: 200,
+                
                 width: 200,
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
@@ -186,7 +195,9 @@ class HomePage extends StatelessWidget {
 
 class CustomButton extends StatelessWidget {
   final IconData icon;
-  const CustomButton({super.key, required this.icon});
+  final VoidCallback onPressed;
+
+  const CustomButton({super.key, required this.icon, required this.onPressed});
 
   @override
   Widget build(BuildContext context) {
@@ -197,7 +208,7 @@ class CustomButton extends StatelessWidget {
       ),
       child: IconButton(
         icon: Icon(icon, color: Colors.white70),
-        onPressed: () {},
+        onPressed: onPressed,
       ),
     );
   }
