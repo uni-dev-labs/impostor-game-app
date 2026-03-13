@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class GameCard extends StatefulWidget {
+class GameCard extends StatelessWidget {
   final String imagePath;
   final String title;
   final String imageBackgraundPath;
@@ -17,14 +17,9 @@ class GameCard extends StatefulWidget {
   });
 
   @override
-  State<GameCard> createState() => _GameCardState();
-}
-
-class _GameCardState extends State<GameCard> {
-  @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: widget.onTap,
+      onTap: onTap,
       child: SizedBox(
         height: 180,
         width: 130,
@@ -33,7 +28,7 @@ class _GameCardState extends State<GameCard> {
           child: Stack(
             children: [
               Image.asset(
-                widget.imageBackgraundPath,
+                imageBackgraundPath,
                 fit: BoxFit.cover,
                 height: 200,
                 width: 150,
@@ -43,7 +38,7 @@ class _GameCardState extends State<GameCard> {
 
               AnimatedOpacity(
                 duration: Duration(milliseconds: 300),
-                opacity: widget.isSelected ? 1 : 0,
+                opacity: isSelected ? 1 : 0,
                 child: Container(
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(20),
@@ -67,10 +62,10 @@ class _GameCardState extends State<GameCard> {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Image.asset(widget.imagePath, width: 70),
+                    Image.asset(imagePath, width: 70),
                     const SizedBox(height: 10),
                     Text(
-                      widget.title,
+                      title,
                       style: TextStyle(
                         fontSize: 15,
                         fontWeight: FontWeight.bold,
@@ -89,12 +84,10 @@ class _GameCardState extends State<GameCard> {
                   height: 40,
                   width: 25,
                   decoration: BoxDecoration(
-                    color: widget.isSelected
-                        ? Colors.white
-                        : Colors.transparent,
+                    color: isSelected ? Colors.white : Colors.transparent,
                     borderRadius: BorderRadius.circular(15),
                   ),
-                  child: widget.isSelected
+                  child: isSelected
                       ? const Icon(Icons.check, size: 18, color: Colors.black)
                       : null,
                 ),

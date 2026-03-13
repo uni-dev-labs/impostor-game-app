@@ -27,7 +27,7 @@ class HomePage extends StatelessWidget {
                   SizedBox(height: 20),
                   CustomButtonText(
                     iconLeft: Icons.play_arrow,
-                    textButton: " JUGAR ",
+                    textButton: "JUGAR",
                     onPressed: () => "Jugar",
                   ),
                   SizedBox(height: 20),
@@ -39,6 +39,7 @@ class HomePage extends StatelessWidget {
                   ),
                   SizedBox(height: 30),
                   _superponerImages(imagesUser),
+                  SizedBox(height: 20),
                   _subTitle("JUGANDO POR GRUPOS EN TODO EL MUNDO"),
                 ],
               ),
@@ -132,7 +133,7 @@ class HomePage extends StatelessWidget {
   }
 
   Widget _superponerImages(List<String> imagesUser) {
-    const double imageSize = 50;
+    const double imageSize = 60;
     const double overlap = 20;
 
     return Align(
