@@ -1,0 +1,32 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"label": "sync-branch-to-main",
+			"type": "shell",
+			"command": "git",
+			"args": [
+				"fetch",
+				"origin",
+				"&&",
+				"git",
+				"reset",
+				"--hard",
+				"origin/main",
+				"&&",
+				"git",
+				"push",
+				"--force-with-lease",
+				"origin",
+				"HEAD:factor-home-grupo-1"
+			],
+			"isBackground": false
+		},
+		{
+			"label": "sync-branch-to-main",
+			"type": "shell",
+			"command": "git fetch origin; git reset --hard origin/main; git push --force-with-lease origin HEAD:factor-home-grupo-1",
+			"isBackground": false
+		}
+	]
+}
