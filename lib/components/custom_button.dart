@@ -7,14 +7,17 @@ class CustomButton extends StatelessWidget {
   final IconData? icon;
   final VoidCallback onPressed;
   final Color color;
+  final bool isIconInLeft;
+  final double? borderRadius;
 
-  
   const CustomButton({
     super.key, 
     required this.text, 
     required this.onPressed,
     this.color = Colors.blue,
     this.icon, 
+    this.isIconInLeft = true,
+    this.borderRadius = 30,
   });
 
   @override
@@ -22,7 +25,7 @@ class CustomButton extends StatelessWidget {
     return MaterialButton(
       height: 70,
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(30),
+        borderRadius: BorderRadius.circular(borderRadius ?? 30),
       ),
       color: color,
       onPressed: onPressed,
@@ -30,7 +33,7 @@ class CustomButton extends StatelessWidget {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(icon, color: Colors.white),
+            if (isIconInLeft) Icon(icon, color: Colors.white),
             Text(
               text, 
               style: TextStyle(
@@ -39,6 +42,7 @@ class CustomButton extends StatelessWidget {
                 fontWeight: FontWeight.w800
               ),
             ),
+            if (!isIconInLeft) Icon(icon, color: Colors.white),
           ],
         ),
       ),
