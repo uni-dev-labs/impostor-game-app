@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:impostor/components/custom_button.dart';
 import 'package:impostor/components/custom_icon_button.dart';
+import 'package:impostor/core/app_colors.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -10,7 +11,7 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
 
     return Scaffold(
-      backgroundColor: Colors.purple,
+      backgroundColor: primaryColor,
       body: SafeArea(
         child: SingleChildScrollView(
           child: Padding(
@@ -80,17 +81,16 @@ class HomePage extends StatelessWidget {
     );
   }
 
-  Container _customAppbar() {
-    return Container(
+  SizedBox _customAppbar() {
+    return SizedBox(
       width : double.infinity,
       height: 100,
-      color: Colors.red,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          CustomIconButton(icon: Icons.settings),
-          CustomIconButton(icon: Icons.info_outline),
+          CustomIconButton(icon: Icons.settings, onPressed: () {}),
+          CustomIconButton(icon: Icons.info_outline, onPressed: () {}),
         ],
       ),
     );
