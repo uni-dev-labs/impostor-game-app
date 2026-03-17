@@ -1,0 +1,1 @@
+export 'package:impostor/providers/configuration_game_provider.dart';
