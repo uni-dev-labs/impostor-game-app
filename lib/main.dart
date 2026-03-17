@@ -1,8 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:impostor/providers/configuration_game_provider.dart';
 import 'package:impostor/routes.dart';
+import 'package:provider/provider.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(
+          create: (context) => ConfigurationGameProvider(),
+        ),
+      ],
+      child: const MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {

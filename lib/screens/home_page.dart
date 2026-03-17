@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:impostor/components/custom_button.dart';
 import 'package:impostor/components/custom_button_text.dart';
 import 'package:impostor/components/backgraund_sreen.dart';
-import 'package:impostor/data/user_list.dart';
+import 'package:impostor/core/user_list.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
