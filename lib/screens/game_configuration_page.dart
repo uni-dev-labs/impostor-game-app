@@ -5,33 +5,16 @@ import 'package:impostor/components/game_card.dart';
 import 'package:impostor/core/game_card_data.dart';
 import 'package:impostor/components/player_counter.dart';
 import 'package:impostor/components/impostor_ronda.dart';
+import 'package:impostor/providers/configuration_game_provider.dart';
+import 'package:provider/provider.dart';
 
-class GameConfigurationPage extends StatefulWidget {
+class GameConfigurationPage extends StatelessWidget {
   const GameConfigurationPage({super.key});
 
   @override
-  State<GameConfigurationPage> createState() => _GameConfigurationPageState();
-}
-
-class _GameConfigurationPageState extends State<GameConfigurationPage> {
-  late int selectedIndex;
-  int rondas = 1;
-  int impostors = 1;
-  int players = 3;
-  int maxPlayers = 20;
-
-  @override
-  void initState() {
-    super.initState();
-
-    selectedIndex = gameModes.indexWhere((game) => game.title == "ALEATORIO");
-    if (selectedIndex == -1) {
-      selectedIndex = 0;
-    }
-  }
-
-  @override
   Widget build(BuildContext context) {
+    final ConfigurationGameProvider configurationGameProvider =
+        Provider.of<ConfigurationGameProvider>(context);
     return BackgraundScreen(
       child: Scaffold(
         backgroundColor: Colors.transparent,
@@ -57,7 +40,7 @@ class _GameConfigurationPageState extends State<GameConfigurationPage> {
                       Column(
                         children: [
                           Text(
-                            '$players',
+                            '',
                             style: TextStyle(
                               color: const Color.fromRGBO(55, 20, 234, 1),
                               fontWeight: FontWeight.bold,
@@ -70,15 +53,7 @@ class _GameConfigurationPageState extends State<GameConfigurationPage> {
                   ),
                   //Todo: Angelica componente contador jugadores
                   SizedBox(height: 20),
-                  PlayerCounter(
-                    players: players,
-                    maxPlayers: maxPlayers,
-                    onChanged: (newValue) {
-                      setState(() {
-                        players = newValue;
-                      });
-                    },
-                  ),
+
                   SizedBox(height: 20),
                   _allCounters(),
                   SizedBox(height: 20),
@@ -87,10 +62,10 @@ class _GameConfigurationPageState extends State<GameConfigurationPage> {
                   _mainText('TEMÁTICA'),
                   _subtitleText('Selecciona el mazo de palabras'),
                   SizedBox(height: 20),
-                  _gameModeSelector(),
+                  _gameModeSelector(context, configurationGameProvider),
                   //Fin Wldy
                   SizedBox(height: 40),
-                  _warningAndBegin(),
+                  _warningAndBegin(context, configurationGameProvider),
                 ],
               ),
             ),
@@ -100,7 +75,10 @@ class _GameConfigurationPageState extends State<GameConfigurationPage> {
     );
   }
 
-  Stack _warningAndBegin() {
+  Stack _warningAndBegin(
+    BuildContext context,
+    ConfigurationGameProvider configurationGameProvider,
+  ) {
     return Stack(
       children: [
         Container(
@@ -154,7 +132,10 @@ class _GameConfigurationPageState extends State<GameConfigurationPage> {
           left: 0,
           child: CustomButtonText(
             textButton: 'Comenzar ',
-            onPressed: () => "Comenzar",
+            onPressed: () => _onStartPressed(
+              context: context,
+              provider: configurationGameProvider,
+            ),
             iconRight: Icons.play_arrow,
           ),
         ),
@@ -163,115 +144,71 @@ class _GameConfigurationPageState extends State<GameConfigurationPage> {
   }
 
   Row _allCounters() {
-    return Row(
-      children: [
-        Expanded(
-          flex: 45,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              _mainText('IMPOSTORES'),
-              _subtitleText('¿Quién miente?'),
-              const SizedBox(height: 20),
-              ImpostorRonda(
-                onMinus: () {
-                  setState(() {
-                    if (rondas > 1) rondas--;
-                  });
-                },
-                onPlus: () {
-                  setState(() {
-                    rondas++;
-                  });
-                },
-                ronda: rondas,
-              ),
-            ],
-          ),
-        ),
-
-        const SizedBox(width: 20),
-        // Columna de RONDAS
-        Expanded(
-          flex: 45,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              _mainText('RONDAS'),
-              _subtitleText('Duración partida'),
-              const SizedBox(height: 20),
-              ImpostorRonda(
-                onMinus: () {
-                  setState(() {
-                    if (impostors > 1) impostors--;
-                  });
-                },
-                onPlus: () {
-                  setState(() {
-                    impostors++;
-                  });
-                },
-                ronda: impostors,
-              ),
-            ],
-          ),
-        ),
-      ],
-    );
+    return Row();
   }
 
-  SingleChildScrollView _gameModeSelector() {
-    return SingleChildScrollView(
-      scrollDirection: Axis.horizontal,
-      child: Row(
-        children: [
-          ...gameModes.asMap().entries.map((entry) {
-            int index = entry.key;
-            var game = entry.value;
-
-            return Row(
-              children: [
-                GameCard(
-                  imagePath: game.imagePath,
-                  title: game.title,
-                  imageBackgraundPath: game.imageBackgraundPath,
-                  isSelected: selectedIndex == index,
-                  onTap: () {
-                    setState(() {
-                      selectedIndex = index;
-                    });
-                  },
-                ),
-                const SizedBox(width: 20),
-              ],
-            );
-          }),
-        ],
+  Widget _gameModeSelector(
+    BuildContext context,
+    ConfigurationGameProvider provider,
+  ) {
+    return SizedBox(
+      height: 180,
+      child: ListView.separated(
+        scrollDirection: Axis.horizontal,
+        itemCount: WordDeck.values.length,
+        separatorBuilder: (context, index) => const SizedBox(width: 12),
+        itemBuilder: (BuildContext context, int index) {
+          final WordDeck deck = WordDeck.values[index];
+          return GameCard(
+            deck: deck,
+            isSelected: provider.selectedDeck == deck,
+            onTap: () => provider.selectDeck(deck),
+          );
+        },
       ),
     );
   }
+
+  Text _mainText(String mainText) {
+    return Text(
+      mainText,
+      style: TextStyle(
+        fontSize: 14,
+        fontWeight: FontWeight.bold,
+        color: const Color.fromRGBO(55, 20, 234, 1),
+      ),
+      textAlign: TextAlign.start,
+    );
+  }
+
+  Text _subtitleText(String subtitleText) {
+    return Text(
+      subtitleText,
+      style: TextStyle(
+        fontSize: 12,
+        fontWeight: FontWeight.normal,
+        color: const Color.fromARGB(135, 255, 255, 255),
+      ),
+      textAlign: TextAlign.start,
+    );
+  }
 }
 
-Text _mainText(String mainText) {
-  return Text(
-    mainText,
-    style: TextStyle(
-      fontSize: 14,
-      fontWeight: FontWeight.bold,
-      color: const Color.fromRGBO(55, 20, 234, 1),
-    ),
-    textAlign: TextAlign.start,
-  );
-}
-
-Text _subtitleText(String subtitleText) {
-  return Text(
-    subtitleText,
-    style: TextStyle(
-      fontSize: 12,
-      fontWeight: FontWeight.normal,
-      color: const Color.fromARGB(135, 255, 255, 255),
-    ),
-    textAlign: TextAlign.start,
-  );
+void _onStartPressed({
+  required BuildContext context,
+  required ConfigurationGameProvider provider,
+}) {
+  try {
+    provider.startGame();
+    print("la palabra es: ${provider.currentWord}");
+  } catch (e) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(e.toString()),
+        backgroundColor: Colors.red[800],
+        behavior: SnackBarBehavior.floating,
+      ),
+    );
+    return;
+  }
 }

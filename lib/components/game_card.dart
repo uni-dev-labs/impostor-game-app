@@ -1,17 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:impostor/core/game_card_data.dart';
 
 class GameCard extends StatelessWidget {
-  final String imagePath;
-  final String title;
-  final String imageBackgraundPath;
+  final WordDeck deck;
   final bool isSelected;
   final VoidCallback onTap;
 
   const GameCard({
     super.key,
-    required this.imagePath,
-    required this.title,
-    required this.imageBackgraundPath,
+    required this.deck,
     required this.isSelected,
     required this.onTap,
   });
@@ -28,7 +25,7 @@ class GameCard extends StatelessWidget {
           child: Stack(
             children: [
               Image.asset(
-                imageBackgraundPath,
+                (deck.imageBackgraundPath),
                 fit: BoxFit.cover,
                 height: 200,
                 width: 150,
@@ -62,10 +59,10 @@ class GameCard extends StatelessWidget {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Image.asset(imagePath, width: 70),
+                    Image.asset(deck.imagePath, width: 70),
                     const SizedBox(height: 10),
                     Text(
-                      title,
+                      deck.titleCard,
                       style: TextStyle(
                         fontSize: 15,
                         fontWeight: FontWeight.bold,
