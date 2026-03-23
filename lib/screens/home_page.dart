@@ -12,6 +12,7 @@ class HomePage extends StatelessWidget {
     colors: [Color(0xFF1A1F4D), Color(0xFF0A0E27)],
   );
 
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

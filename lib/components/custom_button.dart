@@ -96,7 +96,7 @@ class ProfileBar extends StatelessWidget {
 }
 
 class _Perfiles extends StatelessWidget {
-  const _Perfiles({super.key, required this.imagePath});
+  const _Perfiles({required this.imagePath});
 
   final String imagePath;
 
