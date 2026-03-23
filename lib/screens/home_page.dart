@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:impostor/screens/reveal_role_page.dart';
 import 'package:impostor/components/custom_button.dart';
 import 'package:impostor/screens/settings_page.dart';
 
