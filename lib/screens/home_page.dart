@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:impostor/components/custom_button.dart';
+import 'package:impostor/screens/settings_page.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -66,7 +67,13 @@ class HomePage extends StatelessWidget {
                 PrimaryButton(
                   text: '➡ JUGAR',
                   onPressed: () {
-                    debugPrint('Jugar');
+                    // Quitamos el debugPrint y ponemos la navegación
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const SettingsPage(),
+                      ),
+                    );
                   },
                 ),
 
@@ -114,9 +121,26 @@ class _HeaderButtons extends StatelessWidget {
       height: 100,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: const [
-          CustomButton(icon: Icons.settings),
-          CustomButton(icon: Icons.info_outline),
+        children: [
+          // Botón de Settings
+          CustomButton(
+            icon: Icons.settings,
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const SettingsPage()),
+              );
+            },
+          ),
+          // Botón de Info
+          // Botón de Settings
+          CustomButton(
+            icon: Icons.settings,
+            onPressed: () {
+              // Lo dejamos vacío o para futuros ajustes generales
+              debugPrint("Ajustes generales presionados");
+            },
+          ),
         ],
       ),
     );
