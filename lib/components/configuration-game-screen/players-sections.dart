@@ -1,17 +1,22 @@
 import 'package:flutter/material.dart';
+import 'package:impostor/Providers/configuration_game_provider.dart';
+import 'package:provider/provider.dart';
+
 
 class PlayersSection extends StatelessWidget {
   const PlayersSection({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final config = context.watch<ConfigurationGameProvider>();
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: const [
-            Column(
+          children: [
+            const Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
@@ -29,9 +34,11 @@ class PlayersSection extends StatelessWidget {
                 ),
               ],
             ),
+
+            /// 🔢 DINÁMICO
             Text(
-              "08",
-              style: TextStyle(
+              config.players.toString().padLeft(2, "0"),
+              style: const TextStyle(
                 color: Color(0xFF1A3DBF),
                 fontSize: 32,
                 fontWeight: FontWeight.bold,
@@ -47,6 +54,7 @@ class PlayersSection extends StatelessWidget {
           ],
         ),
         const SizedBox(height: 16),
+
         Container(
           padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 14),
           decoration: BoxDecoration(
@@ -59,8 +67,14 @@ class PlayersSection extends StatelessWidget {
           ),
           child: Row(
             children: [
-              _squareButton(Icons.remove, isPrimary: false),
+              /// ➖ RESTAR
+              GestureDetector(
+                onTap: () => config.lessPlayers(),
+                child: _squareButton(Icons.remove, isPrimary: false),
+              ),
+
               const SizedBox(width: 12),
+
               Expanded(
                 child: Container(
                   height: 6,
@@ -71,7 +85,10 @@ class PlayersSection extends StatelessWidget {
                   child: Align(
                     alignment: Alignment.centerLeft,
                     child: FractionallySizedBox(
-                      widthFactor: 0.6,
+                      /// 📊 BARRA DINÁMICA
+                      widthFactor: config.players == 0
+                          ? 0
+                          : config.players / config.maxPlayers,
                       child: Container(
                         decoration: BoxDecoration(
                           color: const Color(0xFF1A3DBF),
@@ -89,8 +106,14 @@ class PlayersSection extends StatelessWidget {
                   ),
                 ),
               ),
+
               const SizedBox(width: 12),
-              _squareButton(Icons.add, isPrimary: true),
+
+              /// ➕ SUMAR
+              GestureDetector(
+                onTap: () => config.addPlayers(),
+                child: _squareButton(Icons.add, isPrimary: true),
+              ),
             ],
           ),
         ),
