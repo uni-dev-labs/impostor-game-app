@@ -53,8 +53,9 @@ class _SettingsPageState extends State<SettingsPage> {
                               value: _impostors,
                               onIncrement: () => setState(() => _impostors++),
                               onDecrement: () {
-                                if (_impostors > 1)
+                                if (_impostors > 1) {
                                   setState(() => _impostors--);
+                                }
                               },
                             ),
                           ),
