@@ -41,6 +41,11 @@ class ConfigurationGameProvider extends ChangeNotifier {
   void lessPlayers() {
     if (!validateIsPositiveNumber(players)) return;
     players--;
+
+    if (impostors >= players) {
+    impostors = (players - 1).clamp(0, players);
+    }
+
     notifyListeners();
   }
 
@@ -57,6 +62,7 @@ class ConfigurationGameProvider extends ChangeNotifier {
 
   void selectDeck(WordDeck deck) {
     selectedDeck = deck;
+    debugPrint('🎴 Mazo seleccionado: ${deck.label}');
     notifyListeners();
   }
 

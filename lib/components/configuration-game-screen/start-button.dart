@@ -1,13 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:impostor/Providers/configuration_game_provider.dart';
+import 'package:provider/provider.dart';
 
 class StartButton extends StatelessWidget {
   const StartButton({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final config = context.read<ConfigurationGameProvider>();
+
     return Column(
       children: [
-        // Texto de advertencia
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
           child: Row(
@@ -42,55 +45,79 @@ class StartButton extends StatelessWidget {
             ],
           ),
         ),
-
         const SizedBox(height: 8),
-
-        // Botón
         SizedBox(
           width: double.infinity,
           height: 55,
-          child: Container(
-            decoration: BoxDecoration(
-              color: const Color.fromARGB(255, 30, 38, 129),
-              borderRadius: BorderRadius.circular(20),
-              border: Border.all(
-                color: const Color(0xFF1A3DBF).withOpacity(0.8),
-                width: 1.5,
-              ),
-              boxShadow: [
-                BoxShadow(
-                  color: const Color(0xFF1A3DBF).withOpacity(0.5),
-                  blurRadius: 25,
-                  spreadRadius: 4,
-                  offset: const Offset(0, 0),
-                ),
-                BoxShadow(
-                  color: const Color(0xFF1A3DBF).withOpacity(0.2),
-                  blurRadius: 50,
-                  spreadRadius: 8,
-                  offset: const Offset(0, 0),
-                ),
-              ],
-            ),
-            child: const Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(
-                  "COMENZAR",
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 18,
-                    letterSpacing: 2,
+          child: GestureDetector(
+            onTap: () {
+              try {
+                final word = config.startGame();
+                debugPrint('🎮 Juego iniciado');
+                debugPrint('🔤 Palabra generada: $word');
+                debugPrint('👥 Jugadores: ${config.players}');
+                debugPrint('🕵️ Impostores: ${config.impostors}');
+                debugPrint('🔄 Rondas: ${config.rounds}');
+                debugPrint('🎴 Mazo: ${config.selectedDeck.label}');
+
+                // TODO: navegar a la siguiente pantalla
+              } catch (e) {
+                debugPrint('❌ Error al iniciar: $e');
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    content: Text(e.toString().replaceAll('StateError: ', '')),
+                    backgroundColor: const Color(0xFF1A3DBF),
+                    behavior: SnackBarBehavior.floating,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12),
+                    ),
                   ),
+                );
+              }
+            },
+            child: Container(
+              decoration: BoxDecoration(
+                color: const Color.fromARGB(255, 30, 38, 129),
+                borderRadius: BorderRadius.circular(20),
+                border: Border.all(
+                  color: const Color(0xFF1A3DBF).withOpacity(0.8),
+                  width: 1.5,
                 ),
-                SizedBox(width: 10),
-                Icon(
-                  Icons.play_arrow,
-                  color: Colors.white,
-                  size: 22,
-                ),
-              ],
+                boxShadow: [
+                  BoxShadow(
+                    color: const Color(0xFF1A3DBF).withOpacity(0.5),
+                    blurRadius: 25,
+                    spreadRadius: 4,
+                    offset: const Offset(0, 0),
+                  ),
+                  BoxShadow(
+                    color: const Color(0xFF1A3DBF).withOpacity(0.2),
+                    blurRadius: 50,
+                    spreadRadius: 8,
+                    offset: const Offset(0, 0),
+                  ),
+                ],
+              ),
+              child: const Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    "COMENZAR",
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 18,
+                      letterSpacing: 2,
+                    ),
+                  ),
+                  SizedBox(width: 10),
+                  Icon(
+                    Icons.play_arrow,
+                    color: Colors.white,
+                    size: 22,
+                  ),
+                ],
+              ),
             ),
           ),
         ),
