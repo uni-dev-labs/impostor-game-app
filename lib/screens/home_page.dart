@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-
+import 'package:impostor/screens/reveal_role_page.dart';
 import 'package:impostor/components/custom_button.dart';
 import 'package:impostor/screens/settings_page.dart';
 
@@ -9,25 +9,21 @@ class HomePage extends StatelessWidget {
   static const _gradient = LinearGradient(
     begin: Alignment.topCenter,
     end: Alignment.bottomCenter,
-    colors: [Color(0xFF1A1F4D), Color(0xFF0A0E27)],
+    colors: [Color(0xFF0D0B1E), Color(0xFF1A1740)],
   );
-
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
         decoration: const BoxDecoration(gradient: _gradient),
-        child: SingleChildScrollView(
-          padding: const EdgeInsets.symmetric(horizontal: 20),
-          child: ConstrainedBox(
-            constraints: BoxConstraints(
-              minHeight: MediaQuery.of(context).size.height,
-            ),
+        child: Center(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20),
             child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                const SizedBox(height: 50),
-
+                
                 /// Header
                 const _HeaderButtons(),
 
@@ -35,12 +31,13 @@ class HomePage extends StatelessWidget {
 
                 /// Title
                 const Text(
-                  'EL \nIMPOSTOR',
+                  'EL IMPOSTOR',
                   textAlign: TextAlign.center,
                   style: TextStyle(
-                    fontSize: 24,
+                    fontSize: 36,
                     fontWeight: FontWeight.bold,
                     color: Colors.white,
+                    letterSpacing: 2,
                   ),
                 ),
 
@@ -51,23 +48,23 @@ class HomePage extends StatelessWidget {
                   'DESCUBRE QUIÉN MIENTE...',
                   textAlign: TextAlign.center,
                   style: TextStyle(
-                    fontSize: 10,
-                    fontWeight: FontWeight.bold,
-                    color: Color.fromRGBO(255, 255, 255, 0.5),
+                    fontSize: 12,
+                    color: Colors.white54,
                   ),
                 ),
 
-                const SizedBox(height: 30),
+                const SizedBox(height: 40),
 
-                /// Logo
+                /// Logo mejorado
                 const _Logo(),
 
-                const SizedBox(height: 40),
+                const SizedBox(height: 50),
 
                 /// Play Button
                 PrimaryButton(
-                  text: '➡ JUGAR',
+                  text: 'JUGAR',
                   onPressed: () {
+                     Navigator.push(context,MaterialPageRoute(builder: (context) => const SettingsPage()));
                     debugPrint('Jugar');
                   },
                 ),
@@ -83,18 +80,18 @@ class HomePage extends StatelessWidget {
                   },
                 ),
 
+                const SizedBox(height: 25),
+
                 const ProfileBar(),
 
-                Padding(
-                  padding: const EdgeInsets.only(top: 5),
-                  child: Text(
-                    'JUGADO POR GRUPOS EN TODO EL MUNDO',
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      fontSize: 10,
-                      fontWeight: FontWeight.bold,
-                      color: Color.fromRGBO(255, 255, 255, 0.5),
-                    ),
+                const SizedBox(height: 10),
+
+                const Text(
+                  'JUGADO POR GRUPOS EN TODO EL MUNDO',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontSize: 10,
+                    color: Colors.white54,
                   ),
                 ),
               ],
@@ -150,7 +147,13 @@ class _Logo extends StatelessWidget {
       height: 200,
       decoration: BoxDecoration(
         shape: BoxShape.circle,
-        border: Border.all(color: Colors.deepPurple),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.deepPurple.withOpacity(0.6),
+            blurRadius: 40,
+            spreadRadius: 5,
+          ),
+        ],
       ),
       child: Stack(
         children: [
@@ -161,10 +164,10 @@ class _Logo extends StatelessWidget {
           Container(
             decoration: BoxDecoration(
               shape: BoxShape.circle,
-              color: Colors.black.withOpacity(0.4), // Nivel de oscuridad
+              color: Colors.black.withOpacity(0.3),
             ),
           ),
-        ],
+        ]
       ),
     );
   }

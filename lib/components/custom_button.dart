@@ -35,37 +35,48 @@ class PrimaryButton extends StatelessWidget {
   final VoidCallback onPressed;
   final Color backgroundColor;
   final Color textColor;
-  final double horizontalPadding;
-  final double verticalPadding;
 
   const PrimaryButton({
     super.key,
     required this.text,
     required this.onPressed,
-    this.backgroundColor = const Color(0xFF5B3FD9),
+    this.backgroundColor = const Color(0xFF5A3FFF),
     this.textColor = Colors.white,
-    this.horizontalPadding = 100,
-    this.verticalPadding = 20,
   });
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
+    return Container(
       width: double.infinity,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(30),
+        boxShadow: [
+          BoxShadow(
+            color: backgroundColor.withOpacity(0.6),
+            blurRadius: 20,
+            spreadRadius: 2,
+          ),
+        ],
+      ),
       child: ElevatedButton(
         style: ElevatedButton.styleFrom(
           backgroundColor: backgroundColor,
-          foregroundColor: textColor,
-          padding: EdgeInsets.symmetric(
-            horizontal: horizontalPadding,
-            vertical: verticalPadding,
-          ),
+          padding: const EdgeInsets.symmetric(vertical: 18),
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(12),
+            borderRadius: BorderRadius.circular(30),
           ),
+          elevation: 0, // importante para que no choque con el glow
         ),
         onPressed: onPressed,
-        child: Text(text, style: const TextStyle(fontWeight: FontWeight.bold)),
+        child: Text(
+          text,
+          style: TextStyle(
+            color: textColor,
+            fontWeight: FontWeight.bold,
+            fontSize: 16,
+            letterSpacing: 1,
+          ),
+        ),
       ),
     );
   }
