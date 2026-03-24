@@ -28,7 +28,7 @@ class HomePage extends StatelessWidget {
                   CustomButtonText(
                     iconLeft: Icons.play_arrow,
                     textButton: "JUGAR",
-                    onPressed: () => "Jugar",
+                    onPressed: () => Navigator.pushNamed(context, "configuration-game"),
                   ),
                   SizedBox(height: 20),
                   CustomButtonText(
@@ -104,7 +104,7 @@ class HomePage extends StatelessWidget {
         children: [
           CustomButton(
             icon: Icons.settings,
-            onPressed: () => Navigator.pushNamed(context, "configuration-game"),
+            onPressed: () => '',
           ),
           CustomButton(icon: Icons.info_outline, onPressed: () => ''),
         ],

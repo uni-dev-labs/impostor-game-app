@@ -1,17 +1,67 @@
 import 'package:flutter/material.dart';
-
 class ConfigurationGameProvider extends ChangeNotifier {
+  
   int players;
   int maxPlayers;
-  int impostor;
-  int rounds;
-  String? currentword;
+  int impostors;
+  int rounds;  
+  String? currentWord;
 
   ConfigurationGameProvider({
-    this.players = 0,
-    this.maxPlayers = 24,
-    this.impostor = 0,
-    this.rounds = 3,
-    this.currentword,
+    this.players    = 0,
+    this.impostors  = 0,
+    this.rounds     = 0,
+    this.maxPlayers = 24,    
+    this.currentWord,
   });
+
+  void addImpostors() {
+    if (impostors >= players - 1) return;
+    impostors++;
+    notifyListeners();
+  }
+
+  void lessImpostors() {
+    if (!validateIsPositiveNumber(impostors)) return;
+    impostors--;
+    notifyListeners();
+  }
+
+  void addPlayers() {
+    if (players >= maxPlayers) return;
+    players++;
+    notifyListeners();
+  }
+
+  void lessPlayers() {
+    if (!validateIsPositiveNumber(players)) return;
+    players--;
+    notifyListeners();
+  }
+
+  void addRounds() {
+    rounds++;
+    notifyListeners();
+  }
+
+  void lessRounds() {
+    if (!validateIsPositiveNumber(rounds)) return;
+    rounds--;
+    notifyListeners();
+  }  
+
+  void _validateGameRules() {
+    if (players <= 0)   throw StateError('Debes tener al menos 1 jugador para comenzar.');
+    if (rounds <= 0)    throw StateError('Debes configurar al menos 1 ronda.');
+    if (impostors <= 0) throw StateError('Debe haber al menos 1 impostor en la partida.');
+  }
+
+  String startGame() {
+    _validateGameRules();    
+    notifyListeners();
+    return currentWord!;
+  }
+
+  bool validateIsPositiveNumber(int value) => (value == 0) ? false : true;
+
 }
