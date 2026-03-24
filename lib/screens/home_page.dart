@@ -19,7 +19,7 @@ class HomePage extends StatelessWidget {
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                _customAppbar(),
+                _customAppbar(context),
                 SizedBox(height: 5),
                 _title(),
                 _subtitle(),
@@ -30,12 +30,6 @@ class HomePage extends StatelessWidget {
                   text: "JUGAR",
                   onPressed: () => Navigator.pushNamed(context, 'configuration-game'),
                   icon: Icons.play_arrow,
-                ),
-                SizedBox(height: 20),
-                CustomButton(
-                  text: "hola mundo",
-                  onPressed: () => print("Iniciar"),
-                  color: Colors.grey,
                 ),
               ],
             ),
@@ -81,7 +75,7 @@ class HomePage extends StatelessWidget {
     );
   }
 
-  SizedBox _customAppbar() {
+  SizedBox _customAppbar(BuildContext context) {
     return SizedBox(
       width : double.infinity,
       height: 100,
@@ -89,7 +83,10 @@ class HomePage extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          CustomIconButton(icon: Icons.settings, onPressed: () {}),
+          CustomIconButton(
+            icon: Icons.settings,
+            onPressed: () => Navigator.pushNamed(context, 'configuration-game'),
+          ),
           CustomIconButton(icon: Icons.info_outline, onPressed: () {}),
         ],
       ),

@@ -284,7 +284,7 @@ class GameConfigurationPage extends StatelessWidget {
   }) {
     try {
       provider.startGame();
-      print("la palabra es: ${provider.currentWord}");
+      Navigator.pushNamed(context, 'rotation-secret');
     } catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
