@@ -1,11 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:impostor/components/backgraund_sreen.dart';
+import 'package:impostor/core/app_colors.dart';
 import 'package:impostor/components/custom_button_text.dart';
-import 'package:impostor/components/game_card.dart';
 import 'package:impostor/core/game_card_data.dart';
+
 import 'package:impostor/components/player_counter.dart';
 import 'package:impostor/components/impostor_ronda.dart';
 import 'package:impostor/providers/configuration_game_provider.dart';
+
+import 'package:impostor/providers/configuration_game_provider.dart';
+import 'package:impostor/screens/ui/game_configuration/button_configuration.dart';
+import 'package:impostor/screens/ui/game_configuration/select_option.dart';
 import 'package:provider/provider.dart';
 
 class GameConfigurationPage extends StatelessWidget {
@@ -24,17 +29,25 @@ class GameConfigurationPage extends StatelessWidget {
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20),
               child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
+                  _sectionPlayers(
+                    configurationGameProvider: configurationGameProvider,
+                  ),                  
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          _mainText('JUGADORES'),
-                          _subtitleText('Total de participantes'),
-                        ],
+                      Expanded(
+                        child: SelectOptionUI(
+                          title: 'IMPOSTORES',
+                          subtitle: '¿Quién miente?',
+                          value: configurationGameProvider.impostors,
+                          addPressed: () =>
+                              configurationGameProvider.addImpostors(),
+                          lessPressed: () =>
+                              configurationGameProvider.lessImpostors(),
+                        ),
                       ),
                       SizedBox(width: 100),
                       Column(
@@ -48,21 +61,37 @@ class GameConfigurationPage extends StatelessWidget {
                             ),
                           ),
                         ],
+
+                      const SizedBox(width: 16),
+                      Expanded(
+                        child: SelectOptionUI(
+                          title: 'RONDAS',
+                          subtitle: '¿Cuántas rondas?',
+                          value: configurationGameProvider.rounds,
+                          addPressed: () =>
+                              configurationGameProvider.addRounds(),
+                          lessPressed: () =>
+                              configurationGameProvider.lessRounds(),
+                        ),
+
                       ),
                     ],
                   ),
                   //Todo: Angelica componente contador jugadores
                   SizedBox(height: 20),
-
                   SizedBox(height: 20),
                   _allCounters(),
-                  SizedBox(height: 20),
+                  SizedBox(height: 20),                 
                   //Fin Daniela
+
                   //Todo: componente tarjetas de juego Wldy
                   _mainText('TEMÁTICA'),
                   _subtitleText('Selecciona el mazo de palabras'),
                   SizedBox(height: 20),
                   _gameModeSelector(context, configurationGameProvider),
+
+                  //Todo: componente tarjetas de juego Wldy                  
+
                   //Fin Wldy
                   SizedBox(height: 40),
                   _warningAndBegin(context, configurationGameProvider),
@@ -142,6 +171,9 @@ class GameConfigurationPage extends StatelessWidget {
       ],
     );
   }
+ 
+}
+
 
   Row _allCounters() {
     return Row();
@@ -211,4 +243,97 @@ void _onStartPressed({
     );
     return;
   }
+Widget _sectionPlayers({
+  required ConfigurationGameProvider configurationGameProvider,
+}) {
+  return Column(
+    crossAxisAlignment: CrossAxisAlignment.start,
+    children: [
+      Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        textBaseline: TextBaseline.alphabetic,
+        children: [
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                'JUGADORES',
+                style: TextStyle(
+                  color: purple,
+                  fontSize: 14,
+                  fontWeight: FontWeight.bold,
+                  letterSpacing: 1.2,
+                ),
+              ),
+              const SizedBox(height: 2),
+              Text(
+                'Total de participantes',
+                style: TextStyle(color: subtitleGray, fontSize: 12),
+              ),
+            ],
+          ),
+          Text(
+            configurationGameProvider.players.toString(),
+            style: TextStyle(
+              color: purple,
+              fontSize: 32,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+        ],
+      ),
+      const SizedBox(height: 12),
+      Container(
+        width: double.infinity,
+        height: 100,
+        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+        decoration: BoxDecoration(
+          color: cardColor,
+          borderRadius: BorderRadius.circular(20),
+          border: Border.all(color: cardBorderColor, width: 1),
+        ),
+        child: Row(
+          children: [
+            ButtonConfigurationUI(
+              onPressed: () => configurationGameProvider.lessPlayers(),
+              icon: Icons.remove,
+              isAccent: false,
+              width: 55,
+              height: 55,
+            ),
+            
+            Expanded(
+              child: SliderTheme(
+                data: SliderThemeData(
+                  trackHeight: 7,                  
+                  activeTrackColor: purple,
+                  inactiveTrackColor: purpleDark.withValues(alpha: 0.5),
+                  thumbShape: const RoundSliderThumbShape(
+                    enabledThumbRadius: 0,
+                  ),
+                                   
+                  overlayColor: purple.withValues(alpha: 0.2),
+                ),
+                child: Slider(
+                  value: configurationGameProvider.players.toDouble(),
+                  min: 0,
+                  max: configurationGameProvider.maxPlayers.toDouble(),
+                  onChanged: (_) => configurationGameProvider.players,
+                ),
+              ),
+            ),
+            ButtonConfigurationUI(
+              onPressed: () => configurationGameProvider.addPlayers(),
+              icon: Icons.add,
+              isAccent: true,
+              width: 55,
+              height: 55,
+            ),
+          ],
+        ),
+      ),
+      const SizedBox(height: 20),
+    ],
+  );
 }
