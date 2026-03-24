@@ -4,3 +4,5 @@ export 'package:impostor/screens/game_round_time.dart';
 export 'package:impostor/screens/victory_page.dart';
 export 'package:impostor/screens/impostor.dart';
 export 'package:impostor/screens/rol_usuario.dart';
+export 'package:impostor/screens/adivinar_palabra.dart';
+export 'package:impostor/screens/ocultar_rol.dart';

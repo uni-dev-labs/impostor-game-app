@@ -11,5 +11,16 @@ Map<String, WidgetBuilder> routes = {
   '/game-round-time':(context) =>const GameRoundPage(),
   '/victory':(context) =>const VictoryPage(),
   '/rol-usuario':(context)=>const RolUsuarioPage(),
+  '/ocultar-rol': (context) => OcultarRolPage(
+    playerName: 'Jugador 1',
+    currentStep: 1,
+    totalSteps: 8,
+    onReveal: () => ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(content: Text('¡Revelando rol...')),
+      ),
+  ),
+  '/adivinar-palabra': (context) => AdivinarPalabraPage(
+  onConfirm: (palabra) => Navigator.pushNamed(context, '/resultado'),
+),
 
 };

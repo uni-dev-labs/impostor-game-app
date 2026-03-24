@@ -1,0 +1,10 @@
+{
+    "configurations": [
+        {
+            "name": "Flutter (lib\\screens\\ocultar_rol.dart)",
+            "type": "dart",
+            "request": "launch",
+            "program": "lib\\screens\\ocultar_rol.dart"
+        }
+    ]
+}
