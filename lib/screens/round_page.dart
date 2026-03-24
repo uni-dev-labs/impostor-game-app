@@ -1,5 +1,8 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import '../provider/game_provider.dart'; 
+import 'adivinar_page.dart';
 
 class RoundPage extends StatefulWidget {
   final int totalRounds;
@@ -56,9 +59,107 @@ class _RoundPageState extends State<RoundPage>
         _startTimer();
       });
     } else {
-      // TODO: navegar a pantalla de votación
-      debugPrint("Fin del juego");
+      // 1. Detenemos el temporizador para que no siga corriendo en segundo plano
+      _timer?.cancel(); 
+      
+      // 2. Navegamos a la pantalla donde el impostor intenta adivinar
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => const GuessWordPage()),
+      );
     }
+  }
+  // FUNCIÓN NUEVA: Lógica para que el impostor intente adivinar la palabra
+  void _showGuessDialog(BuildContext context) {
+    final TextEditingController controller = TextEditingController();
+    final String correctWord = Provider.of<GameProvider>(context, listen: false).palabraSecreta;
+
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (context) => AlertDialog(
+        backgroundColor: const Color(0xFF151530),
+
+        shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(25),
+              side: const BorderSide(color: Colors.white12), // Usa BorderSide, no Border.all
+        ),
+
+        title: const Text(
+          "¿Cuál es la palabra?",
+          textAlign: TextAlign.center,
+          style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+        ),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            const Text(
+              "Si aciertas, los impostores ganan la partida.",
+              textAlign: TextAlign.center,
+              style: TextStyle(color: Colors.white54, fontSize: 13),
+            ),
+            const SizedBox(height: 20),
+            TextField(
+              controller: controller,
+              autofocus: true,
+              textAlign: TextAlign.center,
+              style: const TextStyle(color: Colors.white, fontSize: 20),
+              decoration: InputDecoration(
+                hintText: "Escribe aquí...",
+                hintStyle: const TextStyle(color: Colors.white24),
+                filled: true,
+                fillColor: Colors.white.withOpacity(0.05),
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(15),
+                  borderSide: BorderSide.none,
+                ),
+              ),
+            ),
+          ],
+        ),
+        actionsPadding: const EdgeInsets.only(bottom: 20, left: 20, right: 20),
+        actions: [
+          Row(
+            children: [
+              Expanded(
+                child: TextButton(
+                  onPressed: () => Navigator.pop(context),
+                  child: const Text("CANCELAR", style: TextStyle(color: Colors.white38)),
+                ),
+              ),
+              Expanded(
+                child: ElevatedButton(
+                  onPressed: () {
+                    if (controller.text.trim().toLowerCase() == correctWord.toLowerCase()) {
+                      Navigator.pop(context);
+                      _showFinalResult(true);
+                    } else {
+                      Navigator.pop(context);
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(
+                          content: Text("Palabra incorrecta, ¡ten cuidado!"),
+                          backgroundColor: Colors.redAccent,
+                        ),
+                      );
+                    }
+                  },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: const Color(0xFF6C3BFF),
+                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                  ),
+                  child: const Text("ADIVINAR", style: TextStyle(color: Colors.white)),
+                ),
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+
+  void _showFinalResult(bool impostorWon) {
+    // Aquí podrías navegar a una pantalla de resultados final
+    debugPrint(impostorWon ? "GANÓ EL IMPOSTOR" : "GANARON LOS JUGADORES");
   }
 
   @override
@@ -124,8 +225,8 @@ class _RoundPageState extends State<RoundPage>
                 ///INTENTAR ADIVINAR (solo para impostores) 
                 if (widget.isImpostor)
                   OutlinedButton.icon(
-                    onPressed: () => debugPrint("Intentar adivinar"),
-                    icon: const Icon(Icons.location_on_outlined,
+                    onPressed: () => _showGuessDialog(context),
+                    icon: const Icon(Icons.lightbulb_outline,
                         size: 16, color: Colors.white54),
                     label: const Text(
                       "Intentar adivinar",
@@ -290,7 +391,6 @@ class _TimerCircle extends StatelessWidget {
     );
   }
 }
-
 
 class _ArcPainter extends CustomPainter {
   final double progress;

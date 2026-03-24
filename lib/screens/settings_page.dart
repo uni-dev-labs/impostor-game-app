@@ -3,6 +3,8 @@ import 'package:impostor/components/custom_button.dart';
 import 'package:impostor/components/counter_control.dart';
 import 'package:impostor/screens/game_data.dart';
 import 'package:impostor/screens/reveal_role_page.dart';
+import 'package:provider/provider.dart';
+import '../provider/game_provider.dart'; 
 
 
 class SettingsPage extends StatefulWidget {
@@ -87,41 +89,41 @@ class _SettingsPageState extends State<SettingsPage> {
                       const SizedBox(height: 24),
 
                       PrimaryButton(
-                        text: "COMENZAR  ▶",
-                        onPressed: () {
+  text: "COMENZAR  ▶",
+  onPressed: () {
+    // 1. Elegimos la palabra secreta según el tema seleccionado
+    String secretWord = GameData.getRandomWord(_selectedTheme);
 
-                          // Aquí inicias la lógica del juego
-                          debugPrint("Iniciando con $_players jugadores");
+    // 2. GUARDAMOS LA PALABRA EN EL PROVIDER (Para tus mockups finales)
+    Provider.of<GameProvider>(context, listen: false).setPalabraSecreta(secretWord);
 
-                          // 1. Elegimos la palabra secreta según el tema seleccionado
-                          String secretWord = GameData.getRandomWord(
-                            _selectedTheme,
-                          );
+    debugPrint("Iniciando con $_players jugadores. Palabra: $secretWord");
 
-                          // 2. Creamos la lista de roles (primero todos con la palabra)
-                          List<String> roles = List.generate(
-                            _players,
-                            (index) => secretWord,
-                          );
+    // 3. Creamos la lista de roles
+    List<String> roles = List.generate(
+      _players,
+      (index) => secretWord,
+    );
 
-                          // 3. Reemplazamos algunos por "IMPOSTOR" según la cantidad elegida
-                          for (int i = 0; i < _impostors; i++) {
-                            roles[i] = "IMPOSTOR";
-                          }
+    // 4. Reemplazamos algunos por "IMPOSTOR"
+    for (int i = 0; i < _impostors; i++) {
+      roles[i] = "IMPOSTOR";
+    }
 
-                          // 4. ¡MUY IMPORTANTE! Mezclamos la lista para que sea aleatorio
-                          roles.shuffle();
+    // 5. Mezclamos la lista
+    roles.shuffle();
 
-                          // 5. Navegamos a la pantalla de revelado que hicimos antes
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) =>
-                                  RevealRolePage(playerRoles: roles),
-                            ),
-                          );
-                        },
-                      ),
+    // 6. Navegamos a la pantalla de revelado
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => RevealRolePage(playerRoles: roles),
+      ),
+    );
+  },
+),
+
+
                       const SizedBox(height: 20),
                     ],
                   ),

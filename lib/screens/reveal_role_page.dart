@@ -52,13 +52,16 @@ class _RevealRolePageState extends State<RevealRolePage>
           _flipController.reset();
         });
      } else {
+  
+  bool isImpostor = widget.playerRoles[_currentPlayerIndex] == "IMPOSTOR";
+
   Navigator.pushReplacement(
     context,
     MaterialPageRoute(
       builder: (context) => RoundPage(
         totalRounds: 5,
         secondsPerRound: 120,
-        isImpostor: widget.playerRoles[_currentPlayerIndex] == "IMPOSTOR",
+        isImpostor: isImpostor,
       ),
     ),
   );
