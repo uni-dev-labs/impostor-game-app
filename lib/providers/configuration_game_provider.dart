@@ -1,9 +1,22 @@
+import 'dart:math';
 import 'package:flutter/material.dart';
+import 'package:impostor/core/game_card_data.dart';
+
 class ConfigurationGameProvider extends ChangeNotifier {
   
   int players;
   int maxPlayers;
   int impostors;
+  int rounds;
+  WordDeck selectedDeck;
+  String? currentWord;
+
+  ConfigurationGameProvider({
+    this.players = 0,
+    this.impostors = 0,
+    this.rounds = 0,
+    this.maxPlayers = 24,
+    this.selectedDeck = WordDeck.random,
   int rounds;  
   String? currentWord;
 
@@ -48,6 +61,29 @@ class ConfigurationGameProvider extends ChangeNotifier {
     if (!validateIsPositiveNumber(rounds)) return;
     rounds--;
     notifyListeners();
+  }
+
+  void selectDeck(WordDeck deck) {
+    selectedDeck = deck;
+    notifyListeners();
+  }
+
+  String getRandomWord() {
+    final List<String> words = selectedDeck.words;
+    return words[Random().nextInt(words.length)];
+  }
+
+  void _validateGameRules() {
+    if (players <= 0)
+      throw StateError('Debes tener al menos 1 jugador para comenzar.');
+    if (rounds <= 0) throw StateError('Debes configurar al menos 1 ronda.');
+    if (impostors <= 0)
+      throw StateError('Debe haber al menos 1 impostor en la partida.');
+  }
+
+  String startGame() {
+    _validateGameRules();
+    currentWord = getRandomWord();
   }  
 
   void _validateGameRules() {
@@ -63,5 +99,6 @@ class ConfigurationGameProvider extends ChangeNotifier {
   }
 
   bool validateIsPositiveNumber(int value) => (value == 0) ? false : true;
+}
 
 }

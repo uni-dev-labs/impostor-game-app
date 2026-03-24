@@ -3,6 +3,11 @@ import 'package:impostor/components/backgraund_sreen.dart';
 import 'package:impostor/core/app_colors.dart';
 import 'package:impostor/components/custom_button_text.dart';
 import 'package:impostor/core/game_card_data.dart';
+
+import 'package:impostor/components/player_counter.dart';
+import 'package:impostor/components/impostor_ronda.dart';
+import 'package:impostor/providers/configuration_game_provider.dart';
+
 import 'package:impostor/providers/configuration_game_provider.dart';
 import 'package:impostor/screens/ui/game_configuration/button_configuration.dart';
 import 'package:impostor/screens/ui/game_configuration/select_option.dart';
@@ -44,6 +49,19 @@ class GameConfigurationPage extends StatelessWidget {
                               configurationGameProvider.lessImpostors(),
                         ),
                       ),
+                      SizedBox(width: 100),
+                      Column(
+                        children: [
+                          Text(
+                            '',
+                            style: TextStyle(
+                              color: const Color.fromRGBO(55, 20, 234, 1),
+                              fontWeight: FontWeight.bold,
+                              fontSize: 32,
+                            ),
+                          ),
+                        ],
+
                       const SizedBox(width: 16),
                       Expanded(
                         child: SelectOptionUI(
@@ -55,18 +73,28 @@ class GameConfigurationPage extends StatelessWidget {
                           lessPressed: () =>
                               configurationGameProvider.lessRounds(),
                         ),
+
                       ),
                     ],
                   ),
                   //Todo: Angelica componente contador jugadores
                   SizedBox(height: 20),
                   SizedBox(height: 20),
-                  
+                  _allCounters(),
+                  SizedBox(height: 20),                 
                   //Fin Daniela
+
+                  //Todo: componente tarjetas de juego Wldy
+                  _mainText('TEMÁTICA'),
+                  _subtitleText('Selecciona el mazo de palabras'),
+                  SizedBox(height: 20),
+                  _gameModeSelector(context, configurationGameProvider),
+
                   //Todo: componente tarjetas de juego Wldy                  
+
                   //Fin Wldy
                   SizedBox(height: 40),
-                  _warningAndBegin(),
+                  _warningAndBegin(context, configurationGameProvider),
                 ],
               ),
             ),
@@ -76,7 +104,10 @@ class GameConfigurationPage extends StatelessWidget {
     );
   }
 
-  Stack _warningAndBegin() {
+  Stack _warningAndBegin(
+    BuildContext context,
+    ConfigurationGameProvider configurationGameProvider,
+  ) {
     return Stack(
       children: [
         Container(
@@ -130,7 +161,10 @@ class GameConfigurationPage extends StatelessWidget {
           left: 0,
           child: CustomButtonText(
             textButton: 'Comenzar ',
-            onPressed: () => "Comenzar",
+            onPressed: () => _onStartPressed(
+              context: context,
+              provider: configurationGameProvider,
+            ),
             iconRight: Icons.play_arrow,
           ),
         ),
@@ -140,6 +174,75 @@ class GameConfigurationPage extends StatelessWidget {
  
 }
 
+
+  Row _allCounters() {
+    return Row();
+  }
+
+  Widget _gameModeSelector(
+    BuildContext context,
+    ConfigurationGameProvider provider,
+  ) {
+    return SizedBox(
+      height: 180,
+      child: ListView.separated(
+        scrollDirection: Axis.horizontal,
+        itemCount: WordDeck.values.length,
+        separatorBuilder: (context, index) => const SizedBox(width: 12),
+        itemBuilder: (BuildContext context, int index) {
+          final WordDeck deck = WordDeck.values[index];
+          return GameCard(
+            deck: deck,
+            isSelected: provider.selectedDeck == deck,
+            onTap: () => provider.selectDeck(deck),
+          );
+        },
+      ),
+    );
+  }
+
+  Text _mainText(String mainText) {
+    return Text(
+      mainText,
+      style: TextStyle(
+        fontSize: 14,
+        fontWeight: FontWeight.bold,
+        color: const Color.fromRGBO(55, 20, 234, 1),
+      ),
+      textAlign: TextAlign.start,
+    );
+  }
+
+  Text _subtitleText(String subtitleText) {
+    return Text(
+      subtitleText,
+      style: TextStyle(
+        fontSize: 12,
+        fontWeight: FontWeight.normal,
+        color: const Color.fromARGB(135, 255, 255, 255),
+      ),
+      textAlign: TextAlign.start,
+    );
+  }
+}
+
+void _onStartPressed({
+  required BuildContext context,
+  required ConfigurationGameProvider provider,
+}) {
+  try {
+    provider.startGame();
+    print("la palabra es: ${provider.currentWord}");
+  } catch (e) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(e.toString()),
+        backgroundColor: Colors.red[800],
+        behavior: SnackBarBehavior.floating,
+      ),
+    );
+    return;
+  }
 Widget _sectionPlayers({
   required ConfigurationGameProvider configurationGameProvider,
 }) {
