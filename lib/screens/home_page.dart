@@ -108,7 +108,9 @@ class HomePage extends StatelessWidget {
                   width: double.infinity,
                   height: 56,
                   child: ElevatedButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.pushNamed(context, "/configuration");
+                    },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: const Color(0xFF3D38E0),
                       foregroundColor: Colors.white,
