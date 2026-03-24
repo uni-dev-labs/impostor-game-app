@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:impostor/routes.dart';
+import 'package:impostor/screens/player_screen.dart';
 
 void main() {
   runApp(const MyApp());
