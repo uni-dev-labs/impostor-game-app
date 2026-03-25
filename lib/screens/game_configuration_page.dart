@@ -1,25 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:impostor/core/app_colors.dart';
+import 'package:impostor/core/word_decks.dart';
+import 'package:impostor/providers/game_configuration_provider.dart';
+import 'package:impostor/providers/game_provider.dart';
 import 'package:impostor/components/circle_button.dart';
 import 'package:impostor/components/theme_card.dart';
 import 'package:impostor/components/custom_button.dart';
+import 'package:provider/provider.dart';
 
-class GameConfigurationPage extends StatefulWidget {
+class GameConfigurationPage extends StatelessWidget {
   const GameConfigurationPage({super.key});
 
   @override
-  State<GameConfigurationPage> createState() => _GameConfigurationPageState();
-}
-
-class _GameConfigurationPageState extends State<GameConfigurationPage> {
-  double players = 8;
-  int impostors = 1;
-  int rounds = 5;
-  int selectedTheme = 0;
-
-  @override
   Widget build(BuildContext context) {
+    final ConfigurationGameProvider configurationGameProvider = Provider.of<ConfigurationGameProvider>(context);
     return Scaffold(
-      backgroundColor: Color.fromARGB(255, 21, 15, 51),
+      backgroundColor: primaryColor,
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
@@ -30,18 +26,18 @@ class _GameConfigurationPageState extends State<GameConfigurationPage> {
           padding: EdgeInsets.only(left: 15, top: 8, bottom: 8),
           child: Container(
             decoration: BoxDecoration(
-              color: Color.fromARGB(60, 255, 255, 255),
+              color: cardColor,
               shape: BoxShape.circle,
             ),
             child: BackButton(
-              color: Color.fromARGB(255, 255, 255, 255),
+              color: Colors.white,
             ),
           ),
         ),
         title: Text(
           "Configuración",
           style: TextStyle(
-            color: Color.fromARGB(255, 255, 255, 255),
+            color: Colors.white,
             fontSize: 24,
             fontWeight: FontWeight.bold,
           ),
@@ -54,8 +50,8 @@ class _GameConfigurationPageState extends State<GameConfigurationPage> {
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
             colors: [
-              Color.fromARGB(255, 21, 15, 51),
-              Color.fromARGB(255, 19, 15, 35),
+              primaryColor,
+              primaryColor,
             ],
           ),
         ),
@@ -65,20 +61,20 @@ class _GameConfigurationPageState extends State<GameConfigurationPage> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               SizedBox(height: 20),
-              _playersSection(),
+              _playersSection(context, configurationGameProvider),
               SizedBox(height: 30),
-              _impostorsAndRounds(),
+              _impostorsAndRounds(configurationGameProvider),
               SizedBox(height: 30),
-              _themeSection(),
+              _themeSection(context, configurationGameProvider),
               SizedBox(height: 20),
               _recommendationText(),
               SizedBox(height: 30),
               OptionButton(
                 icon: Icons.play_arrow,
                 text: "COMENZAR",
-                colorIcon: Color.fromARGB(255, 255, 255, 255),
-                colorBackground: Color.fromARGB(255, 95, 44, 255),
-                onTap: () {},
+                colorIcon: Colors.white,
+                colorBackground: purple,
+                onTap: () => _onStartPressed(context, configurationGameProvider),
               ),
               SizedBox(height: 20),
             ],
@@ -88,7 +84,7 @@ class _GameConfigurationPageState extends State<GameConfigurationPage> {
     );
   }
 
-  Column _playersSection() {
+  Column _playersSection(BuildContext context, ConfigurationGameProvider provider) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -101,23 +97,23 @@ class _GameConfigurationPageState extends State<GameConfigurationPage> {
                 Text(
                   "JUGADORES",
                   style: TextStyle(
-                    color: Color.fromARGB(255, 95, 44, 255),
+                    color: purple,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
                 Text(
                   "Total de participantes",
                   style: TextStyle(
-                    color: Color.fromARGB(150, 255, 255, 255),
+                    color: subtitleGray,
                     fontSize: 12,
                   ),
                 ),
               ],
             ),
             Text(
-              players.toInt().toString().padLeft(2, '0'),
+              provider.players.toString().padLeft(2, '0'),
               style: TextStyle(
-                color: Color.fromARGB(255, 95, 44, 255),
+                color: purple,
                 fontSize: 32,
                 fontWeight: FontWeight.bold,
               ),
@@ -128,40 +124,36 @@ class _GameConfigurationPageState extends State<GameConfigurationPage> {
         Container(
           padding: EdgeInsets.symmetric(horizontal: 10, vertical: 15),
           decoration: BoxDecoration(
-            color: Color.fromARGB(255, 33, 22, 75),
+            color: purpleDark,
             borderRadius: BorderRadius.circular(20),
           ),
           child: Row(
             children: [
               CircleButton(
                 icon: Icons.remove,
-                onTap: () {
-                  if (players > 3) setState(() => players--);
-                },
+                onTap: () => provider.lessPlayers(),
               ),
               Expanded(
                 child: SliderTheme(
                   data: SliderTheme.of(context).copyWith(
-                    activeTrackColor: Color.fromARGB(255, 95, 44, 255),
-                    inactiveTrackColor: Color.fromARGB(80, 255, 255, 255),
-                    thumbColor: Color.fromARGB(255, 140, 82, 255),
-                    overlayColor: Color.fromARGB(50, 95, 44, 255),
+                    activeTrackColor: purple,
+                    inactiveTrackColor: cardBorderColor,
+                    thumbColor: purple,
+                    overlayColor: purple.withValues(alpha: 0.2),
                     trackHeight: 4,
                   ),
                   child: Slider(
-                    value: players,
-                    min: 3,
-                    max: 20,
-                    divisions: 17,
-                    onChanged: (value) => setState(() => players = value),
+                    value: provider.players.toDouble(),
+                    min: 0,
+                    max: provider.maxPlayers.toDouble(),
+                    divisions: provider.maxPlayers,
+                    onChanged: (_) => provider.players,
                   ),
                 ),
               ),
               CircleButton(
                 icon: Icons.add,
-                onTap: () {
-                  if (players < 20) setState(() => players++);
-                },
+                onTap: () => provider.addPlayers(),
               ),
             ],
           ),
@@ -170,7 +162,7 @@ class _GameConfigurationPageState extends State<GameConfigurationPage> {
     );
   }
 
-  Row _impostorsAndRounds() {
+  Row _impostorsAndRounds(ConfigurationGameProvider provider) {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -181,14 +173,14 @@ class _GameConfigurationPageState extends State<GameConfigurationPage> {
               Text(
                 "IMPOSTORES",
                 style: TextStyle(
-                  color: Color.fromARGB(255, 95, 44, 255),
+                  color: purple,
                   fontWeight: FontWeight.bold,
                 ),
               ),
               Text(
                 "¿Quién miente?",
                 style: TextStyle(
-                  color: Color.fromARGB(150, 255, 255, 255),
+                  color: subtitleGray,
                   fontSize: 11,
                 ),
               ),
@@ -197,16 +189,16 @@ class _GameConfigurationPageState extends State<GameConfigurationPage> {
                 width: double.infinity,
                 padding: EdgeInsets.all(15),
                 decoration: BoxDecoration(
-                  color: Color.fromARGB(255, 33, 22, 75),
+                  color: purpleDark,
                   borderRadius: BorderRadius.circular(20),
                 ),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     Text(
-                      impostors.toString(),
+                      provider.impostors.toString(),
                       style: TextStyle(
-                        color: Color.fromARGB(255, 255, 255, 255),
+                        color: Colors.white,
                         fontSize: 24,
                         fontWeight: FontWeight.bold,
                       ),
@@ -217,14 +209,12 @@ class _GameConfigurationPageState extends State<GameConfigurationPage> {
                       children: [
                         CircleButton(
                           icon: Icons.remove,
-                          onTap: () {
-                            if (impostors > 1) setState(() => impostors--);
-                          },
+                          onTap: () => provider.lessImpostors(),
                         ),
                         SizedBox(width: 15),
                         CircleButton(
                           icon: Icons.add,
-                          onTap: () => setState(() => impostors++),
+                          onTap: () => provider.addImpostors(),
                         ),
                       ],
                     ),
@@ -242,14 +232,14 @@ class _GameConfigurationPageState extends State<GameConfigurationPage> {
               Text(
                 "RONDAS",
                 style: TextStyle(
-                  color: Color.fromARGB(255, 95, 44, 255),
+                  color: purple,
                   fontWeight: FontWeight.bold,
                 ),
               ),
               Text(
                 "Duración partida",
                 style: TextStyle(
-                  color: Color.fromARGB(150, 255, 255, 255),
+                  color: subtitleGray,
                   fontSize: 11,
                 ),
               ),
@@ -258,16 +248,16 @@ class _GameConfigurationPageState extends State<GameConfigurationPage> {
                 width: double.infinity,
                 padding: EdgeInsets.all(15),
                 decoration: BoxDecoration(
-                  color: Color.fromARGB(255, 33, 22, 75),
+                  color: purpleDark,
                   borderRadius: BorderRadius.circular(20),
                 ),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     Text(
-                      rounds.toString(),
+                      provider.rounds.toString(),
                       style: TextStyle(
-                        color: Color.fromARGB(255, 255, 255, 255),
+                        color: Colors.white,
                         fontSize: 24,
                         fontWeight: FontWeight.bold,
                       ),
@@ -278,14 +268,12 @@ class _GameConfigurationPageState extends State<GameConfigurationPage> {
                       children: [
                         CircleButton(
                           icon: Icons.remove,
-                          onTap: () {
-                            if (rounds > 1) setState(() => rounds--);
-                          },
+                          onTap: () => provider.lessRounds(),
                         ),
                         SizedBox(width: 15),
                         CircleButton(
                           icon: Icons.add,
-                          onTap: () => setState(() => rounds++),
+                          onTap: () => provider.addRounds(),
                         ),
                       ],
                     ),
@@ -299,7 +287,7 @@ class _GameConfigurationPageState extends State<GameConfigurationPage> {
     );
   }
 
-  Column _themeSection() {
+  Column _themeSection(BuildContext context, ConfigurationGameProvider provider) {
     final height = MediaQuery.of(context).size.height;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -307,63 +295,68 @@ class _GameConfigurationPageState extends State<GameConfigurationPage> {
         Text(
           "TEMÁTICA",
           style: TextStyle(
-            color: Color.fromARGB(255, 95, 44, 255),
+            color: purple,
+            fontSize: 12,
             fontWeight: FontWeight.bold,
+            letterSpacing: 1.2
           ),
         ),
         Text(
           "Selecciona el mazo de palabras",
           style: TextStyle(
-            color: Color.fromARGB(150, 255, 255, 255),
+            color: subtitleGray,
             fontSize: 12,
           ),
         ),
         SizedBox(height: 15),
         SizedBox(
           height: height * 0.20,
-          child: Row(
-            children: [
-              Expanded(
+          child: ListView.separated(
+            scrollDirection: Axis.horizontal,
+            itemCount: WordDeck.values.length,
+            separatorBuilder: (context, index) => SizedBox(width: 12),
+            itemBuilder: (context, index) {
+              final WordDeck deck = WordDeck.values[index];
+              return SizedBox(
+                width: 100,
                 child: ThemeCard(
-                  label: "ALEATORIO",
-                  icon: Icons.casino,
-                  isSelected: selectedTheme == 0,
-                  onTap: () => setState(() => selectedTheme = 0),
+                  label: deck.label,
+                  icon: deck.icon,
+                  imagePath: deck.imagePath,
+                  isSelected: provider.selectedDeck == deck,
+                  onTap: () => provider.selectDeck(deck),
                 ),
-              ),
-              SizedBox(width: 10),
-              Expanded(
-                child: ThemeCard(
-                  label: "MAGIA",
-                  icon: Icons.auto_fix_high,
-                  imagePath: "assets/images/magia.jpg",
-                  isSelected: selectedTheme == 1,
-                  onTap: () => setState(() => selectedTheme = 1),
-                ),
-              ),
-              SizedBox(width: 10),
-              Expanded(
-                child: ThemeCard(
-                  label: "DEPORTE",
-                  icon: Icons.sports_soccer,
-                  imagePath: "assets/images/deportes.jpg",
-                  isSelected: selectedTheme == 2,
-                  onTap: () => setState(() => selectedTheme = 2),
-                ),
-              ),
-            ],
+              );
+            },
           ),
         ),
       ],
     );
   }
 
+    void _onStartPressed(BuildContext context, ConfigurationGameProvider provider) {
+      try {
+        provider.startGame();
+        final GameProvider gameProvider = Provider.of<GameProvider>(context, listen: false);
+        gameProvider.initGame();
+        Navigator.pushNamed(context, 'players-rol');
+      } catch (e) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(e.toString()),
+            backgroundColor: Colors.red[800],
+            behavior: SnackBarBehavior.floating,
+          ),
+        );
+      }
+    }
+
   Row _recommendationText() {
     return Row(
       children: [
         Icon(
           Icons.info_outline,
-          color: Color.fromARGB(255, 95, 44, 255),
+          color: purple,
           size: 16,
         ),
         SizedBox(width: 8),
@@ -371,7 +364,7 @@ class _GameConfigurationPageState extends State<GameConfigurationPage> {
           child: RichText(
             text: TextSpan(
               style: TextStyle(
-                color: Color.fromARGB(150, 255, 255, 255),
+                color: subtitleGray,
                 fontSize: 12,
               ),
               children: [
@@ -379,7 +372,7 @@ class _GameConfigurationPageState extends State<GameConfigurationPage> {
                 TextSpan(
                   text: "5 jugadores",
                   style: TextStyle(
-                    color: Color.fromARGB(255, 140, 82, 255),
+                    color: purple,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
