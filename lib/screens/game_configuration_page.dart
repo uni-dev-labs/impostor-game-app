@@ -61,16 +61,14 @@ class GameConfigurationPage extends StatelessWidget {
                   ),
 
                   //Todo: Angelica componente contador jugadores
-                  SizedBox(height: 20),
-                  SizedBox(height: 20),
+                  SizedBox(height: 12),
                   _allCounters(),
-                  SizedBox(height: 20),
+                  SizedBox(height: 12),
                   //Fin Daniela
-
                   //Todo: componente tarjetas de juego Wldy
                   _mainText('TEMÁTICA'),
                   _subtitleText('Selecciona el mazo de palabras'),
-                  SizedBox(height: 20),
+                  SizedBox(height: 12),
                   _gameModeSelector(context, configurationGameProvider),
 
                   //Todo: componente tarjetas de juego Wldy
@@ -96,7 +94,7 @@ class GameConfigurationPage extends StatelessWidget {
         Container(
           height: 110,
           decoration: BoxDecoration(
-            color: Color.fromRGBO(77, 44, 241, 0.2),
+            color: warningText,
             borderRadius: BorderRadius.circular(20),
           ),
           child: Padding(
@@ -212,6 +210,7 @@ void _onStartPressed({
 }) {
   try {
     provider.startGame();
+    Navigator.pushNamed(context, "hiding-role");
     print("la palabra es: ${provider.currentWord}");
   } catch (e) {
     ScaffoldMessenger.of(context).showSnackBar(

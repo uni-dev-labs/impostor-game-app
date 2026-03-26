@@ -5,6 +5,7 @@ const Color purple = Color.fromRGBO(55, 19, 236, 1);
 const Color purpleDark = Color(0xFF211B44);
 const Color primaryColor = Color.fromRGBO(19, 16, 34, 1);
 const Color subtitleGray = Color(0xFF9E9E9E);
-
+const Color purpleWithOpacity = Color.fromARGB(45, 55, 19, 236);
 const Color cardColor = Color(0xFF111426);
 const Color cardBorderColor = Color(0xFF141334);
+const Color warningText = Color.fromRGBO(77, 44, 241, 0.2);
