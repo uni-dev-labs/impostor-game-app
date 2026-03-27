@@ -1,3 +1,4 @@
+// lib/providers/configuration_game_provider.dart
 import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:impostor/data/words_data.dart';
@@ -5,20 +6,23 @@ import 'package:impostor/data/words_data.dart';
 class GameConfig extends ChangeNotifier {
   // ── Configuración ──────────────────────────────────────────────
   int _totalPlayers = 8;
-  int _impostors = 1;
-  int _rounds = 5;
+  int _impostors   = 1;
+  int _rounds      = 5;
   String _selectedTheme = 'ALEATORIO';
 
-  int get totalPlayers => _totalPlayers;
-  int get impostors => _impostors;
-  int get rounds => _rounds;
+  int get totalPlayers    => _totalPlayers;
+  int get impostors       => _impostors;
+  int get rounds          => _rounds;
   String get selectedTheme => _selectedTheme;
-
-  int get maxImpostors => (_totalPlayers ~/ 3).clamp(1, 5);
+  int get maxImpostors    => (_totalPlayers ~/ 3).clamp(1, 5);
 
   void setTotalPlayers(int value) {
     _totalPlayers = value.clamp(4, 15);
     if (_impostors > maxImpostors) _impostors = maxImpostors;
+    // Ajusta la lista de nombres al nuevo total
+    if (_playerNames.length > _totalPlayers) {
+      _playerNames = _playerNames.sublist(0, _totalPlayers);
+    }
     notifyListeners();
   }
 
@@ -37,49 +41,73 @@ class GameConfig extends ChangeNotifier {
     notifyListeners();
   }
 
-  // ── Estado del juego activo ────────────────────────────────────
-  String _secretWord = '';
-  List<int> _impostorIndexes = []; // índices de jugadores impostores
-  int _currentPlayerIndex = 0; // turno de rotación actual
-  int _currentRound = 1;
-  bool _gameStarted = false;
-  bool _impostorWon = false;
-  String _impostorGuess = '';
+  // ── Nombres de jugadores ───────────────────────────────────────
+  List<String> _playerNames = [];
 
-  String get secretWord => _secretWord;
-  List<int> get impostorIndexes => _impostorIndexes;
-  int get currentPlayerIndex => _currentPlayerIndex;
-  int get currentRound => _currentRound;
-  bool get gameStarted => _gameStarted;
-  bool get impostorWon => _impostorWon;
-  String get impostorGuess => _impostorGuess;
+  List<String> get playerNames => _playerNames;
 
-  /// Devuelve true si el jugador actual (en rotación) es impostor.
-  bool get currentPlayerIsImpostor =>
-      _impostorIndexes.contains(_currentPlayerIndex);
+  /// Devuelve el nombre del jugador en la posición [index].
+  /// Si no tiene nombre asignado, devuelve "Jugador N".
+  String getPlayerName(int index) {
+    if (index < _playerNames.length && _playerNames[index].isNotEmpty) {
+      return _playerNames[index];
+    }
+    return 'Jugador ${index + 1}';
+  }
 
-  /// Devuelve true si ya todos los jugadores vieron su rol.
-  bool get allPlayersRevealed => _currentPlayerIndex >= _totalPlayers;
-
-  // ── Iniciar partida ────────────────────────────────────────────
-  void startGame() {
-    _secretWord = getRandomWord(_selectedTheme);
-    _impostorIndexes = _pickImpostors();
-    _currentPlayerIndex = 0;
-    _currentRound = 1;
-    _gameStarted = true;
-    _impostorWon = false;
-    _impostorGuess = '';
+  /// Inicializa la lista de nombres vacíos según el total de jugadores.
+  void initPlayerNames() {
+    _playerNames = List.filled(_totalPlayers, '');
     notifyListeners();
   }
 
-List<int> _pickImpostors() {
-  final indexes = List<int>.from(
-    List<int>.generate(_totalPlayers, (i) => i),
-  );
-  indexes.shuffle(Random());
-  return indexes.take(_impostors).toList();
-}
+  /// Actualiza el nombre de un jugador específico.
+  void setPlayerName(int index, String name) {
+    if (index < _playerNames.length) {
+      _playerNames[index] = name.trim();
+      notifyListeners();
+    }
+  }
+
+  // ── Estado del juego activo ────────────────────────────────────
+  String _secretWord       = '';
+  List<int> _impostorIndexes = [];
+  int _currentPlayerIndex  = 0;
+  int _currentRound        = 1;
+  bool _gameStarted        = false;
+  bool _impostorWon        = false;
+  String _impostorGuess    = '';
+
+  String get secretWord           => _secretWord;
+  List<int> get impostorIndexes   => _impostorIndexes;
+  int get currentPlayerIndex      => _currentPlayerIndex;
+  int get currentRound            => _currentRound;
+  bool get gameStarted            => _gameStarted;
+  bool get impostorWon            => _impostorWon;
+  String get impostorGuess        => _impostorGuess;
+
+  bool get currentPlayerIsImpostor =>
+      _impostorIndexes.contains(_currentPlayerIndex);
+  bool get allPlayersRevealed =>
+      _currentPlayerIndex >= _totalPlayers;
+
+  // ── Iniciar partida ────────────────────────────────────────────
+  void startGame() {
+    _secretWord        = getRandomWord(_selectedTheme);
+    _impostorIndexes   = _pickImpostors();
+    _currentPlayerIndex = 0;
+    _currentRound      = 1;
+    _gameStarted       = true;
+    _impostorWon       = false;
+    _impostorGuess     = '';
+    notifyListeners();
+  }
+
+  List<int> _pickImpostors() {
+    final indexes = List<int>.generate(_totalPlayers, (i) => i)
+      ..shuffle(Random());
+    return indexes.take(_impostors).toList();
+  }
 
   // ── Rotación ───────────────────────────────────────────────────
   void nextPlayer() {
@@ -100,19 +128,28 @@ List<int> _pickImpostors() {
   // ── Adivinar ──────────────────────────────────────────────────
   void impostorTriesGuess(String guess) {
     _impostorGuess = guess.trim();
-    _impostorWon = _impostorGuess.toLowerCase() == _secretWord.toLowerCase();
+    _impostorWon =
+        _impostorGuess.toLowerCase() == _secretWord.toLowerCase();
     notifyListeners();
   }
 
   // ── Reiniciar ─────────────────────────────────────────────────
   void resetGame() {
-    _secretWord = '';
-    _impostorIndexes = [];
+    _secretWord        = '';
+    _impostorIndexes   = [];
     _currentPlayerIndex = 0;
-    _currentRound = 1;
-    _gameStarted = false;
-    _impostorWon = false;
-    _impostorGuess = '';
+    _currentRound      = 1;
+    _gameStarted       = false;
+    _impostorWon       = false;
+    _impostorGuess     = '';
+    // Los nombres se conservan para poder jugar otra vez
+    notifyListeners();
+  }
+
+  /// Reinicio total incluyendo nombres (volver al inicio).
+  void resetAll() {
+    resetGame();
+    _playerNames = [];
     notifyListeners();
   }
 }

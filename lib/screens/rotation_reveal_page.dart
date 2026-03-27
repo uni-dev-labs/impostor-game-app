@@ -1,3 +1,4 @@
+// lib/screens/rotation_reveal_page.dart
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:impostor/providers/providers.dart';
@@ -12,12 +13,29 @@ class RotationRevealPage extends StatefulWidget {
 class _RotationRevealPageState extends State<RotationRevealPage> {
   bool _wordVisible = false;
 
+  // ── Datos del jugador actual capturados al entrar ─────────────
+  // Se leen una sola vez en initState para evitar el flash
+  // que ocurre cuando nextPlayer() actualiza el índice
+  // antes de que la navegación termine.
+  late String _playerName;
+  late bool _isImpostor;
+  late String _secretWord;
+  late int _playerIndex;
+  late int _totalPlayers;
+
+  @override
+  void initState() {
+    super.initState();
+    final config = context.read<GameConfig>();
+    _playerName = config.getPlayerName(config.currentPlayerIndex);
+    _isImpostor = config.currentPlayerIsImpostor;
+    _secretWord = config.secretWord;
+    _playerIndex = config.currentPlayerIndex;
+    _totalPlayers = config.totalPlayers;
+  }
+
   @override
   Widget build(BuildContext context) {
-    final config = context.watch<GameConfig>();
-    final isImpostor = config.currentPlayerIsImpostor;
-    final playerNumber = config.currentPlayerIndex + 1;
-
     return Scaffold(
       backgroundColor: const Color(0xFF0D0D1A),
       body: SafeArea(
@@ -31,14 +49,18 @@ class _RotationRevealPageState extends State<RotationRevealPage> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text(
-                      'JUGADOR $playerNumber DE ${config.totalPlayers}',
-                      style: const TextStyle(
-                        color: Colors.white54,
-                        fontSize: 11,
-                        letterSpacing: 1,
+                    Flexible(
+                      child: Text(
+                        '${_playerName.toUpperCase()} — ${_playerIndex + 1} DE $_totalPlayers',
+                        style: const TextStyle(
+                          color: Colors.white54,
+                          fontSize: 11,
+                          letterSpacing: 1,
+                        ),
+                        overflow: TextOverflow.ellipsis,
                       ),
                     ),
+                    const SizedBox(width: 8),
                     Container(
                       decoration: BoxDecoration(
                         color: const Color(0xFF1A1A2E),
@@ -64,58 +86,42 @@ class _RotationRevealPageState extends State<RotationRevealPage> {
 
               const Spacer(),
 
-              isImpostor
-                  ? _buildImpostorView()
-                  : _buildUserView(config.secretWord),
+              _isImpostor ? _buildImpostorView() : _buildUserView(_secretWord),
 
               const Spacer(),
 
-              // ── Aviso ocultar pantalla ──────────────────────────
-              if (!isImpostor)
-                const Padding(
-                  padding: EdgeInsets.only(bottom: 16),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Icon(
-                        Icons.shield_outlined,
+              // ── Aviso ───────────────────────────────────────────
+              Padding(
+                padding: const EdgeInsets.only(bottom: 16),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Icon(
+                      _isImpostor
+                          ? Icons.visibility_off_outlined
+                          : Icons.shield_outlined,
+                      color: Colors.white38,
+                      size: 16,
+                    ),
+                    const SizedBox(width: 8),
+                    Text(
+                      _isImpostor
+                          ? 'Oculta la pantalla antes de continuar'
+                          : 'No muestres esta palabra a nadie',
+                      style: const TextStyle(
                         color: Colors.white38,
-                        size: 16,
+                        fontSize: 12,
                       ),
-                      SizedBox(width: 8),
-                      Text(
-                        'No muestres esta palabra a nadie',
-                        style: TextStyle(color: Colors.white38, fontSize: 12),
-                      ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
-
-              if (isImpostor)
-                const Padding(
-                  padding: EdgeInsets.only(bottom: 16),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Icon(
-                        Icons.visibility_off_outlined,
-                        color: Colors.white38,
-                        size: 16,
-                      ),
-                      SizedBox(width: 8),
-                      Text(
-                        'Oculta la pantalla antes de continuar',
-                        style: TextStyle(color: Colors.white38, fontSize: 12),
-                      ),
-                    ],
-                  ),
-                ),
+              ),
 
               // ── Botón siguiente jugador ─────────────────────────
               SizedBox(
                 width: double.infinity,
                 child: ElevatedButton.icon(
-                  onPressed: () => _onNext(context, config),
+                  onPressed: () => _onNext(context),
                   icon: const Icon(Icons.arrow_forward, color: Colors.white),
                   label: const Text(
                     'Pasar al siguiente jugador',
@@ -178,7 +184,6 @@ class _RotationRevealPageState extends State<RotationRevealPage> {
 
         const SizedBox(height: 16),
 
-        // Palabra con toggle de visibilidad
         GestureDetector(
           onTap: () => setState(() => _wordVisible = !_wordVisible),
           child: AnimatedSwitcher(
@@ -317,9 +322,8 @@ class _RotationRevealPageState extends State<RotationRevealPage> {
   }
 
   // ── Lógica de navegación ──────────────────────────────────────
-  // En _onNext(), antes de navegar:
-  void _onNext(BuildContext context, GameConfig config) {
-    setState(() => _wordVisible = false); // ← añadir esta línea
+  void _onNext(BuildContext context) {
+    final config = context.read<GameConfig>();
     config.nextPlayer();
 
     if (config.allPlayersRevealed) {

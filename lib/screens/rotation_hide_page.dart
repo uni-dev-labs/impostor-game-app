@@ -8,7 +8,7 @@ class RotationHidePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final config = context.watch<GameConfig>();
-    final playerNumber = config.currentPlayerIndex + 1;
+    final playerName = config.getPlayerName(config.currentPlayerIndex);
 
     return Scaffold(
       backgroundColor: const Color(0xFF0D0D1A),
@@ -25,30 +25,39 @@ class RotationHidePage extends StatelessWidget {
                   children: [
                     Container(
                       padding: const EdgeInsets.symmetric(
-                          horizontal: 14, vertical: 7),
+                        horizontal: 14,
+                        vertical: 7,
+                      ),
                       decoration: BoxDecoration(
                         color: const Color(0xFF1A1A2E),
                         borderRadius: BorderRadius.circular(20),
                       ),
                       child: const Row(
                         children: [
-                          Icon(Icons.lock_outline,
-                              color: Color(0xFF5B3FF8), size: 16),
+                          Icon(
+                            Icons.lock_outline,
+                            color: Color(0xFF5B3FF8),
+                            size: 16,
+                          ),
                           SizedBox(width: 6),
-                          Text('PRIVACIDAD ACTIVA',
-                              style: TextStyle(
-                                  color: Colors.white70,
-                                  fontSize: 11,
-                                  letterSpacing: 1)),
+                          Text(
+                            'PRIVACIDAD ACTIVA',
+                            style: TextStyle(
+                              color: Colors.white70,
+                              fontSize: 11,
+                              letterSpacing: 1,
+                            ),
+                          ),
                         ],
                       ),
                     ),
                     Text(
-                      'PASO $playerNumber DE ${config.totalPlayers}',
+                      'PASO ${config.currentPlayerIndex + 1} DE ${config.totalPlayers}',
                       style: const TextStyle(
-                          color: Colors.white54,
-                          fontSize: 11,
-                          letterSpacing: 1),
+                        color: Colors.white54,
+                        fontSize: 11,
+                        letterSpacing: 1,
+                      ),
                     ),
                   ],
                 ),
@@ -63,23 +72,26 @@ class RotationHidePage extends StatelessWidget {
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
                   color: const Color(0xFF1E143F),
-                  border: Border.all(
-                      color: const Color(0xFF5B3FF8), width: 2),
+                  border: Border.all(color: const Color(0xFF5B3FF8), width: 2),
                 ),
-                child: const Icon(Icons.person,
-                    color: Color(0xFF5B3FF8), size: 52),
+                child: const Icon(
+                  Icons.person,
+                  color: Color(0xFF5B3FF8),
+                  size: 52,
+                ),
               ),
 
               const SizedBox(height: 28),
 
               // ── Nombre jugador ──────────────────────────────────
               Text(
-                'Jugador $playerNumber',
+                playerName,
                 style: const TextStyle(
                   color: Colors.white,
                   fontSize: 36,
                   fontWeight: FontWeight.bold,
                 ),
+                textAlign: TextAlign.center,
               ),
 
               const SizedBox(height: 12),
@@ -106,21 +118,25 @@ class RotationHidePage extends StatelessWidget {
                 child: ElevatedButton.icon(
                   onPressed: () =>
                       Navigator.pushNamed(context, '/rotation-reveal'),
-                  icon: const Icon(Icons.remove_red_eye_outlined,
-                      color: Colors.white),
+                  icon: const Icon(
+                    Icons.remove_red_eye_outlined,
+                    color: Colors.white,
+                  ),
                   label: const Text(
                     'TOCAR PARA REVELAR',
                     style: TextStyle(
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 16,
-                        letterSpacing: 1),
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 16,
+                      letterSpacing: 1,
+                    ),
                   ),
                   style: ElevatedButton.styleFrom(
                     backgroundColor: const Color(0xFF5B3FF8),
                     padding: const EdgeInsets.symmetric(vertical: 18),
                     shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(30)),
+                      borderRadius: BorderRadius.circular(30),
+                    ),
                   ),
                 ),
               ),

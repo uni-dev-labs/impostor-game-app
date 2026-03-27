@@ -1,5 +1,6 @@
 export 'package:impostor/screens/home_page.dart';
 export 'package:impostor/screens/game_configuration_page.dart';
+export 'package:impostor/screens/player_names_page.dart';   // ← nueva
 export 'package:impostor/screens/rotation_hide_page.dart';
 export 'package:impostor/screens/rotation_reveal_page.dart';
 export 'package:impostor/screens/rounds_page.dart';

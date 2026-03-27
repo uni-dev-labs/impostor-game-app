@@ -221,11 +221,9 @@ class GameConfigurationPage extends StatelessWidget {
                 text: 'COMENZAR',
                 icon: Icons.play_arrow,
                 onPressed: () {
-                  context.read<GameConfig>().startGame();
-                  Navigator.pushNamed(context, '/rotation-hide');
+                  Navigator.pushNamed(context, '/player-names');
                 },
               ),
-
               const SizedBox(height: 40),
             ],
           ),

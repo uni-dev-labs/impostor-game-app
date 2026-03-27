@@ -197,7 +197,6 @@ class FinalPage extends StatelessWidget {
         ),
         const SizedBox(height: 12),
         ...config.impostorIndexes.map((index) {
-          final playerNumber = index + 1;
           return Container(
             margin: const EdgeInsets.only(bottom: 10),
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
@@ -211,6 +210,7 @@ class FinalPage extends StatelessWidget {
             ),
             child: Row(
               children: [
+                // Avatar
                 Container(
                   width: 40,
                   height: 40,
@@ -229,15 +229,21 @@ class FinalPage extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(width: 14),
-                Text(
-                  'Jugador $playerNumber',
-                  style: const TextStyle(
-                    color: Colors.white,
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
+
+                // Nombre real del jugador
+                Expanded(
+                  child: Text(
+                    config.getPlayerName(index),
+                    style: const TextStyle(
+                      color: Colors.white,
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                    ),
+                    overflow: TextOverflow.ellipsis,
                   ),
                 ),
-                const Spacer(),
+
+                // Badge IMPOSTOR
                 Container(
                   padding: const EdgeInsets.symmetric(
                     horizontal: 10,
@@ -282,8 +288,8 @@ class FinalPage extends StatelessWidget {
           _statDivider(),
           _statItem(
             config.totalPlayers.toString(),
-            'VOTACIÓN',
-            Icons.how_to_vote_outlined,
+            'JUGADORES',
+            Icons.people_outline,
           ),
         ],
       ),
@@ -324,7 +330,7 @@ class FinalPage extends StatelessWidget {
   Widget _buildButtons(BuildContext context, GameConfig config) {
     return Column(
       children: [
-        // Jugar otra vez (misma config, nueva partida)
+        // Jugar otra vez (misma config y mismos nombres)
         SizedBox(
           width: double.infinity,
           child: ElevatedButton.icon(
@@ -357,12 +363,12 @@ class FinalPage extends StatelessWidget {
 
         const SizedBox(height: 14),
 
-        // Volver al inicio
+        // Volver al inicio (resetea todo incluyendo nombres)
         SizedBox(
           width: double.infinity,
           child: OutlinedButton.icon(
             onPressed: () {
-              config.resetGame();
+              config.resetAll();
               Navigator.pushNamedAndRemoveUntil(context, '/', (route) => false);
             },
             icon: const Icon(Icons.home_outlined, color: Colors.white70),
