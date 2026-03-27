@@ -43,18 +43,26 @@ class HomePage extends StatelessWidget {
     );
   }
 
-  Container _imageGame() {
+  Widget _imageGame() {
     return Container(
       width: 200,
       height: 200,
       decoration: BoxDecoration(
-        color: Colors.blue,
+        color: const Color(0xFF1E143F),
         borderRadius: BorderRadius.circular(100),
-        border: Border.all(color: Colors.white, width: 2),
+        border: Border.all(color: const Color(0xFF5B3FF8), width: 2),
       ),
       child: ClipRRect(
         borderRadius: BorderRadius.circular(100),
-        child: Image.asset('assets/images/logo.png', fit: BoxFit.contain),
+        child: Image.asset(
+          'assets/images/logo.png',
+          fit: BoxFit.contain,
+          errorBuilder: (context, error, stackTrace) => const Icon(
+            Icons.person_search,
+            color: Color(0xFF5B3FF8),
+            size: 80,
+          ),
+        ),
       ),
     );
   }

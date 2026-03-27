@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
 
 class CustomIconButton extends StatelessWidget {
-
   final IconData icon;
+  final VoidCallback? onPressed;
 
-  const CustomIconButton({super.key, required this.icon});
+  const CustomIconButton({
+    super.key,
+    required this.icon,
+    this.onPressed,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -12,13 +16,12 @@ class CustomIconButton extends StatelessWidget {
       decoration: BoxDecoration(
         color: Colors.transparent,
         borderRadius: BorderRadius.circular(100),
-        border: Border.all(color: const Color.fromARGB(255, 100, 100, 100), width: 2),
+        border: Border.all(
+            color: const Color.fromARGB(255, 100, 100, 100), width: 2),
       ),
       child: IconButton(
-        onPressed: () {
-          print("hola mundo");
-        }, 
-        icon: Icon(icon)
+        onPressed: onPressed ?? () {},
+        icon: Icon(icon, color: Colors.white),
       ),
     );
   }
