@@ -1,14 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:impostor/components/custom_button.dart';
 import 'package:impostor/core/app_colors.dart';
+import 'package:impostor/core/word_decks.dart';
+import 'package:impostor/providers/configuration_game_provider.dart';
 import 'package:impostor/screens/ui/game_configuration/button_configuration.dart';
 import 'package:impostor/screens/ui/game_configuration/select_option.dart';
+import 'package:provider/provider.dart';
 
 class GameConfigurationPage extends StatelessWidget {
   const GameConfigurationPage({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final ConfigurationGameProvider  configurationGameProvider = Provider.of<ConfigurationGameProvider>(context);
     return Scaffold(
       backgroundColor: primaryColor,
       body: SafeArea(
@@ -20,7 +24,9 @@ class GameConfigurationPage extends StatelessWidget {
               children: [
                 SizedBox(height: 20),
                 _appBar(context),
-                _sectionPlayers(),
+                _sectionPlayers(
+                  configurationGameProvider: configurationGameProvider,
+                ),
                 const SizedBox(height: 28),
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -29,9 +35,9 @@ class GameConfigurationPage extends StatelessWidget {
                       child: SelectOptionUI(
                         title: 'IMPOSTORES', 
                         subtitle: '¿Quién miente?', 
-                        value: 0, 
-                        addPressed  : () { }, 
-                        lessPressed : () { }, 
+                        value: configurationGameProvider.impostors, 
+                        addPressed  : () => configurationGameProvider.addImpostors(), 
+                        lessPressed : () => configurationGameProvider.lessImpostors(),
                       )
                     ),
                     const SizedBox(width: 16),
@@ -39,15 +45,15 @@ class GameConfigurationPage extends StatelessWidget {
                       child: SelectOptionUI(
                         title: 'RONDAS', 
                         subtitle: '¿Cuántas rondas?', 
-                        value: 0, 
-                        addPressed  : () {  }, 
-                        lessPressed : () {  }, 
+                        value: configurationGameProvider.rounds, 
+                        addPressed  : () => configurationGameProvider.addRounds(), 
+                        lessPressed : () => configurationGameProvider.lessRounds(), 
                       )
                     ),
                   ],
                 ),
                 const SizedBox(height: 28),
-                _sectionTheme(context),
+                _sectionTheme(context, configurationGameProvider),
                 const SizedBox(height: 20),
                 _infoBox(),
                 const SizedBox(height: 24),
@@ -55,7 +61,10 @@ class GameConfigurationPage extends StatelessWidget {
                   text: 'COMENZAR',
                   color: purple,
                   icon: Icons.play_arrow,
-                  onPressed: () {},
+                  onPressed: () => _onStartPressed(
+                    context: context, 
+                    provider: configurationGameProvider,
+                  ),
                   isIconInLeft: false,
                   borderRadius: 12,
                 ),
@@ -91,7 +100,7 @@ class GameConfigurationPage extends StatelessWidget {
     );
   }
 
-  Widget _sectionPlayers() {
+  Widget _sectionPlayers({required ConfigurationGameProvider configurationGameProvider}) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -120,7 +129,7 @@ class GameConfigurationPage extends StatelessWidget {
               ],
             ),
             Text(
-              '08',
+              configurationGameProvider.players.toString(),
               style: TextStyle(
                 color: purple,
                 fontSize: 28,
@@ -140,7 +149,7 @@ class GameConfigurationPage extends StatelessWidget {
           child: Row(
             children: [
               ButtonConfigurationUI(
-                onPressed: () {},
+                onPressed: () => configurationGameProvider.lessPlayers(),
                 icon: Icons.remove,
                 isAccent: false,
                 width: 55,
@@ -156,15 +165,15 @@ class GameConfigurationPage extends StatelessWidget {
                     overlayColor: purple.withValues(alpha:  0.2),
                   ),
                   child: Slider(
-                    value: 8,
-                    min: 4,
-                    max: 12,
-                    onChanged: (_) {},
+                    value: configurationGameProvider.players.toDouble(),
+                    min: 0,
+                    max: configurationGameProvider.maxPlayers.toDouble(),
+                    onChanged: (_) => configurationGameProvider.players,
                   ),
                 ),
               ),
               ButtonConfigurationUI(
-                onPressed: () {},
+                onPressed: () => configurationGameProvider.addPlayers(),
                 icon: Icons.add,
                 isAccent: true,
                 width: 55,
@@ -177,14 +186,7 @@ class GameConfigurationPage extends StatelessWidget {
     );
   }
 
-  Widget _sectionTheme(BuildContext context) {
-    const themes = [
-      ('ALEATORIO', Icons.casino, true),
-      ('MAGIA', Icons.auto_awesome, false),
-      ('DEPORTE', Icons.sports_soccer, false),
-      ('CIENCIA', Icons.science, false),
-    ];
-
+  Widget _sectionTheme(BuildContext context, ConfigurationGameProvider provider) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -207,14 +209,14 @@ class GameConfigurationPage extends StatelessWidget {
           height: 120,
           child: ListView.separated(
             scrollDirection: Axis.horizontal,
-            itemCount: themes.length,
+            itemCount: WordDeck.values.length,
             separatorBuilder: (context, index) => const SizedBox(width: 12),
-            itemBuilder: (context, index) {
-              final (label, icon, selected) = themes[index];
+            itemBuilder: (BuildContext context, int index) {
+              final WordDeck deck = WordDeck.values[index];
               return _themeCard(
-                label: label,
-                icon: icon,
-                selected: selected,
+                deck: deck,
+                selected: provider.selectedDeck == deck,
+                onTap: () => provider.selectDeck(deck),
               );
             },
           ),
@@ -224,53 +226,75 @@ class GameConfigurationPage extends StatelessWidget {
   }
 
   Widget _themeCard({
-    required String label,
-    required IconData icon,
+    required WordDeck deck,
     required bool selected,
+    required VoidCallback onTap,
   }) {
-    return Container(
-      width: 100,
-      decoration: BoxDecoration(
-        color: selected ? purpleDark : cardColor,
-        borderRadius: BorderRadius.circular(16),
-        border: selected ? Border.all(color: purple, width: 2) : null,
-      ),
-      child: Stack(
-        children: [
-          Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Icon(icon, color: Colors.white, size: 36),
-                const SizedBox(height: 8),
-                Text(
-                  label,
-                  style: const TextStyle(
-                    color: Colors.white,
-                    fontSize: 12,
-                    fontWeight: FontWeight.w600,
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        width: 100,
+        decoration: BoxDecoration(
+          color: selected ? purpleDark : cardColor,
+          borderRadius: BorderRadius.circular(16),
+          border: selected ? Border.all(color: purple, width: 2) : null,
+        ),
+        child: Stack(
+          children: [
+            Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Icon(deck.icon, color: Colors.white, size: 36),
+                  const SizedBox(height: 8),
+                  Text(
+                    deck.label,
+                    style: const TextStyle(
+                      color: Colors.white,
+                      fontSize: 12,
+                      fontWeight: FontWeight.w600,
+                    ),
                   ),
-                ),
-              ],
-            ),
-          ),
-          if (selected)
-            Positioned(
-              top: 8,
-              right: 8,
-              child: Container(
-                width: 24,
-                height: 24,
-                decoration: BoxDecoration(
-                  color: purple,
-                  shape: BoxShape.circle,
-                ),
-                child: const Icon(Icons.check, color: Colors.white, size: 16),
+                ],
               ),
             ),
-        ],
+            if (selected)
+              Positioned(
+                top: 8,
+                right: 8,
+                child: Container(
+                  width: 24,
+                  height: 24,
+                  decoration: BoxDecoration(
+                    color: purple,
+                    shape: BoxShape.circle,
+                  ),
+                  child: const Icon(Icons.check, color: Colors.white, size: 16),
+                ),
+              ),
+          ],
+        ),
       ),
     );
+  }
+
+  void _onStartPressed({
+    required BuildContext context, 
+    required ConfigurationGameProvider provider,
+  }) {
+    try {
+      provider.startGame();
+      Navigator.pushNamed(context, 'rotation-secret');
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(e.toString()),
+          backgroundColor: Colors.red[800],
+          behavior: SnackBarBehavior.floating,
+        ),
+      );
+      return;
+    }
   }
 
   Widget _infoBox() {
