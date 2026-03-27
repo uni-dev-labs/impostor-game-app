@@ -11,8 +11,16 @@ class GameConfigurationPage extends StatelessWidget {
 
   static const List<Map<String, dynamic>> _themes = [
     {'name': 'ALEATORIO', 'icon': Icons.casino},
-    {'name': 'MAGIA',     'icon': Icons.auto_awesome},
-    {'name': 'DEPORTES',  'icon': Icons.sports_soccer},
+    {'name': 'MAGIA', 'icon': Icons.auto_awesome},
+    {'name': 'DEPORTES', 'icon': Icons.sports_soccer},
+    {'name': 'CIENCIA', 'icon': Icons.science_outlined},
+    {'name': 'CINE', 'icon': Icons.movie_outlined},
+    {'name': 'COCINA', 'icon': Icons.restaurant_outlined},
+    {'name': 'TECNOLOGÍA', 'icon': Icons.computer_outlined},
+    {'name': 'NATURALEZA', 'icon': Icons.forest_outlined},
+    {'name': 'MÚSICA', 'icon': Icons.music_note_outlined},
+    {'name': 'HISTORIA', 'icon': Icons.account_balance_outlined},
+    {'name': 'VIDEOJUEGOS', 'icon': Icons.sports_esports_outlined},
   ];
 
   @override
@@ -55,13 +63,15 @@ class GameConfigurationPage extends StatelessWidget {
               Row(
                 children: [
                   IconButton(
-                    onPressed: () =>
-                        context.read<GameConfig>().setTotalPlayers(config.totalPlayers - 1),
+                    onPressed: () => context.read<GameConfig>().setTotalPlayers(
+                      config.totalPlayers - 1,
+                    ),
                     icon: const Icon(Icons.remove, color: Colors.white),
                     style: IconButton.styleFrom(
                       backgroundColor: const Color(0xFF1E143F),
                       shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(12)),
+                        borderRadius: BorderRadius.circular(12),
+                      ),
                     ),
                   ),
                   Expanded(
@@ -77,8 +87,9 @@ class GameConfigurationPage extends StatelessWidget {
                         min: 4,
                         max: 15,
                         divisions: 11,
-                        onChanged: (v) =>
-                            context.read<GameConfig>().setTotalPlayers(v.toInt()),
+                        onChanged: (v) => context
+                            .read<GameConfig>()
+                            .setTotalPlayers(v.toInt()),
                       ),
                     ),
                   ),
@@ -92,13 +103,15 @@ class GameConfigurationPage extends StatelessWidget {
                   ),
                   const SizedBox(width: 8),
                   IconButton(
-                    onPressed: () =>
-                        context.read<GameConfig>().setTotalPlayers(config.totalPlayers + 1),
+                    onPressed: () => context.read<GameConfig>().setTotalPlayers(
+                      config.totalPlayers + 1,
+                    ),
                     icon: const Icon(Icons.add, color: Colors.white),
                     style: IconButton.styleFrom(
                       backgroundColor: const Color(0xFF5B3FF8),
                       shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(12)),
+                        borderRadius: BorderRadius.circular(12),
+                      ),
                     ),
                   ),
                 ],
@@ -171,8 +184,11 @@ class GameConfigurationPage extends StatelessWidget {
               // ── Aviso ───────────────────────────────────────────
               Row(
                 children: [
-                  const Icon(Icons.info_outline,
-                      color: Color(0xFF5B3FF8), size: 20),
+                  const Icon(
+                    Icons.info_outline,
+                    color: Color(0xFF5B3FF8),
+                    size: 20,
+                  ),
                   const SizedBox(width: 12),
                   Expanded(
                     child: RichText(
@@ -183,12 +199,14 @@ class GameConfigurationPage extends StatelessWidget {
                           TextSpan(
                             text: '6 jugadores ',
                             style: TextStyle(
-                                color: Color(0xFF5B3FF8),
-                                fontWeight: FontWeight.bold),
+                              color: Color(0xFF5B3FF8),
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
                           TextSpan(
-                              text:
-                                  'para una experiencia óptima con más de un impostor.'),
+                            text:
+                                'para una experiencia óptima con más de un impostor.',
+                          ),
                         ],
                       ),
                     ),
@@ -220,14 +238,19 @@ class GameConfigurationPage extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(title,
-            style: const TextStyle(
-                color: Color(0xFF5B3FF8),
-                fontSize: 13,
-                fontWeight: FontWeight.bold,
-                letterSpacing: 1.5)),
-        Text(subtitle,
-            style: const TextStyle(color: Colors.white54, fontSize: 12)),
+        Text(
+          title,
+          style: const TextStyle(
+            color: Color(0xFF5B3FF8),
+            fontSize: 13,
+            fontWeight: FontWeight.bold,
+            letterSpacing: 1.5,
+          ),
+        ),
+        Text(
+          subtitle,
+          style: const TextStyle(color: Colors.white54, fontSize: 12),
+        ),
       ],
     );
   }
