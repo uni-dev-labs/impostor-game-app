@@ -1,12 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:impostor/components/backgraund_sreen.dart';
 import 'package:impostor/core/app_colors.dart';
+import 'package:impostor/providers/game_session_provider.dart';
+import 'package:impostor/screens/role_reveal.dart';
+import 'package:provider/provider.dart';
 
 class HidingRole extends StatelessWidget {
   const HidingRole({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final GameSessionProvider gameSessionProvider = context
+        .watch<GameSessionProvider>();
+
     return BackgraundScreen(
       child: Scaffold(
         backgroundColor: Colors.transparent,
@@ -28,7 +34,7 @@ class HidingRole extends StatelessWidget {
                   ],
                 ),
                 Text(
-                  "PASO 1 DE 8",
+                  gameSessionProvider.stepCounter,
                   style: TextStyle(color: subtitleGray, fontSize: 12),
                 ),
               ],
@@ -50,7 +56,7 @@ class HidingRole extends StatelessWidget {
                 child: Icon(Icons.person, color: purple, size: 60),
               ),
               SizedBox(height: 16),
-              _titleText("Jugador 1"),
+              _titleText(gameSessionProvider.currentPlayerName),
               SizedBox(height: 8),
               _subtitleText("Es tu turno de ver la palabra secreta"),
               SizedBox(height: 100),
@@ -77,7 +83,16 @@ class HidingRole extends StatelessWidget {
                       color: subtitleGray,
                       iconSize: 20,
                       onPressed: () {
-                        print('hola menas');
+                        final game = context.read<GameSessionProvider>();
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (_) => ChangeNotifierProvider.value(
+                              value: game,
+                              child: const RoleReveal(),
+                            ),
+                          ),
+                        );
                       },
                     ),
                   ),
@@ -116,7 +131,7 @@ class HidingRole extends StatelessWidget {
                         ),
                         child: Icon(Icons.shield, color: purple, size: 22),
                       ),
-                      
+
                       Text(
                         'Asegurate de que nadie más este \nmirando la pantalla antes de tocar.',
                         style: TextStyle(color: subtitleGray, fontSize: 12),

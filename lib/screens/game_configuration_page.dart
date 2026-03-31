@@ -4,6 +4,8 @@ import 'package:impostor/core/app_colors.dart';
 import 'package:impostor/components/custom_button_text.dart';
 import 'package:impostor/core/game_card_data.dart';
 import 'package:impostor/providers/configuration_game_provider.dart';
+import 'package:impostor/providers/game_session_provider.dart';
+import 'package:impostor/screens/hiding_role.dart';
 import 'package:impostor/screens/ui/game_configuration/button_configuration.dart';
 import 'package:impostor/screens/ui/game_configuration/select_option.dart';
 import 'package:provider/provider.dart';
@@ -60,9 +62,7 @@ class GameConfigurationPage extends StatelessWidget {
                     ],
                   ),
 
-                  //Todo: Angelica componente contador jugadores
-                  SizedBox(height: 12),
-                  _allCounters(),
+                  //Todo: Angelica componente contador jugadores                                    
                   SizedBox(height: 12),
                   //Fin Daniela
                   //Todo: componente tarjetas de juego Wldy
@@ -154,10 +154,6 @@ class GameConfigurationPage extends StatelessWidget {
   }
 }
 
-Row _allCounters() {
-  return Row();
-}
-
 Widget _gameModeSelector(
   BuildContext context,
   ConfigurationGameProvider provider,
@@ -209,9 +205,25 @@ void _onStartPressed({
   required ConfigurationGameProvider provider,
 }) {
   try {
-    provider.startGame();
-    Navigator.pushNamed(context, "hiding-role");
-    print("la palabra es: ${provider.currentWord}");
+    final String word = provider.startGame();
+
+    // Creas la sesión con los datos de configuración
+    final session = GameSessionProvider(
+      totalPlayers: provider.players,
+      impostorCount: provider.impostors,
+      secretWord: word,
+      totalRounds: provider.rounds,
+    );
+
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (_) => ChangeNotifierProvider.value(
+          value: session,
+          child: const HidingRole(),
+        ),
+      ),
+    );
   } catch (e) {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
@@ -220,7 +232,6 @@ void _onStartPressed({
         behavior: SnackBarBehavior.floating,
       ),
     );
-    return;
   }
 }
 
