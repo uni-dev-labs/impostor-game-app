@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import '../core/app_state.dart';
+import '../core/game_provider.dart';
 import '../core/app_colors.dart';
 import '../components/circle_button.dart';
 import '../components/main_button.dart';
@@ -11,11 +14,6 @@ class ConfigPage extends StatefulWidget {
 }
 
 class _ConfigPageState extends State<ConfigPage> {
-  int players = 8;
-  int impostors = 1;
-  int rounds = 5;
-  String selectedTheme = "ALEATORIO";
-
   final List<Map<String, dynamic>> themes = const [
     {"name": "ALEATORIO", "image": "assets/aleatorio.jpg"},
     {"name": "MAGIA", "image": "assets/magia.jpg"},
@@ -24,336 +22,234 @@ class _ConfigPageState extends State<ConfigPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: AppColors.bgColor,
-      body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20),
-          child: SingleChildScrollView(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const SizedBox(height: 15),
+    final size = MediaQuery.of(context).size;
+    final isSmallScreen = size.width < 600;
 
-                /// 🔹 BOTÓN ATRÁS
-                GestureDetector(
-                  onTap: () => Navigator.pop(context),
-                  child: const Icon(
-                    Icons.arrow_back_ios_new,
-                    color: Colors.white,
-                  ),
-                ),
-
-                const SizedBox(height: 10),
-
-                /// 🔹 TÍTULO
-                const Center(
-                  child: Text(
-                    "Configuración",
-                    style: TextStyle(
+    return Consumer2<AppState, GameProvider>(
+      builder: (context, appState, gameProvider, child) {
+        return Scaffold(
+          backgroundColor: appState.backgroundColor,
+          body: SafeArea(
+            child: SingleChildScrollView(
+              padding: EdgeInsets.symmetric(
+                horizontal: isSmallScreen ? 20 : 28,
+                vertical: 20,
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  GestureDetector(
+                    onTap: () => Navigator.pop(context),
+                    child: const Icon(
+                      Icons.arrow_back_ios_new,
                       color: Colors.white,
-                      fontSize: 22,
-                      fontWeight: FontWeight.bold,
+                      size: 28,
                     ),
                   ),
-                ),
+                  const SizedBox(height: 25),
 
-                const SizedBox(height: 30),
-
-                /// 🔹 JUGADORES
-                _sectionTitle("JUGADORES", "Total de participantes"),
-
-                const SizedBox(height: 10),
-
-                Align(
-                  alignment: Alignment.centerRight,
-                  child: Text(
-                    players.toString().padLeft(2, '0'),
-                    style: const TextStyle(
-                      color: AppColors.accentColor,
-                      fontSize: 38,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ),
-
-                const SizedBox(height: 10),
-
-                Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 10),
-                  decoration: BoxDecoration(
-                    color: AppColors.cardColor,
-                    borderRadius: BorderRadius.circular(18),
-                  ),
-                  child: Row(
-                    children: [
-                      CircleButton(
-                        icon: Icons.remove,
-                        onTap: () {
-                          if (players > 3) {
-                            setState(() => players--);
-                          }
-                        },
+                  Center(
+                    child: Text(
+                      appState.t("config_t"),
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: isSmallScreen ? 24 : 28,
+                        fontWeight: FontWeight.bold,
+                        letterSpacing: 1.5,
                       ),
+                    ),
+                  ),
+
+                  const SizedBox(height: 40),
+
+                  _buildSectionTitle(appState, "jugadores", "desc_jugadores"),
+                  const SizedBox(height: 12),
+
+                  Align(
+                    alignment: Alignment.centerRight,
+                    child: Text(
+                      gameProvider.totalPlayers.toString().padLeft(2, '0'),
+                      style: TextStyle(
+                        color: AppColors.accentColor,
+                        fontSize: isSmallScreen ? 44 : 52,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+
+                  _buildPlayerSlider(gameProvider),
+                  const SizedBox(height: 32),
+
+                  Row(
+                    children: [
                       Expanded(
-                        child: Slider(
-                          value: players.toDouble(),
-                          min: 3,
-                          max: 20,
-                          activeColor: AppColors.accentColor,
-                          inactiveColor: Colors.white10,
-                          onChanged: (v) {
-                            setState(() => players = v.toInt());
-                          },
+                        child: _buildSmallCounter(
+                          appState,
+                          "impostores",
+                          "desc_impostores",
+                          gameProvider.impostorsCount,
+                          (value) => gameProvider.setImpostorsCount(value),
                         ),
                       ),
-                      CircleButton(
-                        icon: Icons.add,
-                        isFilled: true,
-                        onTap: () {
-                          if (players < 20) {
-                            setState(() => players++);
-                          }
-                        },
+                      const SizedBox(width: 20),
+                      Expanded(
+                        child: _buildSmallCounter(
+                          appState,
+                          "rondas",
+                          "desc_rondas",
+                          gameProvider.rounds,
+                          (value) => gameProvider.setRounds(value),
+                        ),
                       ),
                     ],
                   ),
-                ),
 
-                const SizedBox(height: 30),
+                  const SizedBox(height: 40),
 
-                /// 🔹 IMPOSTORES Y RONDAS
-                Row(
-                  children: [
-                    Expanded(
-                      child: _smallCounter(
-                        "IMPOSTORES",
-                        "¿Quién miente?",
-                        impostors,
-                        (value) {
-                          if (value > 0) {
-                            setState(() => impostors = value);
-                          }
+                  _buildSectionTitle(appState, "tema", "desc_tema"),
+                  const SizedBox(height: 16),
+                  _buildThemeSelector(appState, gameProvider),
+
+                  const SizedBox(height: 50),
+
+                  MainButton(
+                    label: appState.t("comenzar"),
+                    icon: Icons.play_arrow_rounded,
+                    isPrimary: true,
+                    onPressed: () {
+                      gameProvider.generateGame(context);
+
+                      Navigator.pushNamed(
+                        context,
+                        '/players',
+                        arguments: {
+                          'totalPlayers': gameProvider.totalPlayers,
+                          'gameData': gameProvider.currentGameData!,
                         },
-                      ),
-                    ),
-                    const SizedBox(width: 20),
-                    Expanded(
-                      child: _smallCounter(
-                        "RONDAS",
-                        "Duración partida",
-                        rounds,
-                        (value) {
-                          if (value > 0) {
-                            setState(() => rounds = value);
-                          }
-                        },
-                      ),
-                    ),
-                  ],
-                ),
-
-                const SizedBox(height: 30),
-
-                /// 🔹 TEMÁTICA
-                _sectionTitle("TEMÁTICA", "Selecciona el mazo de palabras"),
-
-                const SizedBox(height: 15),
-
-                SizedBox(
-                  height: 150,
-                  child: ListView.builder(
-                    scrollDirection: Axis.horizontal,
-                    itemCount: themes.length,
-                    itemBuilder: (context, index) {
-                      final theme = themes[index];
-                      final isSelected = selectedTheme == theme["name"];
-
-                      return GestureDetector(
-                        onTap: () {
-                          setState(() {
-                            selectedTheme = theme["name"];
-                          });
-                        },
-                        child: Container(
-                          width: 110,
-                          margin: const EdgeInsets.only(right: 15),
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(20),
-                            border: Border.all(
-                              color: isSelected
-                                  ? AppColors.accentColor
-                                  : Colors.white12,
-                              width: 2,
-                            ),
-                            image: DecorationImage(
-                              image: AssetImage(theme["image"] as String),
-                              fit: BoxFit.cover,
-                            ),
-                          ),
-                          child: Container(
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(20),
-                              color: isSelected
-                                  ? AppColors.accentColor.withOpacity(0.8)
-                                  : Colors.black.withOpacity(0.6),
-                            ),
-                            child: Center(
-                              child: Text(
-                                theme["name"],
-                                style: const TextStyle(
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
                       );
                     },
                   ),
-                ),
-
-                const SizedBox(height: 30),
-
-                /// 🔹 CAJA DE ADVERTENCIA
-                Container(
-                  padding: const EdgeInsets.all(15),
-                  decoration: BoxDecoration(
-                    color: const Color(0xFF141028),
-                    borderRadius: BorderRadius.circular(18),
-                    border: Border.all(
-                      color: AppColors.accentColor.withOpacity(0.4),
-                      width: 1,
-                    ),
-                  ),
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      const Icon(
-                        Icons.info_outline,
-                        color: AppColors.accentColor,
-                        size: 20,
-                      ),
-                      const SizedBox(width: 10),
-                      Expanded(
-                        child: RichText(
-                          text: const TextSpan(
-                            style: TextStyle(
-                              color: Colors.white70,
-                              fontSize: 12,
-                            ),
-                            children: [
-                              TextSpan(text: "Recomendamos al menos "),
-                              TextSpan(
-                                text: "5 jugadores",
-                                style: TextStyle(
-                                  color: AppColors.accentColor,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                              TextSpan(
-                                text:
-                                    " para una experiencia óptima con más de un impostor.",
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-
-                const SizedBox(height: 20),
-
-                /// 🔥 BOTÓN COMENZAR
-                MainButton(
-                  label: "COMENZAR",
-                  icon: Icons.play_arrow_rounded,
-                  onPressed: () {},
-                  isPrimary: true,
-                ),
-
-                const SizedBox(height: 30),
-              ],
+                  const SizedBox(height: 40),
+                ],
+              ),
             ),
           ),
-        ),
-      ),
+        );
+      },
     );
   }
 
-  Widget _sectionTitle(String title, String subtitle) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          title,
-          style: const TextStyle(
-            color: AppColors.textPurple,
-            fontWeight: FontWeight.bold,
-            letterSpacing: 1,
-          ),
-        ),
-        Text(
-          subtitle,
-          style: const TextStyle(color: Colors.grey, fontSize: 12),
-        ),
-      ],
-    );
-  }
-
-  Widget _smallCounter(
-    String title,
-    String subtitle,
-    int value,
-    Function(int) onChange,
+  // ==================== WIDGETS REUTILIZABLES ====================
+  Widget _buildSectionTitle(
+    AppState appState,
+    String titleKey,
+    String subtitleKey,
   ) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          title,
-          style: const TextStyle(
+          appState.t(titleKey),
+          style: TextStyle(
             color: AppColors.textPurple,
+            fontSize: 18,
             fontWeight: FontWeight.bold,
           ),
         ),
+        const SizedBox(height: 4),
         Text(
-          subtitle,
-          style: const TextStyle(color: Colors.grey, fontSize: 12),
+          appState.t(subtitleKey),
+          style: const TextStyle(color: Colors.white54, fontSize: 13.5),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildPlayerSlider(GameProvider gameProvider) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+      decoration: BoxDecoration(
+        color: AppColors.cardColor,
+        borderRadius: BorderRadius.circular(22),
+      ),
+      child: Row(
+        children: [
+          CircleButton(
+            icon: Icons.remove,
+            onTap: () =>
+                gameProvider.setTotalPlayers(gameProvider.totalPlayers - 1),
+          ),
+          Expanded(
+            child: Slider(
+              value: gameProvider.totalPlayers.toDouble(),
+              min: 3,
+              max: 20,
+              divisions: 17,
+              activeColor: AppColors.accentColor,
+              inactiveColor: Colors.white24,
+              onChanged: (value) => gameProvider.setTotalPlayers(value.toInt()),
+            ),
+          ),
+          CircleButton(
+            icon: Icons.add,
+            isFilled: true,
+            onTap: () =>
+                gameProvider.setTotalPlayers(gameProvider.totalPlayers + 1),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildSmallCounter(
+    AppState appState,
+    String titleKey,
+    String subtitleKey,
+    int value,
+    Function(int) onChanged,
+  ) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          appState.t(titleKey),
+          style: TextStyle(
+            color: AppColors.textPurple,
+            fontWeight: FontWeight.bold,
+            fontSize: 16,
+          ),
         ),
         const SizedBox(height: 10),
         Container(
-          padding: const EdgeInsets.all(15),
+          padding: const EdgeInsets.all(18),
           decoration: BoxDecoration(
             color: AppColors.cardColor,
-            borderRadius: BorderRadius.circular(20),
+            borderRadius: BorderRadius.circular(22),
           ),
           child: Column(
             children: [
               Text(
                 value.toString(),
                 style: const TextStyle(
-                  color: Colors.white,
-                  fontSize: 28,
+                  fontSize: 38,
                   fontWeight: FontWeight.bold,
+                  color: Colors.white,
                 ),
               ),
-              const SizedBox(height: 10),
+              const SizedBox(height: 16),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   CircleButton(
                     icon: Icons.remove,
-                    size: 35,
-                    onTap: () => onChange(value - 1),
+                    size: 42,
+                    onTap: () => onChanged(value - 1),
                   ),
                   CircleButton(
                     icon: Icons.add,
-                    size: 35,
+                    size: 42,
                     isFilled: true,
-                    onTap: () => onChange(value + 1),
+                    onTap: () => onChanged(value + 1),
                   ),
                 ],
               ),
@@ -361,6 +257,60 @@ class _ConfigPageState extends State<ConfigPage> {
           ),
         ),
       ],
+    );
+  }
+
+  Widget _buildThemeSelector(AppState appState, GameProvider gameProvider) {
+    return SizedBox(
+      height: 135,
+      child: ListView.builder(
+        scrollDirection: Axis.horizontal,
+        itemCount: themes.length,
+        itemBuilder: (context, index) {
+          final theme = themes[index];
+          final isSelected = gameProvider.selectedTheme == theme["name"];
+          return GestureDetector(
+            onTap: () => gameProvider.setSelectedTheme(theme["name"]),
+            child: Container(
+              width: 118,
+              margin: const EdgeInsets.only(right: 16),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(24),
+                border: Border.all(
+                  color: isSelected ? AppColors.accentColor : Colors.white12,
+                  width: isSelected ? 3.5 : 1.5,
+                ),
+                image: DecorationImage(
+                  image: AssetImage(theme["image"]),
+                  fit: BoxFit.cover,
+                ),
+              ),
+              child: Align(
+                alignment: Alignment.bottomCenter,
+                child: Container(
+                  width: double.infinity,
+                  padding: const EdgeInsets.symmetric(vertical: 10),
+                  decoration: BoxDecoration(
+                    color: Colors.black.withOpacity(0.75),
+                    borderRadius: const BorderRadius.vertical(
+                      bottom: Radius.circular(24),
+                    ),
+                  ),
+                  child: Text(
+                    appState.t(theme["name"]),
+                    textAlign: TextAlign.center,
+                    style: const TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 14,
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          );
+        },
+      ),
     );
   }
 }
