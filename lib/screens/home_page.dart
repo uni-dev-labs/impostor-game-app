@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:impostor/components/custom_button.dart';
 import 'package:impostor/components/custom_button_text.dart';
 import 'package:impostor/components/backgraund_sreen.dart';
+import 'package:impostor/core/app_colors.dart';
 import 'package:impostor/core/user_list.dart';
 
 class HomePage extends StatelessWidget {
@@ -40,8 +41,8 @@ class HomePage extends StatelessWidget {
                   ),
                   SizedBox(height: 30),
                   _superponerImages(imagesUser),
-                  SizedBox(height: 20),
-                  _subTitle("JUGANDO POR GRUPOS EN TODO EL MUNDO"),
+                  SizedBox(height: 10),
+                  _subTitle("JUGADO POR GRUPOS EN TODO EL MUNDO"),
                 ],
               ),
             ),
@@ -53,10 +54,9 @@ class HomePage extends StatelessWidget {
 
   Container _imageGame() {
     return Container(
-      decoration: BoxDecoration(
-        color: Colors.red,
+      decoration: BoxDecoration(        
         borderRadius: BorderRadius.circular(100),
-        border: Border.all(color: Colors.white, width: 2),
+        border: Border.all(color: warningText, width: 2),
       ),
       child: ClipRRect(
         borderRadius: BorderRadius.circular(100),
