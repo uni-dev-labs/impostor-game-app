@@ -76,6 +76,11 @@ class GameConfigurationPage extends StatelessWidget {
                   //Fin Wldy
                   SizedBox(height: 40),
                   _warningAndBegin(context, configurationGameProvider),
+                  CustomButtonText(
+                    textButton: 'jasjajs ',
+                    onPressed: () =>
+                        Navigator.pushNamed(context, "guess_missingword"),
+                  ),
                 ],
               ),
             ),
