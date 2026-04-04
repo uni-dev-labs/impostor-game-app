@@ -41,14 +41,7 @@ class GuessMissingword extends StatelessWidget {
                       fontWeight: FontWeight.w500,
                     ),
                   ),
-                  Text(
-                    impostores,
-                    style: TextStyle(
-                      color: purple,
-                      fontSize: 16,
-                      fontWeight: FontWeight.w500,
-                    ),
-                  ),
+
                   SizedBox(height: 40),
                   Center(
                     child: Stack(
