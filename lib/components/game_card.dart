@@ -18,8 +18,7 @@ class GameCard extends StatelessWidget {
     return GestureDetector(
       onTap: onTap,
       child: SizedBox(
-        height: 180,
-        width: 130,
+        width: 110,
         child: ClipRRect(
           borderRadius: BorderRadius.circular(20),
           child: Stack(

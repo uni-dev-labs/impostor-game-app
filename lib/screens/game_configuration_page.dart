@@ -21,7 +21,20 @@ class GameConfigurationPage extends StatelessWidget {
     return BackgraundScreen(
       child: Scaffold(
         backgroundColor: Colors.transparent,
-        appBar: AppBar(title: Text("Configuración")),
+        appBar: AppBar(
+          title: Text("Configuración"),
+          leading: IconButton(
+            icon: Icon(Icons.arrow_back),
+            onPressed: () {
+              configurationGameProvider.reset();
+              Navigator.pushNamedAndRemoveUntil(
+                context,
+                "/", // ruta del home
+                (route) => false, // elimina todo lo anterior de la pila
+              );
+            },
+          ),
+        ),
         body: SafeArea(
           child: SingleChildScrollView(
             child: Padding(
@@ -62,7 +75,7 @@ class GameConfigurationPage extends StatelessWidget {
                     ],
                   ),
 
-                  //Todo: Angelica componente contador jugadores                                    
+                  //Todo: Angelica componente contador jugadores
                   SizedBox(height: 12),
                   //Fin Daniela
                   //Todo: componente tarjetas de juego Wldy
@@ -76,11 +89,6 @@ class GameConfigurationPage extends StatelessWidget {
                   //Fin Wldy
                   SizedBox(height: 40),
                   _warningAndBegin(context, configurationGameProvider),
-                  CustomButtonText(
-                    textButton: 'jasjajs ',
-                    onPressed: () =>
-                        Navigator.pushNamed(context, "guess_missingword"),
-                  ),
                 ],
               ),
             ),
@@ -146,12 +154,12 @@ class GameConfigurationPage extends StatelessWidget {
           right: 0,
           left: 0,
           child: CustomButtonText(
-            textButton: 'Comenzar ',
+            textButton: 'COMENZAR',
             onPressed: () => _onStartPressed(
               context: context,
               provider: configurationGameProvider,
             ),
-            iconRight: Icons.play_arrow,
+            iconRight: Icons.send,
           ),
         ),
       ],
@@ -164,7 +172,7 @@ Widget _gameModeSelector(
   ConfigurationGameProvider provider,
 ) {
   return SizedBox(
-    height: 180,
+    height: 150,
     child: ListView.separated(
       scrollDirection: Axis.horizontal,
       itemCount: WordDeck.values.length,
@@ -219,7 +227,7 @@ void _onStartPressed({
       secretWord: word,
       totalRounds: provider.rounds,
     );
-
+    session.startGame();
     Navigator.push(
       context,
       MaterialPageRoute(
@@ -283,7 +291,7 @@ Widget _sectionPlayers({
       const SizedBox(height: 12),
       Container(
         width: double.infinity,
-        height: 100,
+        height: 90,
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
         decoration: BoxDecoration(
           color: cardColor,

@@ -88,9 +88,25 @@ class RoleUser extends StatelessWidget {
                       width: 350,
                       height: 250,
                       decoration: BoxDecoration(
-                        color: warningText,
+                        color: const Color.fromARGB(69, 141, 136, 167),
                         borderRadius: BorderRadius.circular(20),
-                        border: Border.all(color: cardBorderColor, width: 0.5),
+                        border: Border.all(
+                          color: const Color.fromARGB(62, 255, 255, 255),
+                          width: 0.5,
+                        ),
+                        boxShadow: [
+                          BoxShadow(
+                            color: const Color.fromARGB(
+                              71,
+                              0,
+                              255,
+                              187,
+                            ), // color de la sombra
+                            blurRadius: 120, // desenfoque de la sombra
+                            spreadRadius: 5, // cuánto se extiende hacia afuera
+                            offset: Offset(0, 0), // sin desplazamiento
+                          ),
+                        ],
                       ),
                       child: Padding(
                         padding: const EdgeInsets.all(16.0),
@@ -162,10 +178,10 @@ class RoleUser extends StatelessWidget {
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 20.0),
                       child: CustomButtonText(
-                        textButton: 'Siguiente   ',
+                        textButton: 'SIGUIENTE',
                         onPressed: () =>
                             _handleNext(context, gameSessionProvider),
-                        iconRight: Icons.arrow_right_alt_rounded,
+                        iconRight: Icons.send,
                       ),
                     ),
                   ],

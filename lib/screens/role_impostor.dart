@@ -64,13 +64,27 @@ class RoleImpostor extends StatelessWidget {
                         Container(
                           width: 350,
                           height: 350,
+
                           decoration: BoxDecoration(
-                            color: warningText,
-                            borderRadius: BorderRadius.circular(20),
+                            color: const Color.fromARGB(69, 141, 136, 167),
                             border: Border.all(
-                              color: cardBorderColor,
-                              width: 0.5,
+                              color: const Color.fromARGB(40, 255, 255, 255),
                             ),
+                            borderRadius: BorderRadius.circular(20),
+                            boxShadow: [
+                              BoxShadow(
+                                color: const Color.fromARGB(
+                                  32,
+                                  255,
+                                  17,
+                                  0,
+                                ), // color de la sombra
+                                blurRadius: 120, // desenfoque de la sombra
+                                spreadRadius:
+                                    5, // cuánto se extiende hacia afuera
+                                offset: Offset(0, 0), // sin desplazamiento
+                              ),
+                            ],
                           ),
                           child: Padding(
                             padding: const EdgeInsets.all(16.0),
@@ -78,10 +92,11 @@ class RoleImpostor extends StatelessWidget {
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 Text(
-                                  'Tu Rol Secreto',
+                                  'TU ROL SECRETO',
                                   style: TextStyle(
-                                    color: subtitleGray,
+                                    color: purple,
                                     fontSize: 14,
+                                    fontWeight: FontWeight.w800,
                                   ),
                                   textAlign: TextAlign.center,
                                 ),
@@ -103,7 +118,7 @@ class RoleImpostor extends StatelessWidget {
                                     shadows: [
                                       Shadow(
                                         color: Color.fromARGB(
-                                          255,
+                                          129,
                                           248,
                                           137,
                                           159,
@@ -112,11 +127,11 @@ class RoleImpostor extends StatelessWidget {
                                       ),
                                       Shadow(
                                         color: Color.fromARGB(255, 142, 2, 30),
-                                        blurRadius: 20,
+                                        blurRadius: 15,
                                       ),
                                       Shadow(
                                         color: Color.fromARGB(255, 255, 21, 68),
-                                        blurRadius: 40,
+                                        blurRadius: 15,
                                       ),
                                     ],
                                   ),
@@ -146,26 +161,29 @@ class RoleImpostor extends StatelessWidget {
                                           ),
                                           fontSize: 16,
                                         ),
-                                        children: const [
-                                          TextSpan(text: "Descubre la"),
+                                      ),
+                                    ),
+                                    Text.rich(
+                                      TextSpan(
+                                        style: TextStyle(
+                                          color: Colors.white,
+                                          fontSize: 16,
+                                        ),
+                                        children: [
+                                          const TextSpan(text: "Descubre la "),
                                           TextSpan(
-                                            text: " palabra secreta",
+                                            text: "palabra secreta",
                                             style: TextStyle(
-                                              color: Color.fromRGBO(
-                                                255,
-                                                255,
-                                                255,
-                                                1,
-                                              ),
                                               fontWeight: FontWeight.bold,
                                             ),
                                           ),
-                                          TextSpan(
+                                          const TextSpan(
                                             text:
-                                                " antes de que \nterminen las rondas.",
+                                                "\nantes de que terminen las rondas.",
                                           ),
                                         ],
                                       ),
+                                      textAlign: TextAlign.center,
                                     ),
                                   ],
                                 ),
@@ -230,10 +248,10 @@ class RoleImpostor extends StatelessWidget {
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 20.0),
                       child: CustomButtonText(
-                        textButton: 'Siguiente   ',
+                        textButton: 'SIGUIENTE',
                         onPressed: () =>
                             _handleNext(context, gameSessionProvider),
-                        iconRight: Icons.arrow_right_alt_rounded,
+                        iconRight: Icons.send,
                       ),
                     ),
                   ],

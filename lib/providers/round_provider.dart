@@ -8,13 +8,13 @@ class RoundProvider extends ChangeNotifier {
   bool isFinished = false;
 
   int get secondsRemaining => _secondsRemaining;
-    
+
   String get formattedTime {
     final minutes = (_secondsRemaining ~/ 60).toString().padLeft(2, '0');
     final seconds = (_secondsRemaining % 60).toString().padLeft(2, '0');
     return '$minutes:$seconds';
   }
-  
+
   double get progress => _secondsRemaining / roundDuration;
 
   void start() {

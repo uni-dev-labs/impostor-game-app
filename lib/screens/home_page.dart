@@ -27,7 +27,7 @@ class HomePage extends StatelessWidget {
                   _imageGame(),
                   SizedBox(height: 20),
                   CustomButtonText(
-                    iconLeft: Icons.play_arrow,
+                    iconLeft: Icons.send,
                     textButton: "JUGAR",
                     onPressed: () =>
                         Navigator.pushNamed(context, "configuration-game"),
@@ -54,13 +54,12 @@ class HomePage extends StatelessWidget {
 
   Container _imageGame() {
     return Container(
-      decoration: BoxDecoration(        
+      decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(100),
         border: Border.all(color: warningText, width: 2),
       ),
       child: ClipRRect(
         borderRadius: BorderRadius.circular(100),
-
         child: Image.asset(
           'assets/images/impostor.jpg',
           width: 200,
@@ -87,7 +86,7 @@ class HomePage extends StatelessWidget {
       "EL\nIMPOSTOR",
       style: TextStyle(
         fontSize: 40,
-        fontWeight: FontWeight.bold,
+        fontWeight: FontWeight.w700,
         color: Colors.white,
       ),
       textAlign: TextAlign.center,

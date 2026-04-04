@@ -11,9 +11,9 @@ class ConfigurationGameProvider extends ChangeNotifier {
   String? currentWord;
 
   ConfigurationGameProvider({
-    this.players = 0,
-    this.impostors = 0,
-    this.rounds = 0,
+    this.players = 3,
+    this.impostors = 1,
+    this.rounds = 1,
     this.maxPlayers = 24,
     this.selectedDeck = WordDeck.random,
     this.currentWord,
@@ -26,7 +26,7 @@ class ConfigurationGameProvider extends ChangeNotifier {
   }
 
   void lessImpostors() {
-    if (!validateIsPositiveNumber(impostors)) return;
+    if (impostors <= 1) return;
     impostors--;
     notifyListeners();
   }
@@ -38,7 +38,7 @@ class ConfigurationGameProvider extends ChangeNotifier {
   }
 
   void lessPlayers() {
-    if (!validateIsPositiveNumber(players)) return;
+    if (players <= 3) return;
     players--;
     notifyListeners();
   }
@@ -49,7 +49,7 @@ class ConfigurationGameProvider extends ChangeNotifier {
   }
 
   void lessRounds() {
-    if (!validateIsPositiveNumber(rounds)) return;
+    if (rounds <= 1) return;
     rounds--;
     notifyListeners();
   }
@@ -84,4 +84,13 @@ class ConfigurationGameProvider extends ChangeNotifier {
   }
 
   bool validateIsPositiveNumber(int value) => value > 0;
+
+  void reset() {
+    players = 3;
+    impostors = 1;
+    rounds = 1;
+    maxPlayers = 24;
+    selectedDeck = WordDeck.random;
+    currentWord;
+  }
 }

@@ -5,6 +5,8 @@ import 'package:impostor/components/custom_button_text.dart';
 import 'package:impostor/core/app_colors.dart';
 import 'package:impostor/providers/game_session_provider.dart';
 import 'package:impostor/providers/round_provider.dart';
+import 'package:impostor/screens/guess_missingword.dart';
+import 'package:impostor/screens/imposter_win.dart';
 import 'package:provider/provider.dart';
 
 class RoundsScreen extends StatefulWidget {
@@ -34,11 +36,7 @@ class _RoundsScreenState extends State<RoundsScreen> {
     _roundProvider.reset(); // resetea el cronómetro
 
     if (game.isLastRound) {
-      Navigator.pushNamedAndRemoveUntil(
-        context,
-        'guess-missingword',
-        (route) => false,
-      );
+      // Navega a GuessMissingword pasando el provider
     } else {
       game.advanceToNextRound();
       // Recarga la misma pantalla con el cronómetro reseteado
@@ -80,7 +78,11 @@ class _RoundsScreenState extends State<RoundsScreen> {
                         children: [
                           Text(
                             'EL IMPOSTOR',
-                            style: TextStyle(color: purple, fontSize: 12),
+                            style: TextStyle(
+                              color: purple,
+                              fontSize: 12,
+                              fontWeight: FontWeight.w800,
+                            ),
                           ),
                           SizedBox(height: 4),
                           Text(
@@ -115,6 +117,8 @@ class _RoundsScreenState extends State<RoundsScreen> {
                                     painter: _TimerPainter(
                                       progress: round.progress,
                                       isFinished: round.isFinished,
+                                      remainingSeconds: round.secondsRemaining
+                                          .toDouble(),
                                     ),
                                   ),
                                 ),
@@ -159,7 +163,16 @@ class _RoundsScreenState extends State<RoundsScreen> {
                             textButton: 'Intentar adivinar',
                             textColor: purple,
                             iconColor: purple,
-                            onPressed: () => '',                            
+                            onPressed: () => Navigator.pushAndRemoveUntil(
+                              context,
+                              MaterialPageRoute(
+                                builder: (_) => ChangeNotifierProvider.value(
+                                  value: game, // pasamos la misma instancia
+                                  child: const GuessMissingword(),
+                                ),
+                              ),
+                              (route) => false,
+                            ),
                           ),
                         ),
                         SizedBox(height: 16),
@@ -167,10 +180,25 @@ class _RoundsScreenState extends State<RoundsScreen> {
                           padding: const EdgeInsets.symmetric(horizontal: 20),
                           child: CustomButtonText(
                             textButton: game.isLastRound
-                                ? 'Ver resultados'
-                                : 'Siguiente ronda',
-                            onPressed: () => _handleNext(game),
-                            iconRight: Icons.arrow_right_alt_rounded,
+                                ? 'VER RESULTADOS'
+                                : 'SIGUIENTE RONDA',
+                            onPressed: () {
+                              if (game.isLastRound) {
+                                Navigator.pushAndRemoveUntil(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (_) => ChangeNotifierProvider.value(
+                                      value: game, // pasamos la misma instancia
+                                      child: const ImposterWin(),
+                                    ),
+                                  ),
+                                  (route) => false,
+                                );
+                              } else {
+                                _handleNext(game);
+                              }
+                            },
+                            iconRight: Icons.send,
                           ),
                         ),
                       ],
@@ -189,8 +217,13 @@ class _RoundsScreenState extends State<RoundsScreen> {
 class _TimerPainter extends CustomPainter {
   final double progress;
   final bool isFinished;
+  final double remainingSeconds;
 
-  _TimerPainter({required this.progress, required this.isFinished});
+  _TimerPainter({
+    required this.progress,
+    required this.isFinished,
+    required this.remainingSeconds,
+  });
 
   @override
   void paint(Canvas canvas, Size size) {
@@ -206,6 +239,14 @@ class _TimerPainter extends CustomPainter {
         ..style = PaintingStyle.stroke
         ..strokeWidth = 6,
     );
+    Color color;
+    if (remainingSeconds <= 15) {
+      color = Colors.red;
+    } else if (remainingSeconds <= 30) {
+      color = Colors.yellow;
+    } else {
+      color = purple;
+    }
 
     // Arco de progreso
     canvas.drawArc(
@@ -214,7 +255,7 @@ class _TimerPainter extends CustomPainter {
       2 * pi * progress, // avanza según el tiempo restante
       false,
       Paint()
-        ..color = isFinished ? Colors.red : purple
+        ..color = color
         ..style = PaintingStyle.stroke
         ..strokeWidth = 6
         ..strokeCap = StrokeCap.round,

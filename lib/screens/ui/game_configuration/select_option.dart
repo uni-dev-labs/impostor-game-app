@@ -28,14 +28,21 @@ class SelectOptionUI extends StatelessWidget {
           style: TextStyle(
             color: purple,
             fontSize: 14,
-            fontWeight: FontWeight.bold,            
+            fontWeight: FontWeight.bold,
           ),
         ),
         const SizedBox(height: 2),
-        Text(subtitle, style: TextStyle(color: subtitleGray, fontSize: 12, fontWeight: FontWeight.normal)),
+        Text(
+          subtitle,
+          style: TextStyle(
+            color: subtitleGray,
+            fontSize: 12,
+            fontWeight: FontWeight.normal,
+          ),
+        ),
         const SizedBox(height: 12),
         Container(
-          padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 12),
+          padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 12),
           decoration: BoxDecoration(
             color: cardColor,
             borderRadius: BorderRadius.circular(20),

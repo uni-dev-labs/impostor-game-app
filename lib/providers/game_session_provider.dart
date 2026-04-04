@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 class GameSessionProvider extends ChangeNotifier {
   final int totalPlayers;
   final int impostorCount;
-  final String secretWord;  
+  final String secretWord;
   final int totalRounds;
-
+  DateTime? _startTime;
   int currentPlayerIndex = 0;
   int currentRound = 1;
   List<bool> _impostorAssignment = [];
@@ -14,7 +14,7 @@ class GameSessionProvider extends ChangeNotifier {
   GameSessionProvider({
     required this.totalPlayers,
     required this.impostorCount,
-    required this.secretWord,    
+    required this.secretWord,
     required this.totalRounds,
   }) {
     _assignImpostors();
@@ -29,7 +29,8 @@ class GameSessionProvider extends ChangeNotifier {
   }
 
   String get currentPlayerName => 'Jugador ${currentPlayerIndex + 1}';
-  String get playerCounter => 'JUGADOR ${currentPlayerIndex + 1} DE $totalPlayers';
+  String get playerCounter =>
+      'JUGADOR ${currentPlayerIndex + 1} DE $totalPlayers';
   String get stepCounter => 'PASO ${currentPlayerIndex + 1} DE $totalPlayers';
   bool get currentPlayerIsImpostor => _impostorAssignment[currentPlayerIndex];
   bool get isLastPlayer => currentPlayerIndex == totalPlayers - 1;
@@ -45,9 +46,25 @@ class GameSessionProvider extends ChangeNotifier {
   }
 
   void advanceToNextRound() {
-  if (!isLastRound) {
-    currentRound++;
-    notifyListeners();
+    if (!isLastRound) {
+      currentRound++;
+      notifyListeners();
+    }
   }
-}
+
+  List<int> get impostorIndices => _impostorAssignment
+      .asMap()
+      .entries
+      .where((entry) => entry.value)
+      .map((entry) => entry.key)
+      .toList();
+
+  void startGame() {
+    _startTime = DateTime.now();
+  }
+
+  Duration get elapsedTime {
+    if (_startTime == null) return Duration.zero;
+    return DateTime.now().difference(_startTime!);
+  }
 }
