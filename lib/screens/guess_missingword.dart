@@ -172,7 +172,6 @@ class GuessMissingword extends StatelessWidget {
                           ),
                           (route) => false,
                         );
-                        // aquí podrías mostrar un mensaje de error o avanzar al impostor
                       }
                     },
                   ),
