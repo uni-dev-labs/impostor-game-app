@@ -162,10 +162,15 @@ class GuessMissingword extends StatelessWidget {
                           (route) => false,
                         );
                       } else {
-                        _showResultDialog(
+                        Navigator.pushAndRemoveUntil(
                           context,
-                          impostores,
-                          gameSessionProvider,
+                          MaterialPageRoute(
+                            builder: (_) => ChangeNotifierProvider.value(
+                              value: gameSessionProvider,
+                              child: const ImposterGameOver(),
+                            ),
+                          ),
+                          (route) => false,
                         );
                         // aquí podrías mostrar un mensaje de error o avanzar al impostor
                       }
