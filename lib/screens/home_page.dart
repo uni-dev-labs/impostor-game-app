@@ -4,6 +4,52 @@ import 'package:impostor/components/custom_button.dart';
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
 
+  void _showHowToPlay(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (_) => AlertDialog(
+        backgroundColor: const Color(0xFF18123A),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+        title: const Text(
+          'Cómo jugar',
+          style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+        ),
+        content: const SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              _HowToStep(
+                number: '1',
+                text: 'Cada jugador lee su rol en privado. Los jugadores normales ven la palabra secreta; el impostor no.',
+              ),
+              SizedBox(height: 12),
+              _HowToStep(
+                number: '2',
+                text: 'Durante cada ronda, todos hablan sobre la palabra sin revelarla directamente.',
+              ),
+              SizedBox(height: 12),
+              _HowToStep(
+                number: '3',
+                text: 'El impostor intenta adivinar la palabra y no ser descubierto.',
+              ),
+              SizedBox(height: 12),
+              _HowToStep(
+                number: '4',
+                text: 'Al final votan quién creen que es el impostor. ¡Si aciertan, los jugadores ganan!',
+              ),
+            ],
+          ),
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: const Text('¡Entendido!', style: TextStyle(color: Color(0xFF3D38E0))),
+          ),
+        ],
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -108,7 +154,7 @@ class HomePage extends StatelessWidget {
                   width: double.infinity,
                   height: 56,
                   child: ElevatedButton(
-                    onPressed: () {},
+                    onPressed: () => Navigator.pushNamed(context, '/game-config'),
                     style: ElevatedButton.styleFrom(
                       backgroundColor: const Color(0xFF3D38E0),
                       foregroundColor: Colors.white,
@@ -141,7 +187,7 @@ class HomePage extends StatelessWidget {
                   width: double.infinity,
                   height: 50,
                   child: OutlinedButton(
-                    onPressed: () {},
+                    onPressed: () => _showHowToPlay(context),
                     style: OutlinedButton.styleFrom(
                       foregroundColor: Colors.white,
                       side: BorderSide(
@@ -228,6 +274,51 @@ class HomePage extends StatelessWidget {
           ),
         ),
       ),
+    );
+  }
+}
+
+class _HowToStep extends StatelessWidget {
+  final String number;
+  final String text;
+
+  const _HowToStep({required this.number, required this.text});
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Container(
+          width: 26,
+          height: 26,
+          margin: const EdgeInsets.only(top: 1, right: 10),
+          decoration: const BoxDecoration(
+            color: Color(0xFF3D38E0),
+            shape: BoxShape.circle,
+          ),
+          child: Center(
+            child: Text(
+              number,
+              style: const TextStyle(
+                color: Colors.white,
+                fontSize: 13,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ),
+        ),
+        Expanded(
+          child: Text(
+            text,
+            style: TextStyle(
+              color: Colors.white.withValues(alpha: 0.85),
+              fontSize: 14,
+              height: 1.4,
+            ),
+          ),
+        ),
+      ],
     );
   }
 }
